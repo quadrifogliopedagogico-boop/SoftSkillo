@@ -1,0 +1,1770 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Softskillo</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f0f0f0;--bg2:#fff;--bg3:#e5e5e5;
+  --green:#58cc02;--green-d:#46a302;--green-l:#d7ffb8;
+  --blue:#1cb0f6;--blue-d:#1899d6;--blue-l:#ddf4ff;
+  --purple:#ce82ff;--purple-d:#a855f7;--purple-l:#f3e8ff;
+  --orange:#ff9600;--orange-d:#e08600;--orange-l:#fff4e0;
+  --red:#ff4b4b;--red-d:#ea2b2b;--red-l:#ffe0e0;
+  --amber:#fbbf24;--amber-d:#d9a01f;--amber-l:#fef9c3;
+  --teal:#2dd4bf;--teal-d:#14b8a6;--teal-l:#ccfbf1;
+  --text:#3c3c3c;--text2:#777;--text3:#aaa;
+  --shadow:0 4px 0;
+  --a1:#1cb0f6;--a1d:#1899d6;--a1l:#ddf4ff;
+  --a2:#ce82ff;--a2d:#a855f7;--a2l:#f3e8ff;
+  --a3:#ff9600;--a3d:#e08600;--a3l:#fff4e0;
+  --a4:#2dd4bf;--a4d:#14b8a6;--a4l:#ccfbf1;
+  --r:16px;--rs:12px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+.topbar{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:2px solid var(--bg3);padding:8px 16px;display:flex;align-items:center;gap:12px}
+.topbar .tb-b{background:none;border:2px solid var(--bg3);border-radius:var(--rs);padding:4px 10px;cursor:pointer;font-family:'Nunito';font-size:.85em;font-weight:700;color:var(--text2)}
+.topbar .tb-t{flex:1;font-family:'Fredoka';font-weight:600;font-size:1em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.topbar .tb-x{font-weight:800;font-size:.85em;color:var(--amber-d)}
+.topbar .tb-h{font-size:1.1em}
+.pb{width:100%;height:16px;background:var(--bg3);border-radius:8px;overflow:hidden;position:relative}
+.pb-f{height:100%;border-radius:8px;transition:width .5s cubic-bezier(.2,.8,.3,1.2);background:linear-gradient(90deg,var(--green),#78e008)}
+.pb-f::after{content:'';position:absolute;top:2px;left:4px;right:4px;height:5px;background:rgba(255,255,255,.3);border-radius:3px}
+.c{max-width:600px;margin:0 auto;padding:16px;padding-bottom:100px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 28px;border:none;border-radius:var(--r);font-family:'Nunito';font-weight:800;font-size:1em;cursor:pointer;transition:all .1s;user-select:none;text-transform:uppercase;letter-spacing:.5px}
+.btn:active{transform:translateY(3px)}
+.btn-g{background:var(--green);color:#fff;box-shadow:var(--shadow) var(--green-d)}
+.btn-b{background:var(--blue);color:#fff;box-shadow:var(--shadow) var(--blue-d)}
+.btn-p{background:var(--purple);color:#fff;box-shadow:var(--shadow) var(--purple-d)}
+.btn-o{background:var(--orange);color:#fff;box-shadow:var(--shadow) var(--orange-d)}
+.btn-t{background:var(--teal);color:#fff;box-shadow:var(--shadow) var(--teal-d)}
+.btn-ol{background:var(--bg2);color:var(--text);border:2px solid var(--bg3);box-shadow:var(--shadow) var(--bg3)}
+.btn-sm{padding:10px 18px;font-size:.85em;border-radius:var(--rs)}
+.btn-f{width:100%}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
+.cd{background:var(--bg2);border:2px solid var(--bg3);border-radius:var(--r);padding:20px;margin-bottom:14px;box-shadow:0 2px 0 var(--bg3)}
+.ws{text-align:center;padding:40px 16px;animation:bi .6s cubic-bezier(.2,.8,.3,1.2)}
+.ws h1{font-family:'Fredoka';font-size:2.6em;font-weight:700;margin-bottom:4px;background:linear-gradient(135deg,var(--green),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ws .sub{color:var(--text2);font-size:1.05em;font-weight:600;margin-bottom:24px}
+.msc{font-size:4em;display:block;margin-bottom:12px;animation:fl 3s ease-in-out infinite}
+@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes bi{0%{opacity:0;transform:scale(.7) translateY(20px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes pop{0%{transform:scale(0)}50%{transform:scale(1.15)}100%{transform:scale(1)}}
+@keyframes sh{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes su{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes cf{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(400px) rotate(720deg);opacity:0}}
+@keyframes gl{0%,100%{box-shadow:0 0 8px rgba(88,204,2,.3)}50%{box-shadow:0 0 20px rgba(88,204,2,.6)}}
+@keyframes up{0%{transform:scale(1);opacity:.6}50%{transform:scale(1.08);opacity:1}100%{transform:scale(1);opacity:.6}}
+.ws input{width:100%;max-width:320px;padding:14px 16px;background:var(--bg);border:2px solid var(--bg3);border-radius:var(--r);font-family:'Nunito';font-size:1em;font-weight:600;color:var(--text);outline:none;text-align:center;margin-bottom:16px}
+.ws input:focus{border-color:var(--green)}
+.hst{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.hst .sc{flex:1;min-width:65px;background:var(--bg2);border:2px solid var(--bg3);border-radius:var(--rs);padding:10px 4px;text-align:center}
+.sc .sv{font-family:'Fredoka';font-size:1.4em;font-weight:700;line-height:1}
+.sc .sl{font-size:.65em;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px}
+.nc{background:linear-gradient(135deg,var(--green-l),var(--blue-l));border:2px solid var(--green);border-radius:var(--r);padding:16px;margin-bottom:14px;cursor:pointer;transition:all .2s;animation:gl 2s ease-in-out infinite}
+.nc:hover{transform:translateY(-2px)}
+.nc .nl{font-size:.7em;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--green-d);margin-bottom:2px}
+.nc .nt{font-family:'Fredoka';font-weight:600;font-size:1.05em;margin-bottom:2px}
+.nc .nd{font-size:.8em;color:var(--text2);font-weight:600}
+.wk{background:var(--bg2);border:2px solid var(--bg3);border-radius:var(--r);padding:14px;margin-bottom:14px}
+.wk-title{font-family:'Fredoka';font-weight:600;font-size:.9em;margin-bottom:10px;color:var(--text)}
+.wk-bars{display:flex;flex-direction:column;gap:6px}
+.wk-row{display:flex;align-items:center;gap:8px}
+.wk-label{font-size:.75em;font-weight:700;min-width:28px;text-align:center}
+.wk-bar{flex:1;height:10px;background:var(--bg3);border-radius:5px;overflow:hidden}
+.wk-fill{height:100%;border-radius:5px;transition:width .8s cubic-bezier(.2,.8,.3,1.2)}
+.wk-pct{font-size:.7em;font-weight:800;min-width:32px;text-align:right;font-family:'Fredoka'}
+.as{margin-bottom:16px}
+.ah{display:flex;align-items:center;gap:10px;padding:8px 14px;border-radius:var(--rs);margin-bottom:8px;font-family:'Fredoka';font-weight:600;font-size:.9em;color:#fff}
+.ah .ap{margin-left:auto;font-family:'Nunito';font-size:.75em;font-weight:800;opacity:.85}
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.sk{background:var(--bg2);border:2.5px solid var(--bg3);border-radius:var(--rs);padding:12px 8px;text-align:center;cursor:pointer;transition:all .15s;position:relative}
+.sk:hover:not(.lk){transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.sk .si{font-size:1.4em;display:block;margin-bottom:3px}
+.sk .sn{font-weight:700;font-size:.72em;line-height:1.2}
+.sk .ss{margin-top:3px;font-size:.68em;letter-spacing:1px}
+.sk.ma{border-color:var(--amber);background:var(--amber-l)}
+.sk.lk{opacity:.4;cursor:default;border-style:dashed}
+.sk.lk .si{filter:grayscale(1)}
+.sk.nu{border-color:var(--green);animation:up 1.5s ease-in-out infinite}
+.sk.wk-sk{border-color:var(--red);background:var(--red-l);animation:up 2s ease-in-out infinite}
+.sk.adv{border-color:var(--purple);background:linear-gradient(135deg,var(--purple-l),#f0e6ff);border-width:3px}
+.sk .sb{position:absolute;top:-6px;right:-6px;background:var(--green);color:#fff;font-size:.58em;font-weight:800;padding:2px 6px;border-radius:10px;animation:pop .3s}
+.sk .sr{font-size:.6em;color:var(--text3);font-weight:600;margin-top:2px}
+.sq{font-family:'Fredoka';font-size:1em;font-weight:500;color:var(--text2);margin-bottom:4px}
+.ss2{background:var(--bg);border:2px solid var(--bg3);border-radius:var(--r);padding:16px;margin-bottom:16px;font-size:.95em;line-height:1.6;font-weight:600}
+.sr2{background:var(--bg);border-left:4px solid var(--blue);border-radius:0 var(--rs) var(--rs) 0;padding:12px 16px;margin-bottom:16px;font-size:.9em;line-height:1.55;font-style:italic}
+.ops{display:flex;flex-direction:column;gap:8px}
+.op{padding:14px 16px;border:2.5px solid var(--bg3);border-radius:var(--rs);cursor:pointer;transition:all .12s;font-weight:700;font-size:.9em;display:flex;align-items:center;gap:10px;background:var(--bg2);user-select:none}
+.op:hover:not(.dis){border-color:#bbb;transform:translateY(-1px)}
+.op .om{width:28px;height:28px;border-radius:50%;border:2.5px solid var(--bg3);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.8em;font-weight:800;transition:all .15s}
+.op.cor{border-color:var(--green);background:var(--green-l);animation:pop .3s}
+.op.cor .om{border-color:var(--green);background:var(--green);color:#fff}
+.op.wrg{border-color:var(--red);background:var(--red-l);animation:sh .3s}
+.op.wrg .om{border-color:var(--red);background:var(--red);color:#fff}
+.op.dis{pointer-events:none;opacity:.6}
+.op.rc{border-color:var(--green);background:var(--green-l)}
+.op.rc .om{border-color:var(--green);background:var(--green);color:#fff}
+.os{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.oi{padding:14px 16px;background:var(--bg2);border:2.5px solid var(--bg3);border-radius:var(--rs);font-weight:700;font-size:.86em;display:flex;align-items:center;gap:10px;user-select:none;transition:all .15s}
+.oi .on{width:28px;height:28px;border-radius:50%;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:.8em;font-weight:800;flex-shrink:0}
+.oi .oa{display:flex;flex-direction:column;gap:2px;margin-left:auto;flex-shrink:0}
+.oi .oa button{background:none;border:1.5px solid var(--bg3);border-radius:6px;width:26px;height:22px;cursor:pointer;font-size:.7em;display:flex;align-items:center;justify-content:center}
+.oi .oa button:hover{border-color:var(--blue);color:var(--blue)}
+.fb{position:fixed;bottom:0;left:0;right:0;padding:16px;z-index:200;animation:su .3s}
+.fb.fc{background:var(--green-l);border-top:2px solid var(--green)}
+.fb.fw{background:var(--red-l);border-top:2px solid var(--red)}
+.fi{max-width:600px;margin:0 auto}
+.fb .ft{font-family:'Fredoka';font-weight:600;font-size:1.1em;margin-bottom:4px}
+.fb.fc .ft{color:var(--green-d)}
+.fb.fw .ft{color:var(--red-d)}
+.fb .fx{font-size:.88em;line-height:1.5;font-weight:600;color:var(--text);margin-bottom:12px}
+.res{text-align:center;animation:bi .6s}
+.res h2{font-family:'Fredoka';font-size:1.8em;margin-bottom:6px}
+.rm{font-size:4em;margin-bottom:8px;display:block}
+.rg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
+.rs{background:var(--bg2);border:2px solid var(--bg3);border-radius:var(--rs);padding:14px 8px}
+.rs .rv{font-family:'Fredoka';font-size:1.5em;font-weight:700}
+.rs .rl{font-size:.72em;font-weight:700;color:var(--text2);text-transform:uppercase}
+.cp{position:fixed;top:-20px;width:10px;height:10px;border-radius:2px;z-index:300;animation:cf 2s ease-in forwards}
+.qg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.qc{padding:14px;border:2.5px solid var(--bg3);border-radius:var(--rs);text-align:center;cursor:pointer;transition:all .15s;background:var(--bg2);min-height:65px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.qc:hover:not(.dis){border-color:#bbb;transform:scale(1.02)}
+.qc .qt{font-family:'Fredoka';font-weight:600;font-size:.8em}
+.qc .qd{font-size:.68em;color:var(--text2);font-weight:600}
+.qc.cor{border-color:var(--green);background:var(--green-l)}
+.qc.wrg{border-color:var(--red);background:var(--red-l)}
+.qc.dis{pointer-events:none;opacity:.6}
+.ut{position:fixed;top:80px;left:50%;transform:translateX(-50%);background:var(--bg2);border:2px solid var(--green);border-radius:var(--r);padding:14px 24px;z-index:300;animation:bi .5s;box-shadow:0 8px 30px rgba(0,0,0,.15);text-align:center;max-width:320px}
+.snd{position:fixed;bottom:16px;right:16px;z-index:150;background:var(--bg2);border:2px solid var(--bg3);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1em;box-shadow:0 2px 0 var(--bg3)}
+/* WIKI */
+.wiki-toggle{display:flex;flex-direction:column;align-items:center;gap:2px;padding:14px 16px;border:2.5px solid var(--blue);border-radius:var(--rs);background:linear-gradient(135deg,var(--blue-l),#e8f4fd);cursor:pointer;font-family:'Fredoka';font-weight:700;font-size:1.1em;color:var(--blue-d);transition:all .15s;margin-bottom:14px;width:100%;text-align:center}
+.wiki-toggle:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(28,176,246,.2)}
+.wiki-toggle .wiki-sub{font-family:'Nunito';font-size:.65em;font-weight:600;color:var(--text2);text-transform:none;letter-spacing:0}
+.wiki-box{display:none;margin-bottom:16px;animation:su .3s}
+.wiki-box.open{display:block}
+.wiki-synth{padding:14px;border-radius:var(--rs);margin-bottom:10px;font-size:.88em;line-height:1.6;font-weight:600}
+.wiki-aut{font-size:.78em;font-weight:700;color:var(--text2);margin-bottom:8px;padding:0 4px}
+.wiki-teo{border-left:3px solid var(--blue);padding:10px 14px;margin-bottom:10px;font-style:italic;font-size:.82em;line-height:1.55;color:var(--text2);background:var(--bg);border-radius:0 var(--rs) var(--rs) 0}
+.wiki-lib{background:var(--bg2);border:1.5px solid var(--bg3);border-radius:8px;padding:10px 12px;margin-bottom:6px}
+.wiki-lib strong{font-size:.85em}
+.wiki-lib .wl-m{color:var(--text3);font-size:.78em}
+.wiki-lib .wl-n{color:var(--text2);font-size:.78em;font-style:italic}
+.wiki-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.wiki-tag{padding:3px 10px;border-radius:20px;font-size:.68em;font-weight:700}
+@media(max-width:480px){.ws h1{font-size:2em}.c{padding:10px;padding-bottom:100px}.sg{grid-template-columns:repeat(3,1fr);gap:6px}.sk{padding:10px 6px}.sk .si{font-size:1.2em}.sk .sn{font-size:.68em}.hst{gap:6px}.sc{padding:8px 2px}.sc .sv{font-size:1.2em}}
+</style>
+</head>
+<body>
+<div class="topbar" id="topbar" style="display:none">
+  <button class="tb-b" onclick="goBack()">←</button>
+  <span class="tb-t" id="tbt"></span>
+  <span class="tb-x" id="tbx"></span>
+  <span class="tb-h" id="tbh"></span>
+</div>
+<div class="c" id="app"></div>
+<div class="snd" onclick="togSnd()" id="sndB">🔊</div>
+<div id="fbB" style="display:none"></div>
+<div id="toast"></div>
+<script>
+/* ═══ AUDIO ═══ */
+let aC=null,sOn=true;
+function iA(){if(!aC)aC=new(window.AudioContext||window.webkitAudioContext)()}
+function pT(f,d,t='sine',v=.06){if(!sOn||!aC)return;try{const o=aC.createOscillator(),g=aC.createGain();o.type=t;o.frequency.setValueAtTime(f,aC.currentTime);g.gain.setValueAtTime(v,aC.currentTime);g.gain.exponentialRampToValueAtTime(.001,aC.currentTime+d);o.connect(g);g.connect(aC.destination);o.start();o.stop(aC.currentTime+d)}catch(e){}}
+function sT(){pT(600,.05,'sine',.04);setTimeout(()=>pT(900,.04,'sine',.03),40)}
+function sC(){pT(523,.08,'sine',.06);setTimeout(()=>pT(659,.08,'sine',.06),80);setTimeout(()=>pT(784,.14,'sine',.07),160)}
+function sW(){pT(300,.2,'sawtooth',.03);setTimeout(()=>pT(220,.25,'sawtooth',.03),100)}
+function sL(){[523,659,784,1047].forEach((f,i)=>setTimeout(()=>pT(f,.12,'sine',.05),i*100))}
+function sF(){[784,988,1175,1319,1568].forEach((f,i)=>setTimeout(()=>pT(f,.1,'sine',.04),i*80))}
+function sU(){[392,523,659,784,1047].forEach((f,i)=>setTimeout(()=>pT(f,.15,'sine',.06),i*120))}
+function togSnd(){iA();sOn=!sOn;document.getElementById('sndB').textContent=sOn?'🔊':'🔇'}
+
+/* ═══ UTILS ═══ */
+function pick(a){return a[Math.floor(Math.random()*a.length)]}
+function shuf(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+function fill(tpl,slots){let s=tpl;for(const[k,v]of Object.entries(slots))s=s.replace(new RegExp('\\{'+k+'\\}','g'),typeof v==='object'?pick(v):v);return s}
+
+/* ═══ DATA: AREAS ═══ */
+const AREAS=[
+  {id:1,name:'Comunicazione & Relazioni',icon:'💬',c:'var(--a1)',cd:'var(--a1d)',cl:'var(--a1l)',w:.40},
+  {id:2,name:'Emozioni & Leadership',icon:'💜',c:'var(--a2)',cd:'var(--a2d)',cl:'var(--a2l)',w:.25},
+  {id:3,name:'Problem Solving',icon:'🧩',c:'var(--a3)',cd:'var(--a3d)',cl:'var(--a3l)',w:.25},
+  {id:4,name:'Meta-skill',icon:'⚡',c:'var(--a4)',cd:'var(--a4d)',cl:'var(--a4l)',w:.10}
+];
+
+/* ═══ TEMPLATE SLOTS ═══ */
+const ACTORS=['Il tutor','La responsabile','Un collega','Il responsabile del progetto','La coordinatrice','Il team leader'];
+const CONTEXTS=['in riunione','via email','durante la pausa','davanti al team','in privato','al telefono','in chat di lavoro'];
+const TASKS_URG=['rispondere a un reclamo del cliente','consegnare il report entro oggi','risolvere un guasto tecnico bloccante','gestire un\'emergenza logistica'];
+const TASKS_IMP=['pianificare la formazione trimestrale','aggiornare il CV','leggere un libro di settore','preparare un piano B per il progetto','sviluppare una nuova competenza'];
+const TASKS_DEL=['rispondere a un\'email di aggiornamento interno','compilare un modulo che un collega può fare','partecipare a una riunione che non ti riguarda'];
+const TASKS_ELIM=['controllare i social durante il lavoro','rispondere a spam promozionale','riordinare le icone del desktop','guardare video non correlati al lavoro'];
+
+/* ═══ WIKI DATA ═══ */
+var WIKI={
+stili:{s:"L'assertivit\u00e0 non \u00e8 il punto medio tra passivo e aggressivo: \u00e8 una terza dimensione che include rispetto di s\u00e9, rispetto dell'altro e capacit\u00e0 di proporre alternative.",a:"Salter (1949), Wolpe (1958), Alberti & Emmons (1970)",t:"Andrew Salter introdusse il concetto di personalit\u00e0 eccitatoria nel 1949. Joseph Wolpe lo formalizz\u00f2 come assertive behavior nel 1958. Alberti ed Emmons nel 1970 pubblicarono il primo manuale pratico, definendo l'assertivit\u00e0 come espressione diretta dei propri diritti senza violare quelli altrui.",l:[{t:"Your Perfect Right",a:"Alberti & Emmons",y:"1970",n:"Il testo fondativo dell'assertivit\u00e0 moderna"},{t:"The Practice of Behavior Therapy",a:"Joseph Wolpe",y:"1969",n:"Basi cliniche del training assertivo"},{t:"Conditioned Reflex Therapy",a:"Andrew Salter",y:"1949",n:"Prima formulazione del concetto"}],k:["assertivit\u00e0","comunicazione","diritti personali","Wolpe","Salter"]},
+cnv:{s:"La CNV \u00e8 un processo in 4 passi (Osservazione, Sentimento, Bisogno, Richiesta) che distingue il linguaggio che apre la comunicazione (finestre) da quello che la chiude (muri).",a:"Marshall Rosenberg (2003), Carl Rogers, Alfred Korzybski",t:"Rosenberg svilupp\u00f2 la CNV partendo dalla domanda: perch\u00e9 alcune persone restano empatiche in situazioni difficili? Scopr\u00ec che strutture linguistiche specifiche attivano difesa o collaborazione. La CNV integra l'empatia rogersiana con la semantica generale di Korzybski.",l:[{t:"Le parole sono finestre (oppure muri)",a:"Marshall Rosenberg",y:"2003",n:"Testo fondamentale della CNV"},{t:"On Becoming a Person",a:"Carl Rogers",y:"1961",n:"Radici dell'empatia nella CNV"},{t:"Science and Sanity",a:"Alfred Korzybski",y:"1933",n:"Semantica generale: mappa \u2260 territorio"}],k:["CNV","nonviolenza","empatia","Rosenberg","bisogni"]},
+desc:{s:"Il metodo DESC (Descrivi-Esprimi-Specifica-Conseguenze) \u00e8 una procedura in 4 passi per gestire conflitti preservando la relazione.",a:"Sharon & Gordon Bower (1976)",t:"I Bower svilupparono il DESC dal training assertivo. D neutralizza la difesa (fatto, non giudizio), E crea connessione emotiva, S orienta alla soluzione, C motiva mostrando il vantaggio reciproco.",l:[{t:"Asserting Yourself",a:"Sharon & Gordon Bower",y:"1976",n:"Origine del metodo DESC"},{t:"People Skills",a:"Robert Bolton",y:"1979",n:"Integrazione DESC con ascolto attivo"}],k:["DESC","conflitti","assertivit\u00e0","feedback"]},
+sbi:{s:"Il modello SBI (Situazione-Comportamento-Impatto) separa il feedback dal giudizio: descrive quando/dove, cosa hai osservato, e quale effetto ha avuto.",a:"Center for Creative Leadership, Weitzel (2000)",t:"Il CCL svilupp\u00f2 SBI come alternativa ai feedback valutativi. Il Behavior deve essere filmabile, non un'interpretazione. Questo sposta il feedback dal piano dell'identit\u00e0 al piano del comportamento.",l:[{t:"Feedback That Works",a:"Center for Creative Leadership",y:"2000",n:"Manuale SBI originale"},{t:"Thanks for the Feedback",a:"Stone & Heen",y:"2014",n:"Ricevere feedback efficacemente"}],k:["SBI","feedback","comportamento osservabile","CCL"]},
+emotions:{s:"Distinguere pensieri, emozioni, bisogni e reazioni \u00e8 il primo passo dell'intelligenza emotiva. Senza questa distinzione, si reagisce automaticamente.",a:"Ekman (1972), Plutchik (1980), Damasio (1994), Feldman Barrett (2017)",t:"Ekman identific\u00f2 6 emozioni universali. Damasio dimostr\u00f2 che le emozioni sono indispensabili per le decisioni razionali. Feldman Barrett propose che le emozioni sono costruzioni del cervello, non reazioni automatiche.",l:[{t:"L'errore di Cartesio",a:"Antonio Damasio",y:"1994",n:"Emozioni e decisioni razionali"},{t:"How Emotions Are Made",a:"Lisa Feldman Barrett",y:"2017",n:"Teoria costruzionista delle emozioni"},{t:"Emotions Revealed",a:"Paul Ekman",y:"2003",n:"Riconoscere le emozioni"}],k:["emozioni","Damasio","Ekman","autoconsapevolezza","marcatore somatico"]},
+coping:{s:"L'autoregolazione non \u00e8 sopprimere le emozioni ma gestirle: riconoscere, accettare, scegliere una risposta funzionale invece di una reazione automatica.",a:"Lazarus & Folkman (1984), Linehan DBT (1993), Kabat-Zinn MBSR (1990)",t:"Lazarus e Folkman distinsero coping centrato sul problema e coping centrato sull'emozione. La DBT di Linehan insegna tolleranza e regolazione emotiva. Il MBSR usa la mindfulness per creare spazio tra stimolo e risposta.",l:[{t:"Stress, Appraisal, and Coping",a:"Lazarus & Folkman",y:"1984",n:"Modello transazionale dello stress"},{t:"Cognitive-Behavioral Treatment of BPD",a:"Marsha Linehan",y:"1993",n:"Fondamenti della DBT"},{t:"Full Catastrophe Living",a:"Jon Kabat-Zinn",y:"1990",n:"MBSR e mindfulness applicata"}],k:["coping","stress","mindfulness","DBT","autoregolazione"]},
+empatia:{s:"L'empatia attiva non \u00e8 sentire quello che sente l'altro, ma comunicargli che hai capito cosa sente, senza giudicare, consigliare o spostare il focus su di te.",a:"Carl Rogers (1961), Thomas Gordon (1970), Daniel Goleman (1995)",t:"Rogers defin\u00ec l'empatia come comprendere il mondo interno dell'altro dal suo punto di vista. Gordon identific\u00f2 12 blocchi alla comunicazione che impediscono l'ascolto empatico. Goleman la incluse come componente centrale dell'EQ.",l:[{t:"On Becoming a Person",a:"Carl Rogers",y:"1961",n:"Empatia come condizione di cambiamento"},{t:"Parent Effectiveness Training",a:"Thomas Gordon",y:"1970",n:"I 12 blocchi alla comunicazione"},{t:"Intelligenza Emotiva",a:"Daniel Goleman",y:"1995",n:"Empatia come competenza sociale"}],k:["empatia","Rogers","Gordon","ascolto","12 blocchi"]},
+fatto_opinione:{s:"Distinguere fatti verificabili, opinioni soggettive e interpretazioni inferenziali \u00e8 la base del pensiero critico.",a:"Korzybski (1933), Hayakawa (1939), Ellis (1962), Paul & Elder (2001)",t:"Korzybski insegn\u00f2 che la mappa non \u00e8 il territorio. Hayakawa svilupp\u00f2 la scala di astrazione. Ellis mostr\u00f2 con il modello ABC che non sono gli eventi a causare le emozioni, ma le interpretazioni.",l:[{t:"Language in Thought and Action",a:"S.I. Hayakawa",y:"1939",n:"Scala di astrazione"},{t:"Reason and Emotion in Psychotherapy",a:"Albert Ellis",y:"1962",n:"Modello ABC"},{t:"Critical Thinking",a:"Paul & Elder",y:"2001",n:"Standard del pensiero critico"}],k:["pensiero critico","fatto","opinione","Korzybski","Hayakawa","ABC"]},
+pdca:{s:"Il ciclo PDCA (Plan-Do-Check-Act) \u00e8 un metodo iterativo per il miglioramento continuo: ogni miglioramento \u00e8 un esperimento.",a:"Shewhart (1939), Deming (1982), Ohno (TPS)",t:"Shewhart introdusse il ciclo nel controllo qualit\u00e0. Deming lo diffuse in Giappone dove divenne la base del Toyota Production System. Plan = ipotesi, Do = test, Check = dati, Act = decisione. Il ciclo non finisce mai.",l:[{t:"Out of the Crisis",a:"W. Edwards Deming",y:"1982",n:"PDCA e qualit\u00e0 totale"},{t:"Toyota Production System",a:"Taiichi Ohno",y:"1988",n:"PDCA applicato alla produzione"}],k:["PDCA","Deming","miglioramento continuo","Shewhart","Toyota"]},
+ascolto_attivo:{s:"L'ascolto attivo \u00e8 un processo in cui comunichi all'altro che stai comprendendo il suo messaggio, evitando i 12 blocchi che chiudono la comunicazione.",a:"Carl Rogers (1951), Thomas Gordon (1970), Robert Bolton (1979)",t:"Rogers identific\u00f2 3 condizioni: empatia, accettazione incondizionata, congruenza. Gordon catalog\u00f2 12 risposte tipiche che bloccano la comunicazione (ordinare, minacciare, moralizzare, consigliare, giudicare, ecc.). Bolton sintetizz\u00f2 le tecniche in: attenzione, rispecchiamento, parafrasi, domande aperte.",l:[{t:"Client-Centered Therapy",a:"Carl Rogers",y:"1951",n:"Ascolto empatico come strumento"},{t:"Parent Effectiveness Training",a:"Thomas Gordon",y:"1970",n:"I 12 blocchi"},{t:"People Skills",a:"Robert Bolton",y:"1979",n:"Manuale pratico di ascolto attivo"}],k:["ascolto attivo","Rogers","Gordon","parafrasi","rispecchiamento"]},
+star:{s:"STAR (Situazione-Task-Azione-Risultato) struttura la comunicazione delle proprie esperienze in modo concreto e misurabile.",a:"McClelland (1973), Spencer & Spencer (1993)",t:"McClelland dimostr\u00f2 che le competenze predittive del successo non sono i titoli ma i comportamenti osservabili. Spencer e Spencer formalizzarono il Behavioral Event Interview, da cui nasce STAR.",l:[{t:"Competence at Work",a:"Spencer & Spencer",y:"1993",n:"Modello delle competenze e BEI"},{t:"Testing for Competence Rather Than Intelligence",a:"David McClelland",y:"1973",n:"Articolo fondativo"}],k:["STAR","colloquio","competenze","McClelland","BEI"]},
+goleman_eq:{s:"L'EQ secondo Goleman ha 5 componenti: autoconsapevolezza, autoregolazione, motivazione, empatia, abilit\u00e0 sociali. A differenza del QI, si pu\u00f2 sviluppare.",a:"Salovey & Mayer (1990), Goleman (1995/1998), Bradberry (2009)",t:"Salovey e Mayer definirono l'EQ come capacit\u00e0 di percepire, usare, comprendere e gestire le emozioni. Goleman la divulg\u00f2 distinguendo 5 domini interconnessi.",l:[{t:"Intelligenza Emotiva",a:"Daniel Goleman",y:"1995",n:"Il bestseller che ha diffuso il concetto"},{t:"Emotional Intelligence 2.0",a:"Bradberry & Greaves",y:"2009",n:"Test e strategie pratiche"}],k:["EQ","intelligenza emotiva","Goleman","autoconsapevolezza"]},
+fiveWhy:{s:"I 5 Perch\u00e9 scavano sotto la superficie chiedendo ripetutamente perch\u00e9 fino alla causa radice. Fermarsi ai sintomi produce soluzioni temporanee.",a:"Sakichi Toyoda / Taiichi Ohno (TPS), Kaoru Ishikawa",t:"Toyoda svilupp\u00f2 la tecnica nella Toyota degli anni 50. Ishikawa complet\u00f2 l'approccio con il diagramma causa-effetto (6M: Manpower, Method, Machine, Material, Measurement, Mother Nature).",l:[{t:"Toyota Production System",a:"Taiichi Ohno",y:"1988",n:"I 5 Perch\u00e9 nel TPS"},{t:"Guide to Quality Control",a:"Kaoru Ishikawa",y:"1976",n:"Diagramma causa-effetto"}],k:["5 Perch\u00e9","causa radice","Ishikawa","Toyota","6M"]},
+smart:{s:"Un obiettivo SMART \u00e8 Specifico, Misurabile, Achievable, Rilevante e Time-bound. La differenza tra un desiderio e un obiettivo \u00e8 la struttura.",a:"Doran (1981), Locke & Latham (1990), Drucker (1954)",t:"Drucker introdusse il MBO nel 1954. Doran cre\u00f2 l'acronimo SMART. Locke e Latham dimostrarono che obiettivi specifici e difficili producono performance superiori.",l:[{t:"A Theory of Goal Setting and Task Performance",a:"Locke & Latham",y:"1990",n:"La ricerca definitiva sugli obiettivi"},{t:"The Practice of Management",a:"Peter Drucker",y:"1954",n:"Origine del MBO"}],k:["SMART","obiettivi","Locke","Latham","MBO"]},
+growth_mindset:{s:"Il growth mindset \u00e8 la convinzione che abilit\u00e0 e intelligenza si sviluppano con impegno e strategie. Il fixed mindset crede siano tratti innati.",a:"Carol Dweck (2006), Angela Duckworth (2016), Martin Seligman (1991)",t:"Dweck dimostr\u00f2 che chi crede nella modificabilit\u00e0 affronta le sfide, persiste dopo i fallimenti e usa il feedback. Duckworth estese il concetto con il grit.",l:[{t:"Mindset",a:"Carol Dweck",y:"2006",n:"Il testo fondativo"},{t:"Grit",a:"Angela Duckworth",y:"2016",n:"Perseveranza e passione"},{t:"Learned Optimism",a:"Martin Seligman",y:"1991",n:"Ottimismo come competenza"}],k:["growth mindset","Dweck","Duckworth","grit","resilienza"]},
+eisenhower:{s:"La matrice classifica le attivit\u00e0 in 4 quadranti per urgenza e importanza. Il segreto: vivere nel Quadrante 2 (importante ma non urgente).",a:"Eisenhower (attribuito), Stephen Covey (1989)",t:"Covey sistematizz\u00f2 la matrice nei 7 Habits, dimostrando che le persone efficaci investono in prevenzione, pianificazione e sviluppo (Q2) invece di vivere in crisi permanente (Q1).",l:[{t:"The 7 Habits of Highly Effective People",a:"Stephen Covey",y:"1989",n:"Matrice Q1-Q4"},{t:"First Things First",a:"Covey, Merrill & Merrill",y:"1994",n:"Approfondimento sulla matrice"}],k:["Eisenhower","priorit\u00e0","Covey","Quadrante 2","urgente","importante"]},
+pomodoro:{s:"Il Pomodoro alterna blocchi di lavoro focalizzato (25 min) a pause (5 min). Il cervello lavora meglio in sprint brevi con recupero.",a:"Francesco Cirillo (2018), David Allen GTD (2001), Cal Newport (2016)",t:"Cirillo svilupp\u00f2 la tecnica negli anni 80. L'attenzione sostenuta ha un costo metabolico crescente; le pause permettono al default mode network di consolidare.",l:[{t:"The Pomodoro Technique",a:"Francesco Cirillo",y:"2018",n:"Il metodo originale"},{t:"Deep Work",a:"Cal Newport",y:"2016",n:"Concentrazione profonda"}],k:["Pomodoro","focus","produttivit\u00e0","Cirillo","Deep Work"]},
+scqa:{s:"SCQA (Situazione-Complicazione-Domanda-Risposta) struttura qualsiasi argomentazione partendo dal contesto condiviso fino alla proposta.",a:"Barbara Minto (1987), McKinsey & Company",t:"Minto svilupp\u00f2 il metodo in McKinsey per strutturare memo e presentazioni. La Situazione stabilisce il terreno comune, la Complicazione introduce il problema, la Domanda \u00e8 quella che il pubblico si pone, la Risposta \u00e8 la tua proposta. L'ordine \u00e8 cruciale: crea tensione narrativa.",l:[{t:"The Minto Pyramid Principle",a:"Barbara Minto",y:"1987",n:"Il testo originale"},{t:"The Pyramid Principle",a:"Barbara Minto",y:"2009",n:"Edizione aggiornata"}],k:["SCQA","argomentazione","Minto","McKinsey","presentazioni"]},
+pyramid:{s:"Il Pyramid Principle impone di comunicare top-down: prima la conclusione, poi le motivazioni, poi i dettagli. L'opposto di come pensiamo naturalmente.",a:"Barbara Minto (1987), McKinsey & Company",t:"Minto osserv\u00f2 che la comunicazione bottom-up (premessa \u2192 ragionamento \u2192 conclusione) perde l'attenzione del destinatario. Il top-down (conclusione \u2192 motivazione \u2192 dettagli) rispetta il tempo dell'altro e rende il messaggio immediatamente utile.",l:[{t:"The Pyramid Principle",a:"Barbara Minto",y:"2009",n:"Comunicazione top-down strutturata"},{t:"Pyramid Principle",a:"Barbara Minto",y:"1987",n:"Prima edizione"}],k:["Pyramid","top-down","Minto","conclusione","struttura"]},
+leadership_sit:{s:"Non esiste uno stile di leadership migliore in assoluto. Lo stile efficace dipende dalla situazione, dalla maturit\u00e0 del collaboratore e dall'obiettivo.",a:"Hersey & Blanchard (1969), Daniel Goleman (2000), Vroom & Yetton (1973)",t:"Hersey e Blanchard definirono 4 stili (Direttivo, Coaching, Supportivo, Delegante) in funzione della competenza e motivazione del collaboratore. Goleman identific\u00f2 6 stili (Visionario, Coach, Affiliativo, Democratico, Battistrada, Autoritario) e dimostr\u00f2 che i leader pi\u00f9 efficaci ne usano almeno 4.",l:[{t:"Management of Organizational Behavior",a:"Hersey & Blanchard",y:"1969",n:"Leadership situazionale"},{t:"Leadership That Gets Results",a:"Daniel Goleman",y:"2000",n:"I 6 stili su HBR"},{t:"Primal Leadership",a:"Goleman, Boyatzis, McKee",y:"2002",n:"Leadership e intelligenza emotiva"}],k:["leadership","situazionale","Hersey","Blanchard","Goleman","6 stili"]},
+ooda:{s:"OODA (Observe-Orient-Decide-Act) \u00e8 un ciclo decisionale per contesti incerti e veloci. Chi completa il ciclo pi\u00f9 rapidamente ha il vantaggio.",a:"John Boyd (1976), Chet Richards (2004)",t:"Boyd, pilota militare, teorizz\u00f2 che la superiorit\u00e0 non viene dalla forza ma dalla velocit\u00e0 decisionale. Orient \u00e8 la fase pi\u00f9 critica: \u00e8 dove i bias, l'esperienza e la cultura filtrano l'osservazione. Un Orient sbagliato produce decisioni veloci ma errate.",l:[{t:"Certain to Win",a:"Chet Richards",y:"2004",n:"OODA applicato al business"},{t:"Boyd: The Fighter Pilot Who Changed the Art of War",a:"Robert Coram",y:"2002",n:"Biografia e teoria di Boyd"}],k:["OODA","Boyd","decisioni","incertezza","agilit\u00e0"]}
+};
+var AREA_WIKI_COLORS={1:{bg:"var(--a1l)",tc:"var(--a1d)"},2:{bg:"var(--a2l)",tc:"var(--a2d)"},3:{bg:"var(--a3l)",tc:"var(--a3d)"},4:{bg:"var(--a4l)",tc:"var(--a4d)"}};
+
+
+
+/* ═══ FRAMEWORKS WITH TEMPLATES ═══ */
+const FW=[
+/* ── AREA 1 ── */
+{id:'stili',ps:12,area:1,name:'Stili comunicativi',icon:'🗣️',tier:0,req:null,
+ labels:{passivo:'🟡 Passivo',aggressivo:'🔴 Aggressivo',assertivo:'🟢 Assertivo'},
+ gen(seed){
+  const scenarios=[
+    {s:'{actor} ti chiede di restare mezz\'ora in più. Hai un impegno.',
+     r:[{t:'{resp_passivo}',c:'passivo',fb:'Eviti il confronto e accumuli frustrazione. Passivo.'},{t:'{resp_aggressivo}',c:'aggressivo',fb:'Attacco diretto con etichette. Aggressivo.'},{t:'{resp_assertivo}',c:'assertivo',fb:'Riconosci il bisogno, esprimi il vincolo, proponi alternativa. Assertivo.'}],
+     rp:['Accetti in silenzio e ti lamenti con i colleghi dopo.','Dici "va bene" con tono rassegnato e annulli il tuo impegno.','Annuisci senza dire niente e mandi un messaggio passivo-aggressivo.'],
+     ra:['"Sono stufo di questi cambi! Non sono il tuo schiavo!"','"Ogni volta la stessa storia, non si può lavorare così!"','"Sempre io devo fare straordinari, è inaccettabile!"'],
+     rs:['"Capisco l\'urgenza. Oggi ho un impegno alle 18. Posso arrivare prima domani?"','"Mi farebbe piacere aiutare, ma oggi non posso restare. Possiamo trovare un\'alternativa?"','"Ho un vincolo oggi. Propongo di completare domani mattina come prima cosa."']},
+    {s:'{actor} si prende il merito della tua idea {context}.',
+     r:[{t:'{resp_passivo}',c:'passivo',fb:'Non dici niente: evitamento classico. Passivo.'},{t:'{resp_aggressivo}',c:'aggressivo',fb:'Attacco alla persona con etichette. Aggressivo.'},{t:'{resp_assertivo}',c:'assertivo',fb:'Fatto specifico + proposta collaborativa. Assertivo.'}],
+     rp:['Non dici niente ma eviti il collega per il resto della settimana.','Sospiri e te ne vai, lamentandoti in corridoio.','Fai finta di niente ma ci rimugini per giorni.'],
+     ra:['"Sei il solito furbo! Non rubare mai più le mie idee!"','"Complimenti per il plagio, davvero professionale."','"Ma chi credi di prendere in giro?"'],
+     rs:['"Volevo precisare che questa proposta l\'avevo presentata io. Possiamo svilupparla insieme?"','"L\'idea parte dal mio lavoro della settimana scorsa. Mi farebbe piacere collaborare."','"Questa è la proposta che avevo condiviso con te. Lavoriamoci insieme?"']},
+    {s:'{actor} ti assegna un compito che non sai fare.',
+     r:[{t:'{resp_passivo}',c:'passivo',fb:'Non chiedi aiuto apertamente. Passivo.'},{t:'{resp_aggressivo}',c:'aggressivo',fb:'Rifiuto ostile senza apertura. Aggressivo.'},{t:'{resp_assertivo}',c:'assertivo',fb:'Ammetti il limite e chiedi supporto concreto. Assertivo.'}],
+     rp:['Annuisci e chiedi aiuto a un collega di nascosto.','Dici "certo" ma poi non sai da dove cominciare e ti blocchi.','Accetti e speri di capirlo guardando su internet.'],
+     ra:['"Non è nel mio contratto! Non mi pagano abbastanza per questo."','"Ma perché tocca sempre a me le cose impossibili?"','"Se vuoi che lo faccia, allora insegnami, no?"'],
+     rs:['"Non ho esperienza con questo. Posso avere un\'ora di affiancamento?"','"Ci provo volentieri, ma avrei bisogno di una guida iniziale. Puoi indicarmi qualcuno?"','"È un compito nuovo per me. Posso avere un riferimento da seguire?"']},
+    {s:'{actor} ti interrompe sistematicamente {context}.',
+     r:[{t:'{resp_passivo}',c:'passivo',fb:'Cedi lo spazio comunicativo. Passivo.'},{t:'{resp_aggressivo}',c:'aggressivo',fb:'Attacco diretto. Aggressivo.'},{t:'{resp_assertivo}',c:'assertivo',fb:'Fatto specifico + richiesta chiara. Assertivo.'}],
+     rp:['Abbassi la voce e smetti di parlare.','Ti rassegni e aspetti che finisca.','Non dici niente ma sei irritato tutto il giorno.'],
+     ra:['"Possibile che non riesci a stare zitto per due minuti?"','"Sei maleducato! Non si interrompe!"','"Basta! Mi hai interrotto per l\'ultima volta!"'],
+     rs:['"Mi hai interrotto diverse volte. Vorrei finire il mio punto, poi ascolto volentieri il tuo."','"Posso completare? Dopo sono tutto orecchie."','"Scusa, stavo finendo un concetto importante. Poi ti lascio la parola."']},
+    {s:'{actor} ti critica duramente {context}.',
+     r:[{t:'{resp_passivo}',c:'passivo',fb:'Non esprimi il tuo disagio. Passivo.'},{t:'{resp_aggressivo}',c:'aggressivo',fb:'Controattacco senza dialogo. Aggressivo.'},{t:'{resp_assertivo}',c:'assertivo',fb:'Esprimi il disagio + chiedi costruttivamente. Assertivo.'}],
+     rp:['"Ha ragione, mi scuso" anche se la critica era sproporzionata.','Non rispondi e vai a lamentarti con altri.','Annuisci e ti chiudi in te stesso.'],
+     ra:['"Se non le sta bene, trovati un altro!"','"Non ha il diritto di parlarmi così!"','"Facile criticare, provi lei a fare il mio lavoro!"'],
+     rs:['"Apprezzo il feedback. Possiamo vederlo insieme per capire dove migliorare?"','"La critica mi ha colpito. Preferirei discuterne in privato per trovare una soluzione."','"Capisco il problema. Mi aiuta indicarmi concretamente cosa correggere?"']}
+  ];
+  const sc=scenarios[seed%scenarios.length];
+  const actor=ACTORS[seed%ACTORS.length];
+  const ctx=CONTEXTS[(seed*7)%CONTEXTS.length];
+  const scenario=fill(sc.s,{actor,context:ctx});
+  const variant=sc.r[seed%sc.r.length];
+  let response;
+  if(variant.c==='passivo')response=pick(sc.rp);
+  else if(variant.c==='aggressivo')response=pick(sc.ra);
+  else response=pick(sc.rs);
+  return{type:'classify',scenario,response,correct:variant.c,
+    feedback:{passivo:variant.c==='passivo'?variant.fb:'No — '+(['qui c\'è evitamento','non c\'è attacco','non stai comunicando il bisogno'][seed%3]),
+              aggressivo:variant.c==='aggressivo'?variant.fb:'No — '+(['qui c\'è attacco diretto','non stai evitando','mancano rispetto e proposta'][seed%3]),
+              assertivo:variant.c==='assertivo'?variant.fb:'No — '+(['qui c\'è negoziazione','stai comunicando chiaramente','è una richiesta costruttiva'][seed%3])}};
+}},
+
+{id:'cnv',ps:14,area:1,name:'Muri e Finestre',icon:'🪟',tier:1,req:'stili',
+ labels:{muro:'🧱 Muro',finestra:'🪟 Finestra'},
+ gen(seed){
+  const pairs=[
+    {s:'Un collega non ti ha avvisato di un cambio di orario.',
+     m:['"Non ti importa mai degli altri!"','"Sei il solito menefreghista!"','"Nessuno mi avvisa mai!"','"Mi sento ignorato da te."','"Come al solito, a nessuno importa."'],
+     f:['"Non mi hai comunicato il cambio. Mi sento frustrato."','"Non ho ricevuto l\'avviso. Ho bisogno di essere informato per organizzarmi."','"Quando non ricevo l\'aggiornamento, mi sento in difficoltà. Puoi avvisarmi?"'],
+     mfb:'Generalizzazione o giudizio = muro. Manca il fatto specifico.',
+     ffb:'Osservazione specifica + sentimento vero + richiesta. Finestra.'},
+    {s:'{actor} dice che il tuo lavoro non è all\'altezza.',
+     m:['"Mi sento incompetente."','"Mi sento un fallimento."','"Penso di non valere niente."','"Mi sento non valorizzato da te."','"Mi fai sempre sentire inadeguato!"'],
+     f:['"Mi sento scoraggiato perché ci ho messo impegno. Puoi mostrarmi dove migliorare?"','"La critica mi ha colpito. Ho bisogno di capire concretamente cosa correggere."','"Mi sento confuso — mi aiuti a capire i punti specifici da rivedere?"'],
+     mfb:'"Incompetente", "fallimento", "non valorizzato da te" non sono sentimenti: sono giudizi o accuse mascherate.',
+     ffb:'Sentimento vero + bisogno concreto + richiesta. Tutto finestra.'},
+    {s:'{actor} ha parlato sopra di te durante la presentazione.',
+     m:['"Mi sento non rispettato da te."','"Non mi ascolti mai!"','"Sei sempre così maleducato."','"Tanto a nessuno interessa quello che dico."'],
+     f:['"Quando hai iniziato a parlare mentre presentavo, ho perso il filo. Potresti aspettare che finisca?"','"Nell\'ultima slide mi hanno interrotto tre volte. Ho bisogno di completare il mio intervento."'],
+     mfb:'Se puoi aggiungere "DA TE" dopo il sentimento, è un\'accusa mascherata. O generalizzazione.',
+     ffb:'Osservazione filmabile + effetto concreto + richiesta negoziabile.'},
+    {s:'{actor} ti ha dato un compito urgente senza spiegare le priorità.',
+     m:['"Nessuno mi spiega mai niente!"','"Devo sempre arrangiarmi da solo."','"Ti sembra un modo di lavorare?"','"Mi sento abbandonato."'],
+     f:['"Ho ricevuto il compito X con scadenza oggi. Non ho chiaro se ha priorità su Y. Puoi indicarmi quale completare prima?"','"Ho bisogno di chiarire le priorità. Quale tra X e Y è più urgente?"'],
+     mfb:'Generalizzazioni o accuse indirette. Nessun fatto specifico, nessun bisogno chiaro.',
+     ffb:'Fatto specifico + bisogno di chiarezza + richiesta concreta.'},
+    {s:'{actor} ha cambiato le tue ferie senza avvisarti.',
+     m:['"Non ti importa niente dei miei piani!"','"Sempre la stessa storia con te."','"Mi tratti come se non contassi."'],
+     f:['"Ho visto che le ferie sono state spostate. Avevo preso un impegno. Puoi avvisarmi con anticipo la prossima volta?"','"Il cambio senza preavviso mi ha creato difficoltà. Ho bisogno di almeno 48 ore di anticipo."'],
+     mfb:'Giudizi sulla persona, generalizzazioni. Nessuna osservazione specifica.',
+     ffb:'Osservazione + impatto personale + richiesta con tempistica.'},
+    {s:'{actor} ha usato il tuo pc senza chiedertelo e ha cambiato le impostazioni.',
+     m:['"Non toccare mai più le mie cose!"','"Sei proprio senza rispetto."','"Mi sento violato."','"Con te non si può lasciare niente."'],
+     f:['"Ho trovato le impostazioni del pc cambiate. Mi crea difficoltà perché perdo tempo a ripristinarle. La prossima volta puoi chiedermelo?"','"Stamattina il mio desktop era diverso. Mi sento a disagio. Ho bisogno che le mie impostazioni restino come le lascio."'],
+     mfb:'Etichette e accuse. "Violato" non è un sentimento — è un giudizio mascherato.',
+     ffb:'Fatto filmabile + effetto pratico + richiesta concreta. Nessun giudizio.'},
+    {s:'{actor} ti chiede un favore per la terza volta questa settimana.',
+     m:['"Sei il solito approfittatore!"','"Non ho tempo per i tuoi problemi."','"Mi sento usato da te."','"Fai tutto tu, io non esisto solo per te."'],
+     f:['"Questa settimana mi hai chiesto aiuto tre volte. Mi sento sotto pressione. Avrei bisogno di gestire prima le mie priorità. Possiamo trovare un\'alternativa?"','"Noto che le richieste sono frequenti ultimamente. Mi sento in affanno. Possiamo organizzarci diversamente?"'],
+     mfb:'"Usato" = accusa. "Approfittatore" = etichetta. Nessun dato specifico.',
+     ffb:'Osservazione numerica + sentimento autentico + proposta alternativa.'},
+    {s:'Un collega si prende il merito di una tua idea in riunione.',
+     m:['"Sei un ladro di idee!"','"Non puoi farlo, è mia!"','"Mi sento tradito da te."','"Con te non condivido più niente."'],
+     f:['"In riunione è stata presentata l\'idea che avevo proposto ieri. Mi sento deluso. Ho bisogno che il contributo venga riconosciuto. Possiamo citare la fonte nelle prossime occasioni?"','"L\'idea del punto 3 è quella che ti avevo descritto lunedì. Mi piacerebbe che fosse chiaro, così il team sa come è nata."'],
+     mfb:'"Tradito" non è un sentimento. Etichette e ritorsione non aprono il dialogo.',
+     ffb:'Fatto verificabile + sentimento reale + richiesta di processo (non vendetta).'},
+    {s:'{actor} ti corregge davanti ai clienti.',
+     m:['"Mi umili sempre davanti a tutti!"','"Non mi rispetti come professionista."','"Mi fai sentire un incapace."'],
+     f:['"Oggi durante l\'incontro con il cliente hai corretto il mio calcolo ad alta voce. Mi sono sentito in imbarazzo. Preferirei ricevere le correzioni in privato, così posso concentrarmi meglio."','"Quando vengo corretto davanti al cliente, mi sento teso e faccio più errori. Potresti segnalarmelo con un messaggio o dopo?"'],
+     mfb:'"Umili", "non rispetti", "incapace" sono tutti giudizi — nessuno è un sentimento.',
+     ffb:'Fatto preciso + conseguenza emotiva + richiesta operativa. Nessun attacco alla persona.'},
+    {s:'Un collega arriva costantemente in ritardo alle riunioni che organizzi tu.',
+     m:['"Non ti importa del tempo degli altri."','"Sei sempre in ritardo, è una mancanza di rispetto."','"Tanto tu fai come ti pare."'],
+     f:['"Le ultime quattro riunioni sono iniziate con 10-15 minuti di ritardo. Mi sento in difficoltà perché devo riorganizzare la mia giornata. Puoi avvisarmi se prevedi di tardare?"','"Ho notato ritardi nelle ultime riunioni. Ho bisogno di rispettare i miei orari. Potremmo spostarle a un orario che funziona per entrambi?"'],
+     mfb:'Generalizzazione + attribuzione di intenzione. Non descrive il problema reale.',
+     ffb:'Dato quantificato + sentimento + richiesta concreta con alternativa.'},
+    {s:'Il tuo tutor ti affida sempre i compiti che nessuno vuole fare.',
+     m:['"Mi tratti come la discarica del team!"','"Non è giusto, perché sempre io?"','"Mi sento sfruttato."'],
+     f:['"Nelle ultime tre settimane mi sono stati assegnati i report, l\'inventario e le telefonate ai fornitori. Mi sento demotivato. Vorrei capire come vengono distribuiti i compiti e se posso alternare con altri incarichi."','"Ho notato che i compiti assegnati a me sono spesso quelli meno ambiti. Mi piacerebbe capire i criteri di assegnazione."'],
+     mfb:'"Discarica", "sfruttato" = muri. Non descrivono un fatto ma un giudizio globale.',
+     ffb:'Elenco di fatti + sentimento + domanda esplorativa, non accusa.'},
+    {s:'Un collega ti manda un messaggio aggressivo nella chat di lavoro.',
+     m:['"Chi ti credi di essere per scrivermi così?"','"Sei un maleducato, non ti rispondo."','"Mi sento attaccato da te."'],
+     f:['"Ho letto il messaggio di stamattina. Il tono mi ha colpito e mi sento a disagio. Possiamo parlarne a voce? Per scritto è facile fraintendersi."','"Quel messaggio mi ha lasciato perplesso. Ho bisogno di capire cosa è successo. Ci prendiamo cinque minuti per chiarire?"'],
+     mfb:'Contrattacco o chiusura. "Attaccato da te" = accusa mascherata.',
+     ffb:'Osservazione + effetto su di sé + proposta di cambiare canale comunicativo.'},
+    {s:'{actor} ti interrompe ogni volta che parli nelle riunioni.',
+     m:['"Con te è impossibile parlare!"','"Mi sento sottovalutato da questo team."','"Sei proprio arrogante."'],
+     f:['"Nelle ultime tre riunioni sono stato interrotto prima di finire il mio punto. Mi sento frustrato. Avrei bisogno di concludere i miei interventi. Possiamo darci dei turni di parola?"','"Mi accorgo che non riesco a completare i miei interventi. Questo mi scoraggia dal partecipare. Mi aiuterebbe avere un momento dedicato."'],
+     mfb:'Generalizzazione, etichetta, sentimento falso. Tutto muro.',
+     ffb:'Dato concreto + sentimento vero + proposta strutturale.'},
+    {s:'Il tuo responsabile non ti dà mai feedback sul tuo lavoro.',
+     m:['"Non ti interessa come lavoro."','"A nessuno importa di me qui dentro."','"Mi sento invisibile."'],
+     f:['"Sono passate sei settimane senza un feedback sul mio lavoro. Mi sento incerto sulla direzione. Potremmo fare un punto di 15 minuti al mese?"','"Avrei bisogno di sapere come sta andando. Senza riscontro faccio fatica a capire dove migliorare. Puoi indicarmi un momento per un confronto?"'],
+     mfb:'"Invisibile" non è un sentimento — è un\'interpretazione. Le generalizzazioni chiudono il dialogo.',
+     ffb:'Dato temporale + bisogno di orientamento + richiesta specifica e fattibile.'}
+  ];
+  const p=pairs[seed%pairs.length];
+  const actor=ACTORS[seed%ACTORS.length];
+  const scenario=fill(p.s,{actor});
+  const isMuro=seed%2===0;
+  return{type:'classify',scenario,response:isMuro?pick(p.m):pick(p.f),correct:isMuro?'muro':'finestra',
+    feedback:{muro:isMuro?p.mfb:'No — qui c\'è fatto specifico e sentimento autentico.',finestra:isMuro?'No — qui ci sono giudizi e generalizzazioni, non fatti.':p.ffb}};
+}},
+
+{id:'desc',ps:10,area:1,name:'Metodo DESC',icon:'📐',tier:2,req:'cnv',
+ gen(seed){
+  if(seed%3===0){
+    return{type:'order',instruction:'Riordina i passi del metodo DESC nella sequenza corretta:',
+      steps:['Descrivi il fatto in modo neutro, come una telecamera','Esprimi come ti senti in prima persona','Specifica cosa vorresti che cambiasse','Indica le conseguenze positive per entrambi'],
+      feedback:'DESC: Descrizione neutra → Emozione in prima persona → Specifica/richiesta → Conseguenza win-win.'};
+  }
+  const descs=[
+    {s:'{actor} arriva in ritardo per la terza volta.',
+     good:'"Le ultime tre riunioni sono iniziate in ritardo. Mi mette in difficoltà. Ti chiedo di avvisarmi se prevedi di tardare. Così il team non perde tempo."',
+     bad:['"Sei sempre in ritardo! La prossima volta iniziamo senza di te."','"Dovresti essere più responsabile."','Sospiri guardando l\'orologio ma non dici niente.'],
+     gfb:'DESC completo: D (tre riunioni), E (difficoltà), S (avvisarmi), C (team non perde tempo).',
+     bfb:['Generalizzazione + conseguenza punitiva.','Giudizio morale senza D, E o C.','Passivo-aggressivo: nessun passo DESC.']},
+    {s:'{actor} ti critica duramente {context}.',
+     good:'"Quando mi fai notare errori davanti al team, mi sento in imbarazzo. Preferirei i feedback in privato. Così posso correggermi con attenzione."',
+     bad:['"Non mi devi mai criticare davanti agli altri!"','"Ha ragione, mi scuso."','"Se vuoi umiliarmi, almeno fallo in privato."'],
+     gfb:'DESC: D (davanti al team), E (imbarazzo), S (in privato), C (correzione migliore).',
+     bfb:['Pretesa senza espressione del sentimento.','Passivo: non esprimi il disagio per la modalità.','Aggressivo: "umiliarmi" è interpretazione, non descrizione.']},
+    {s:'{actor} ti assegna straordinari per la terza settimana consecutiva.',
+     good:'"Nelle ultime tre settimane ho fatto straordinari ogni weekend. Ho bisogno di un weekend libero per recuperare. Possiamo organizzare una rotazione? Così il team è coperto e tutti recuperano."',
+     bad:['"Non se ne parla! Ho già dato abbastanza."','"Ma certo, nessun problema." (tono rassegnato)','Chiedi a un collega di andare al tuo posto senza dire niente.'],
+     gfb:'DESC completo: D (tre settimane consecutive), E (bisogno di recupero), S (rotazione), C (team coperto).',
+     bfb:['Aggressivo: rifiuto secco senza dialogo.','Passivo: accetti contro la tua volontà.','Indiretto e passivo: non affronti la questione.']},
+    {s:'{actor} usa il tuo materiale di lavoro senza riconsegnarlo.',
+     good:'"Le ultime due volte che ho cercato la pinzatrice e il nastro adesivo, non c\'erano. Mi rallenta il lavoro. Ti chiedo di rimetterli al loro posto dopo l\'uso. Così li troviamo entrambi quando servono."',
+     bad:['"Non toccare mai più le mie cose!"','"Va be, mi arrangio."','"Qui nessuno rispetta niente!"'],
+     gfb:'DESC: D (oggetti mancanti due volte), E (rallentamento), S (rimettere al posto), C (disponibili per tutti).',
+     bfb:['Pretesa aggressiva senza D.','Passivo: il problema resta.','Generalizzazione che accusa tutti.']},
+    {s:'{actor} ti assegna un compito senza spiegarti come farlo.',
+     good:'"Mi è stato chiesto di preparare il report X entro domani. Non l\'ho mai fatto e mi sento in difficoltà. Potresti mostrarmi un esempio o indicarmi una persona di riferimento? Così lo consegno correttamente al primo tentativo."',
+     bad:['"Come pretendi che faccia qualcosa che non so fare?"','"Ok, ci provo." (senza chiedere nulla)','Chiedi a un collega e speri che vada bene.'],
+     gfb:'D (compito nuovo), E (difficoltà), S (esempio o riferimento), C (consegna corretta).',
+     bfb:['Contrattacco senza esprimere il bisogno.','Passivo: rischi di sbagliare tutto.','Indiretto: non affronti chi ti ha dato il compito.']},
+    {s:'{actor} prende decisioni che riguardano il tuo lavoro senza consultarti.',
+     good:'"Ieri è stato deciso di cambiare la procedura del magazzino che seguo io, senza informarmi. Mi trovo disorientato. Vorrei essere coinvolto nelle decisioni che riguardano le mie attività. Così posso adattarmi in anticipo ed evitare errori."',
+     bad:['"Fate quello che volete, tanto nessuno mi chiede niente!"','"Va bene, mi adeguo."','"Chi ha deciso questa cosa assurda?"'],
+     gfb:'D (cambio procedura senza avviso), E (disorientamento), S (essere coinvolto), C (adattamento + meno errori).',
+     bfb:['Vittimismo generalizzato.','Passivo: il problema si ripeterà.','Aggressivo: attacca la decisione senza DESC.']},
+    {s:'Un collega fa rumore con le cuffie mentre lavori in open space.',
+     good:'"Quando la musica dalle cuffie è alta, faccio fatica a concentrarmi. Mi metto in difficoltà sulle scadenze. Potresti abbassare il volume? Così lavoriamo entrambi tranquilli."',
+     bad:['"Abbassa quella musica!"','"Non dici niente ma metti i tappi con fare ostentato."','"Sei proprio un maleducato."'],
+     gfb:'D (musica alta), E (difficoltà di concentrazione), S (abbassare il volume), C (tranquillità per entrambi).',
+     bfb:['Ordine secco senza D, E, C.','Passivo-aggressivo: comunica fastidio senza parole.','Etichetta sulla persona.']},
+    {s:'{actor} ti mette in copia in email polemiche senza motivo.',
+     good:'"Nelle ultime email su tema X sono stato messo in copia. Non ho un ruolo nella questione e mi confonde sulle mie priorità. Puoi mettermi in copia solo quando serve il mio contributo? Così rispondo più velocemente alle cose importanti."',
+     bad:['"Toglimi da queste email inutili!"','"Non leggo più niente, fate voi."','"Ma perché mi metti in mezzo?"'],
+     gfb:'D (copia senza ruolo), E (confusione priorità), S (copia mirata), C (risposte più rapide).',
+     bfb:['Ordine senza motivazione.','Rinuncia passiva.','Domanda retorica, non DESC.']},
+    {s:'{actor} ha promesso un giorno libero ma poi ci ripensa.',
+     good:'"La settimana scorsa mi avevi confermato il venerdì libero e ieri l\'hai annullato. Mi sento frustrato perché avevo già preso un impegno. Ti chiedo di confermare i giorni liberi con almeno 3 giorni di anticipo. Così posso organizzarmi e garantire la copertura."',
+     bad:['"Non sei una persona di parola!"','"Figurati, nessun problema." (con risentimento)','Non dici niente ma te la ricordi per sempre.'],
+     gfb:'D (promessa + annullamento), E (frustrazione), S (conferma con anticipo), C (organizzazione + copertura).',
+     bfb:['Attacco alla persona senza S né C.','Passivo con accumulo di rancore.','Passivo: il risentimento cresce silenziosamente.']},
+    {s:'{actor} non risponde ai tuoi messaggi di lavoro per giorni.',
+     good:'"L\'ultimo messaggio su progetto Y è rimasto senza risposta per 4 giorni. Mi ha bloccato sull\'avanzamento e mi sento in ansia per la scadenza. Potresti darmi un riscontro entro 24 ore, anche solo per dire che hai bisogno di tempo? Così posso pianificare."',
+     bad:['"Non rispondi mai a nessuno!"','"Lascio perdere, faccio da solo."','"È una mancanza di professionalità."'],
+     gfb:'D (4 giorni senza risposta), E (ansia per scadenza), S (riscontro entro 24h), C (pianificazione).',
+     bfb:['Generalizzazione falsa.','Passivo: il problema non si risolve.','Giudizio morale al posto di una richiesta.']}
+  ];
+  const d=descs[seed%descs.length];
+  const actor=ACTORS[seed%ACTORS.length];
+  const ctx=CONTEXTS[(seed*3)%CONTEXTS.length];
+  const scenario=fill(d.s,{actor,context:ctx});
+  const opts=[{text:d.good,correct:true,feedback:d.gfb}];
+  d.bad.forEach((b,i)=>opts.push({text:b,correct:false,feedback:d.bfb[i]||d.bfb[0]}));
+  return{type:'best_pick',scenario:'Applica il DESC: '+scenario,options:shuf(opts)};
+}},
+
+{id:'sbi',ps:10,area:1,name:'Feedback SBI',icon:'🎯',tier:3,req:'desc',
+ gen(seed){
+  if(seed%3===0){
+    return{type:'order',instruction:'Riordina i passi del metodo SBI:',
+      steps:['Indica il contesto preciso: quando e dove è successo','Descrivi il comportamento specifico e osservabile','Spiega l\'effetto concreto che ha avuto'],
+      feedback:'SBI: contesto → comportamento filmabile → impatto. Il Behavior deve essere osservabile, non un giudizio.'};
+  }
+  const sbis=[
+    {s:'Un collega ha presentato dati sbagliati in riunione.',
+     good:'"Nella riunione di lunedì (S), hai presentato i dati del Q2 invece del Q3 (B). Il team ha perso 20 minuti a correggere (I)."',
+     bad:['"Sei sempre disattento quando presenti."','"La presentazione non andava bene."','"Dovresti controllare meglio i dati."'],
+     gfb:'SBI perfetto: situazione specifica, comportamento filmabile, impatto misurabile.',
+     bfb:['Generalizzazione + etichetta.','Troppo vago: manca S, B e I specifici.','Consiglio generico senza descrivere cosa è successo.']},
+    {s:'Un tirocinante ha gestito bene un cliente difficile.',
+     good:'"Ieri quando il cliente Rossi si è lamentato (S), sei rimasto calmo e hai proposto due soluzioni (B). Il cliente ha confermato l\'ordine (I)."',
+     bad:['"Bravo, sei stato bravissimo!"','"Hai fatto bene con quel cliente."','"Continua così!"'],
+     gfb:'SBI positivo: rinforza il comportamento specifico, non la persona genericamente.',
+     bfb:['Generico: non sa COSA ha fatto bene.','Manca il Behavior specifico.','Incoraggiamento vuoto: non indica quale comportamento mantenere.']},
+    {s:'Un collega ha inviato un\'email con errori al cliente.',
+     good:'"Nell\'email di ieri a Fontana Srl (S), c\'erano due errori nel calcolo del preventivo (B). Il cliente ha chiesto chiarimenti e abbiamo perso mezza giornata a correggerlo (I)."',
+     bad:['"Le tue email fanno sempre una brutta impressione."','"Devi rileggere prima di inviare."','"Non sei preciso."'],
+     gfb:'S (email ieri a Fontana), B (due errori calcolo), I (chiarimenti + mezza giornata persa).',
+     bfb:['Generalizzazione + giudizio globale.','Consiglio senza descrivere cosa è successo.','Etichetta sulla persona.']},
+    {s:'Un collega ha risolto un problema tecnico che bloccava tutti.',
+     good:'"Stamattina quando il server si è bloccato (S), hai trovato il conflitto nel log e riavviato il servizio in 10 minuti (B). Il team ha potuto riprendere a lavorare senza perdere la mattinata (I)."',
+     bad:['"Sei un genio dell\'informatica!"','"Per fortuna c\'eri tu."','"Gran bel lavoro!"'],
+     gfb:'SBI positivo dettagliato: la persona sa esattamente quale competenza è stata preziosa.',
+     bfb:['Etichetta positiva ma vaga: non sa cosa replicare.','Non dice cosa ha fatto di specifico.','Generico: quale lavoro?']},
+    {s:'Un nuovo arrivato ha interrotto la riunione più volte.',
+     good:'"Nella riunione di oggi (S), hai intervenuto cinque volte prima che il relatore finisse di parlare (B). La presentazione ha richiesto 20 minuti in più del previsto (I)."',
+     bad:['"Sei troppo invadente in riunione."','"Devi imparare a stare zitto quando parlano gli altri."','"Non è carino interrompere."'],
+     gfb:'S (riunione oggi), B (5 interventi prima della fine), I (20 minuti extra). Nessun giudizio.',
+     bfb:['Etichetta: "invadente" è un giudizio, non un comportamento.','Ordine + giudizio morale.','Vago e paternalistico.']},
+    {s:'{actor} ha consegnato un report in anticipo e ben strutturato.',
+     good:'"Per il report di venerdì (S), hai consegnato due giorni in anticipo con tutti i grafici aggiornati (B). Ho potuto preparare la presentazione per il cliente senza fretta (I)."',
+     bad:['"Sei sempre affidabile."','"Ottimo report!"','"Sei il migliore del team."'],
+     gfb:'SBI positivo con impatto concreto: sa che consegnare in anticipo ha un effetto reale.',
+     bfb:['Generalizzazione positiva: non sa quale comportamento esatto mantenere.','Generico: cosa aveva di ottimo?','Confronto con altri: crea competizione, non apprendimento.']},
+    {s:'Un collega ha lasciato la postazione in disordine per il turno successivo.',
+     good:'"Quando sono arrivato al turno delle 14 (S), la postazione aveva documenti sparsi e il pc non era stato chiuso (B). Ho perso 15 minuti a sistemare prima di iniziare a lavorare (I)."',
+     bad:['"Sei disordinato."','"Non puoi lasciare tutto così."','"La postazione era un disastro."'],
+     gfb:'S (turno 14), B (documenti sparsi + pc acceso), I (15 min persi). Tutto filmabile.',
+     bfb:['Etichetta generica.','Rimprovero senza S né I.','Giudizio soggettivo senza dati specifici.']},
+    {s:'{actor} ha gestito un reclamo telefonico senza seguire la procedura.',
+     good:'"Nella telefonata con il cliente Bianchi di ieri (S), hai promesso uno sconto del 15% senza consultare il responsabile (B). Ora dobbiamo mantenere la promessa o rischiare di perdere il cliente (I)."',
+     bad:['"Non seguire la procedura è inaccettabile."','"La prossima volta chiedi prima."','"Hai creato un bel casino."'],
+     gfb:'S (telefonata ieri), B (sconto 15% non autorizzato), I (dilemma con il cliente). Preciso e non giudicante.',
+     bfb:['Giudizio morale.','Consiglio senza descrivere l\'impatto.','Espressione colorita senza S specifico.']},
+    {s:'Un membro del team ha preso iniziativa su un problema prima che diventasse urgente.',
+     good:'"La settimana scorsa quando hai notato il calo nelle scorte (S), hai contattato il fornitore e organizzato il riordino senza che nessuno te lo chiedesse (B). Abbiamo evitato un fermo produzione di due giorni (I)."',
+     bad:['"Hai grande spirito di iniziativa!"','"Bravo che hai agito subito."','"Sei proattivo, mi piace."'],
+     gfb:'S (settimana scorsa), B (notato calo + contattato fornitore), I (evitato fermo produzione). Feedback che insegna.',
+     bfb:['Tratto di personalità, non comportamento.','Manca cosa ha fatto di specifico.','Etichetta positiva: non è replicabile.']},
+    {s:'{actor} durante una videochiamata con il cliente teneva il telefono in mano.',
+     good:'"Nella call con Servizi Europa di martedì (S), guardavi il telefono mentre il cliente presentava la proposta (B). Il cliente mi ha chiesto dopo se eravamo interessati, percependo distacco (I)."',
+     bad:['"Non sei professionale."','"In call si sta attenti."','"Il cliente avrà pensato male di noi."'],
+     gfb:'S (call martedì), B (guardare il telefono durante presentazione), I (percezione di distacco del cliente).',
+     bfb:['Giudizio globale sulla persona.','Regola generica senza ancoraggio.','Ipotesi su cosa ha pensato il cliente, non impatto verificabile.']}
+  ];
+  const d=sbis[seed%sbis.length];
+  const opts=[{text:d.good,correct:true,feedback:d.gfb}];
+  d.bad.forEach((b,i)=>opts.push({text:b,correct:false,feedback:d.bfb[i]||d.bfb[0]}));
+  return{type:'best_pick',scenario:d.s,options:shuf(opts)};
+}},
+
+/* ── AREA 2 ── */
+{id:'emotions',ps:5,area:2,name:'Riconoscere le emozioni',icon:'🎭',tier:0,req:null,
+ labels:{pensiero:'💭 Pensiero',emozione:'💗 Emozione',bisogno:'🎯 Bisogno',reazione:'⚡ Reazione'},
+ gen(seed){
+  const sets=[
+    {s:'Dopo una critica del tutor',items:[
+      {r:'"Non sono abbastanza bravo per questo lavoro."',c:'pensiero',fb:'È un\'interpretazione, non un\'emozione.'},
+      {r:'Provi scoraggiamento e confusione.',c:'emozione',fb:'Stati interni reali e specifici.'},
+      {r:'Hai bisogno di capire concretamente cosa migliorare.',c:'bisogno',fb:'Necessità concreta e legittima.'},
+      {r:'Eviti il tutor per il resto della giornata.',c:'reazione',fb:'Evitare è un comportamento concreto (passivo).'}]},
+    {s:'Un collega ottiene la promozione che volevi',items:[
+      {r:'"Non è giusto, lavoro più di lui."',c:'pensiero',fb:'Giudizio comparativo. L\'emozione sotto: delusione o amarezza.'},
+      {r:'Provi amarezza e un senso di ingiustizia.',c:'emozione',fb:'Sentimento vero e specifico.'},
+      {r:'Hai bisogno di capire i criteri della promozione.',c:'bisogno',fb:'Necessità concreta di chiarezza.'},
+      {r:'Inizi a cercare difetti nel lavoro del collega.',c:'reazione',fb:'Sabotaggio indiretto = comportamento aggressivo.'}]},
+    {s:'Ti comunicano che il progetto a cui lavoravi da mesi è stato cancellato',items:[
+      {r:'"Tutto il mio lavoro è stato inutile."',c:'pensiero',fb:'Interpretazione catastrofica. Il lavoro ti ha dato competenze.'},
+      {r:'Provi frustrazione e smarrimento.',c:'emozione',fb:'Sentimenti specifici e legittimi.'},
+      {r:'Hai bisogno di capire cosa succede al tuo ruolo ora.',c:'bisogno',fb:'Bisogno concreto e orientato al futuro.'},
+      {r:'Smetti di impegnarti sugli altri progetti.',c:'reazione',fb:'Ritiro come reazione al dolore. Passivo.'}]},
+    {s:'Ricevi un complimento inaspettato dal responsabile',items:[
+      {r:'"Lo dice solo per essere gentile, non lo pensa davvero."',c:'pensiero',fb:'Interpretazione che invalida il feedback positivo.'},
+      {r:'Provi sorpresa e soddisfazione.',c:'emozione',fb:'Emozioni autentiche e specifiche.'},
+      {r:'Hai bisogno di sapere cosa hai fatto bene per replicarlo.',c:'bisogno',fb:'Bisogno di feedback specifico per crescere.'},
+      {r:'Sminuisci il complimento dicendo "ma no, è stato facile".',c:'reazione',fb:'Sminuire i propri meriti è una reazione passiva.'}]}
+  ];
+  const set=sets[seed%sets.length];
+  const item=set.items[seed%set.items.length];
+  const labels=this.labels;
+  const fb={};
+  for(const k of Object.keys(labels)){fb[k]=k===item.c?'Esatto: '+item.fb:'No — non è un'+(['o','a','o','a'][Object.keys(labels).indexOf(k)])+' '+k+'.';}
+  return{type:'classify',scenario:set.s+':',response:item.r,correct:item.c,feedback:fb};
+}},
+
+{id:'coping',ps:12,area:2,name:'Autoregolazione',icon:'🧘',tier:1,req:'emotions',
+ gen(seed){
+  const qs=[
+    {s:'{actor} ti critica duramente. Senti la rabbia crescere.',
+     opts:[{t:'5 minuti di pausa, respiri, poi chiedi chiarimenti.',c:true,fb:'Pausa → regolazione → azione costruttiva.'},
+       {t:'Rispondi immediatamente per difenderti.',c:false,fb:'Reagire a caldo: amigdala attivata, corteccia prefrontale no.'},
+       {t:'Dai un pugno al muro in bagno.',c:false,fb:'Sfogo distruttivo. Non regola l\'emozione.'},
+       {t:'Ti sfoghi via messaggio con un collega.',c:false,fb:'Triangolazione: non risolve, crea problemi.'}]},
+    {s:'Scadenza domani, sei paralizzato dall\'ansia.',
+     opts:[{t:'Scomponi in 3 passi piccoli e inizi dal primo, anche imperfetto.',c:true,fb:'Chunking + azione immediata: rompe la paralisi.'},
+       {t:'Aspetti di "sentirti pronto".',c:false,fb:'La motivazione spesso segue l\'azione, non la precede.'},
+       {t:'Lavori tutta la notte.',c:false,fb:'Esaurisci le risorse e il pattern si ripete.'},
+       {t:'Chiedi una proroga senza tentare.',c:false,fb:'Se è ansia e non sovraccarico, rinunciare rinforza l\'evitamento.'}]},
+    {s:'Un collega ti ha fatto arrabbiare. Sei tentato di mandare un messaggio duro.',
+     opts:[{t:'Scrivi il messaggio ma NON lo invii. Rileggi dopo 30 minuti.',c:true,fb:'La "bozza di sfogo" scarica la tensione senza conseguenze.'},
+       {t:'Invii subito perché "devi essere autentico".',c:false,fb:'Autenticità include SCEGLIERE quando esprimersi.'},
+       {t:'Non dici niente e cerchi di dimenticare.',c:false,fb:'Soppressione emotiva: la rabbia si accumula.'},
+       {t:'Ne parli con tutti tranne il diretto interessato.',c:false,fb:'Triangolazione: avvelena il clima.'}]},
+    {s:'Hai appena ricevuto un rifiuto per una posizione a cui tenevi.',
+     opts:[{t:'Riconosci la delusione, poi chiedi feedback su come migliorare.',c:true,fb:'Validazione emotiva + azione orientata alla crescita.'},
+       {t:'Concludi che "non sei abbastanza bravo" e smetti di candidarti.',c:false,fb:'Fixed mindset: un rifiuto ≠ identità.'},
+       {t:'Reagisci con rabbia verso chi ha deciso.',c:false,fb:'Esternalizzazione: non impari nulla dalla situazione.'},
+       {t:'Fai finta che non ti importasse.',c:false,fb:'Negazione emotiva: il dolore non elaborato si ripresenta.'}]},
+    {s:'Sei in riunione e il tuo progetto viene bocciato. Ti senti umiliato.',
+     opts:[{t:'Prendi nota delle obiezioni, chiedi 24 ore per una revisione.',c:true,fb:'Accetti il feedback senza collassare. L\'ego non è il progetto.'},
+       {t:'Difendi il progetto con voce alta e agitata.',c:false,fb:'L\'arousal alto corrompe l\'argomentazione.'},
+       {t:'Ti chiudi e non parli per il resto della riunione.',c:false,fb:'Ritiro passivo: il progetto muore senza difesa.'},
+       {t:'Dici che il team non ha capito nulla.',c:false,fb:'Contrattacco narcisistico: perdi credibilità.'}]},
+    {s:'Un errore tuo ha causato un problema al cliente. Il responsabile ti chiama.',
+     opts:[{t:'Ammetti l\'errore, descrivi cosa è successo e proponi come rimediare.',c:true,fb:'Responsabilità + soluzione. La cosa più difficile e più efficace.'},
+       {t:'Cerchi di minimizzare o dare la colpa a qualcun altro.',c:false,fb:'Spostare la colpa erode la fiducia.'},
+       {t:'Ti scusi ripetutamente senza proporre una soluzione.',c:false,fb:'Le scuse senza azione sono vuote.'},
+       {t:'Vai in panico e chiedi ad altri di coprire il problema.',c:false,fb:'Eviti la responsabilità e carichi gli altri.'}]},
+    {s:'Dopo una giornata pesante ti senti esaurito e irritabile. Domani hai un\'altra giornata dura.',
+     opts:[{t:'30 minuti di attività che ti ricarica (camminata, musica, sport), poi vai a dormire presto.',c:true,fb:'Recovery attivo: il cervello ha bisogno di switch off prima del sonno.'},
+       {t:'Scrolli il telefono fino a mezzanotte.',c:false,fb:'Stimolazione passiva che non recupera energia: la luce blu peggiora il sonno.'},
+       {t:'Lavori ancora per "portarti avanti".',c:false,fb:'Nessun recupero = rendimento calante domani. Il debito cognitivo si accumula.'},
+       {t:'Bevi per "staccare".',c:false,fb:'L\'alcol è un depressore: peggiora la qualità del sonno e l\'umore del giorno dopo.'}]},
+    {s:'Un collega continua a fare battute su di te che ti infastidiscono.',
+     opts:[{t:'In privato gli dici: "Quelle battute mi mettono a disagio. Preferirei che smettessi."',c:true,fb:'Assertivo: chiaro, diretto, in privato. Nessuna escalation.'},
+       {t:'Fai battute più pesanti su di lui.',c:false,fb:'Escalation. Nessuno vince.'},
+       {t:'Ridi insieme a tutti ma dentro ti rode.',c:false,fb:'Passività che accumula rancore. Il confine non è mai posto.'},
+       {t:'Lo ignori completamente.',c:false,fb:'Se il comportamento continua, ignorare non è una strategia.'}]},
+    {s:'Hai commesso lo stesso errore per la seconda volta. Ti senti frustrato con te stesso.',
+     opts:[{t:'Analizzi il pattern: cosa c\'era di simile nelle due situazioni? Crei un promemoria per prevenire la terza.',c:true,fb:'L\'errore diventa dato. Il pattern è il problema, non tu.'},
+       {t:'Ti dici che sei un incapace.',c:false,fb:'Autocritica globale: attacchi l\'identità, non il comportamento.'},
+       {t:'Prometti di "stare più attento" senza cambiare nulla.',c:false,fb:'Buona intenzione senza sistema = terzo errore garantito.'},
+       {t:'Chiedi a qualcun altro di fare quel compito al posto tuo.',c:false,fb:'Evitamento: non sviluppi la competenza.'}]},
+    {s:'Il tuo capo ti dà un feedback molto negativo via email. Il tono è duro.',
+     opts:[{t:'Leggi, lasci decantare almeno 2 ore, poi rispondi chiedendo un incontro per discuterne.',c:true,fb:'Il canale scritto amplifica la durezza. Parlare a voce depotenzia il conflitto.'},
+       {t:'Rispondi immediatamente punto per punto.',c:false,fb:'La risposta a caldo via email è quasi sempre un errore. Tono e intenzione si perdono.'},
+       {t:'Non rispondi e lo eviti per giorni.',c:false,fb:'Evitamento passivo: il problema resta e peggiora.'},
+       {t:'Giri l\'email ai colleghi per cercare alleati.',c:false,fb:'Triangolazione: trasformi un feedback in una guerra.'}]},
+    {s:'Sei sovraccarico di lavoro. Non riesci a dire di no alle richieste.',
+     opts:[{t:'Fai una lista delle tue priorità. Al prossimo no rispondi: "Ora sono su X e Y. Posso farlo dopo venerdì oppure puoi chiedere a Z."',c:true,fb:'Dici no senza dire "no": offri alternative con tempistiche.'},
+       {t:'Accetti tutto e poi lavori male su tutto.',c:false,fb:'Dire sempre sì e il modo più sicuro per fare tutto male.'},
+       {t:'Esplodi e dici che "qui fanno lavorare solo te".',c:false,fb:'Aggressivo: non ti ascoltano, ti temono. Non cambia nulla.'},
+       {t:'Fai le cose in ritardo sperando che smettano di chiederti.',c:false,fb:'Passivo-aggressivo: distruggi la tua reputazione.'}]},
+    {s:'Hai un conflitto con un collega che si protrae da settimane. Ogni interazione è tesa.',
+     opts:[{t:'Lo affronti in privato: "Ho notato tensione tra noi. Vorrei capire cosa succede e trovare un modo per lavorare bene."',c:true,fb:'Meta-comunicare sul conflitto è il primo passo per risolverlo.'},
+       {t:'Aspetti che passi da solo.',c:false,fb:'I conflitti non risolti non spariscono. Si cronicizzano.'},
+       {t:'Chiedi al responsabile di intervenire senza prima parlare col collega.',c:false,fb:'Escalation prematura: non hai dato al collega la possibilità di risolvere.'},
+       {t:'Parli male di lui con gli altri per isolare "il problema".',c:false,fb:'Mobbing indiretto. Distrugge il team.'}]}
+  ];
+  const q=qs[seed%qs.length];
+  const actor=ACTORS[seed%ACTORS.length];
+  return{type:'best_pick',scenario:fill(q.s,{actor}),options:shuf(q.opts.map(o=>({text:o.t,correct:o.c,feedback:o.fb})))};
+}},
+
+{id:'empatia',ps:12,area:2,name:'Empatia attiva',icon:'🤝',tier:2,req:'coping',
+ gen(seed){
+  const qs=[
+    {s:'Un collega dice: "Non ce la faccio più con questo progetto."',
+     opts:[{t:'"Sembra che tu sia sotto pressione. Vuoi raccontarmi cosa ti pesa di più?"',c:true,fb:'Riconosci l\'emozione + inviti ad approfondire.'},
+       {t:'"Non preoccuparti, andrà tutto bene!"',c:false,fb:'Rassicurazione prematura: invalida il sentimento.'},
+       {t:'"Anche io sono stressato, guarda."',c:false,fb:'Competizione emotiva: sposti il focus su di te.'},
+       {t:'"Dovresti organizzarti meglio."',c:false,fb:'Consiglio non richiesto: salta l\'ascolto.'}]},
+    {s:'Un tirocinante ha ricevuto un rifiuto per una posizione a cui teneva molto.',
+     opts:[{t:'"Dev\'essere una delusione forte. Come ti senti?"',c:true,fb:'Validazione del sentimento + domanda aperta.'},
+       {t:'"Vedrai che troverai di meglio!"',c:false,fb:'Minimizza il dolore attuale.'},
+       {t:'"Era chiaro che la concorrenza era troppa."',c:false,fb:'Brutale e inutile. Zero empatia.'},
+       {t:'"Ti mando subito un altro annuncio."',c:false,fb:'Problem-solving prematuro: prima serve ascolto.'}]},
+    {s:'Un collega si sfoga per un litigio con il responsabile.',
+     opts:[{t:'"Capisco che ti abbia colpito. Vuoi che ti ascolti o preferisci un consiglio?"',c:true,fb:'Meta-comunicazione: chiedi di cosa ha bisogno.'},
+       {t:'"Il responsabile ha ragione, devi ammetterlo."',c:false,fb:'Ti schieri senza ascoltare.'},
+       {t:'"Lascia perdere, non vale la pena."',c:false,fb:'Invalidazione: il tuo sentimento non conta.'},
+       {t:'Cambi argomento perché ti mette a disagio.',c:false,fb:'Evitamento relazionale.'}]},
+    {s:'Un collega ti racconta che ha problemi familiari che lo distraggono.',
+     opts:[{t:'"Grazie per la fiducia. Se hai bisogno di un momento, posso coprirti. Cosa ti aiuterebbe?"',c:true,fb:'Accogli + offerta concreta + domanda aperta.'},
+       {t:'"Non dovresti portare i problemi personali al lavoro."',c:false,fb:'Giudizio che chiude la comunicazione.'},
+       {t:'"Anche a me succede, è normale."',c:false,fb:'Normalizzazione eccessiva che minimizza.'},
+       {t:'"Vai dallo psicologo."',c:false,fb:'Delega frettolosa senza ascolto.'}]},
+    {s:'Un nuovo arrivato sembra perso e non osa chiedere aiuto.',
+     opts:[{t:'"Noto che stai cercando qualcosa. Posso darti una mano?"',c:true,fb:'Offri aiuto partendo dall\'osservazione, senza forzare.'},
+       {t:'Aspetti che chieda lui.',c:false,fb:'Molti non chiedono per vergogna. L\'empatia è anche iniziativa.'},
+       {t:'"Dovresti chiedere aiuto se non sai le cose."',c:false,fb:'Colpevolizzazione: rinforza la vergogna di chiedere.'},
+       {t:'Lo ignori perché hai le tue cose da fare.',c:false,fb:'Egocentrismo: non ti costa nulla offrire 2 minuti.'}]},
+    {s:'Un collega piange in ufficio dopo una telefonata.',
+     opts:[{t:'Ti avvicini discretamente: "Ehi, vedo che qualcosa non va. Vuoi un momento tranquillo o preferisci compagnia?"',c:true,fb:'Offri scelta: rispetti il suo modo di gestire, non imponi il tuo.'},
+       {t:'"Smettila di piangere, siamo al lavoro."',c:false,fb:'Negazione delle emozioni. Le persone non scelgono quando piangere.'},
+       {t:'Fai finta di non vedere.',c:false,fb:'Evitamento: il collega si sente ancora più solo.'},
+       {t:'Corri a raccontarlo agli altri.',c:false,fb:'Violazione della privacy e della fiducia.'}]},
+    {s:'Un collega confessa di sentirsi inadeguato dopo un errore.',
+     opts:[{t:'"Capisco che ti pesi. Un errore non cancella tutto quello che sai fare. Cosa pensi sia andato storto?"',c:true,fb:'Validazione + ridimensionamento + invito alla riflessione. Non minimizzi, non drammatizzi.'},
+       {t:'"Ma no, sei bravissimo, non dire così!"',c:false,fb:'Rassicurazione generica: non affronta il sentimento reale.'},
+       {t:'"Eh sì, quell\'errore è stato grave."',c:false,fb:'Conferma la paura: distruttivo.'},
+       {t:'"Tutti sbagliano, non ci pensare."',c:false,fb:'Minimizza: il collega non si sente capito.'}]},
+    {s:'Un collega senior ti dice che sta pensando di cambiare lavoro.',
+     opts:[{t:'"È una riflessione importante. Cosa ti sta portando a pensarci?"',c:true,fb:'Non giudichi, non dissuadi. Esplori con rispetto.'},
+       {t:'"Non farlo! Con la crisi che c\'è..."',c:false,fb:'Paura proiettata: parli delle tue ansie, non delle sue.'},
+       {t:'"Ma qui stai benissimo!"',c:false,fb:'Neghi quello che ti sta comunicando: non sta bene.'},
+       {t:'"Chi te lo fa fare, a questa età?"',c:false,fb:'Giudizio + scoraggiamento. L\'empatia è l\'opposto.'}]},
+    {s:'Un collega è visibilmente stressato ma dice "sto bene" quando glielo chiedi.',
+     opts:[{t:'"Ok, se cambi idea sono qui. Non devi gestire tutto da solo."',c:true,fb:'Rispetti il "no" ma lasci la porta aperta. Zero pressione.'},
+       {t:'"Non è vero che stai bene, si vede!"',c:false,fb:'Forzare la confessione: invasivo e controproducente.'},
+       {t:'Insisti: "Dai, dimmi cosa hai."',c:false,fb:'L\'insistenza rompe il confine: l\'altro si chiude di più.'},
+       {t:'Accetti e non ci pensi più.',c:false,fb:'Troppo distante: un follow-up gentile nei giorni successivi è empatico.'}]},
+    {s:'Un collega racconta entusiasta un\'idea che tu pensi non funzionerà.',
+     opts:[{t:'"Mi piace l\'energia. Raccontami di più — su quali dati si basa?"',c:true,fb:'Accogli l\'entusiasmo, poi guidi verso la verifica. Non spegni la motivazione.'},
+       {t:'"Non funzionerà mai."',c:false,fb:'Brutale e demotivante. Uccide l\'iniziativa.'},
+       {t:'"Bello!" (ma non ci credi)',c:false,fb:'Falsità: quando emergerà, la fiducia sarà compromessa.'},
+       {t:'Ignori e cambi argomento.',c:false,fb:'Invisibilizzazione: il collega non si sente ascoltato.'}]},
+    {s:'Un collega torna al lavoro dopo un periodo difficile (malattia, lutto, separazione).',
+     opts:[{t:'"Bentornato. Se c\'è qualcosa che posso fare per facilitarti il rientro, dimmelo."',c:true,fb:'Riconosci senza invadere. Offerta concreta, non curiosità morbosa.'},
+       {t:'"Raccontami tutto, cosa è successo?"',c:false,fb:'Curiosità travestita da interesse: invasiva.'},
+       {t:'Lo tratti esattamente come prima fingendo che nulla sia successo.',c:false,fb:'L\'elefante nella stanza: ignorare non è empatico, è imbarazzo.'},
+       {t:'"Almeno adesso è tutto finito, no?"',c:false,fb:'Chiusura forzata: decidi tu quando il suo dolore deve finire.'}]},
+    {s:'Un collega si lamenta per la terza volta dello stesso problema.',
+     opts:[{t:'"Vedo che questa cosa continua a pesarti. Cosa ti impedirebbe di affrontarla?"',c:true,fb:'Non ripeti il consiglio: esplori il blocco. A volte il vero problema non è quello dichiarato.'},
+       {t:'"Te l\'ho già detto, devi parlare col capo."',c:false,fb:'Ripetere il consiglio è il contrario dell\'ascolto. Se non lo fa, c\'è un motivo.'},
+       {t:'"Smettila di lamentarti e agisci."',c:false,fb:'Aggressivo: invalida sia il sentimento che la persona.'},
+       {t:'Smetti di ascoltarlo perché "è sempre la stessa storia."',c:false,fb:'Abbandono relazionale: la ripetizione è un segnale, non un difetto.'}]}
+  ];
+  const q=qs[seed%qs.length];
+  return{type:'best_pick',scenario:q.s,options:shuf(q.opts.map(o=>({text:o.t,correct:o.c,feedback:o.fb})))};
+}},
+
+/* ── AREA 3 ── */
+{id:'fatto_opinione',ps:10,area:3,name:'Fatto / Opinione / Interpretazione',icon:'🔍',tier:0,req:null,
+ labels:{fatto:'📌 Fatto',opinione:'💬 Opinione',interpretazione:'🔮 Interpretazione'},
+ gen(seed){
+  const items=[
+    {r:'"Marco è arrivato alle 9:15, la riunione era alle 9:00."',c:'fatto',fb:'Dati verificabili e filmabili.'},
+    {r:'"Marco non rispetta mai gli orari."',c:'interpretazione',fb:'"Mai" è generalizzazione da un episodio.'},
+    {r:'"Le riunioni di lunedì sono una perdita di tempo."',c:'opinione',fb:'Giudizio di valore soggettivo.'},
+    {r:'"Il report ha 3 errori di calcolo nelle tabelle 2 e 5."',c:'fatto',fb:'Numero e posizione verificabili.'},
+    {r:'"Laura non ha risposto alla mia email perché ce l\'ha con me."',c:'interpretazione',fb:'Attribuzione di intenzione non verificata.'},
+    {r:'"Lavorare in team è meglio che da soli."',c:'opinione',fb:'Preferenza soggettiva.'},
+    {r:'"Il responsabile ha alzato la voce."',c:'fatto',fb:'Osservabile e filmabile.'},
+    {r:'"Il responsabile è aggressivo."',c:'interpretazione',fb:'"Aggressivo" è un\'etichetta, non un fatto filmabile.'},
+    {r:'"Questo tirocinio è il migliore che abbia fatto."',c:'opinione',fb:'Giudizio personale.'},
+    {r:'"Il team ha consegnato 12 progetti su 15 entro la scadenza."',c:'fatto',fb:'Numeri verificabili.'},
+    {r:'"I giovani non hanno voglia di lavorare."',c:'interpretazione',fb:'Generalizzazione stereotipata.'},
+    {r:'"Il nostro ufficio è troppo piccolo."',c:'opinione',fb:'Giudizio soggettivo sul comfort.'},
+    {r:'"La riunione è durata 47 minuti."',c:'fatto',fb:'Dato misurabile.'},
+    {r:'"Claudia è la più brava del team."',c:'opinione',fb:'Giudizio comparativo soggettivo.'},
+    {r:'"Non mi hanno invitato alla riunione perché non mi stimano."',c:'interpretazione',fb:'Attribuzione di motivazione non verificata.'},
+    {r:'"Il progetto ha superato il budget del 12%."',c:'fatto',fb:'Dato numerico verificabile.'},
+    {r:'"Il cliente era soddisfatto."',c:'interpretazione',fb:'Inferenza sullo stato emotivo altrui, a meno di dichiarazione esplicita.'},
+    {r:'"Il cliente ha detto: Sono soddisfatto del risultato."',c:'fatto',fb:'Citazione diretta = fatto verificabile.'}
+  ];
+  const item=items[seed%items.length];
+  const labels=this.labels;
+  const fb={};
+  for(const k of Object.keys(labels))fb[k]=k===item.c?'Esatto: '+item.fb:'No — non è un '+k+'.';
+  return{type:'classify',response:item.r,correct:item.c,feedback:fb};
+}},
+
+{id:'pdca',ps:10,area:3,name:'Ciclo PDCA',icon:'🔄',tier:1,req:'fatto_opinione',
+ gen(seed){
+  if(seed%3===0){
+    const contexts=['le consegne sono spesso in ritardo','ci sono troppi errori nei documenti','le riunioni durano il doppio del previsto','il team non rispetta le scadenze'];
+    const ctx=contexts[seed%contexts.length];
+    return{type:'order',instruction:'Applica il PDCA al problema: "'+ctx+'"',
+      steps:['Analizza le cause del problema e prepara un piano','Prova la soluzione su piccola scala','Verifica i risultati confrontando i dati','Se funziona standardizza, altrimenti correggi il piano'],
+      feedback:'PDCA ciclico: se Act rivela problemi, torni a Plan con informazioni nuove.'};
+  }
+  const qs=[
+    {s:'Fase CHECK: hai provato un nuovo metodo per le email. Cosa fai?',
+     opts:[{t:'Confronti i dati: email gestite prima vs dopo, tempo medio.',c:true,fb:'Check = verifica con dati oggettivi.'},
+       {t:'Chiedi al tutor se gli sembra che vai meglio.',c:false,fb:'Un\'opinione non è una verifica.'},
+       {t:'Decidi che funziona perché "ti senti organizzato".',c:false,fb:'La sensazione non è un Check.'},
+       {t:'Passi a un altro metodo perché ti annoia.',c:false,fb:'Salti Check e Act.'}]},
+    {s:'Fase PLAN: troppi errori nei documenti. Cosa fai?',
+     opts:[{t:'Analizzi dove, quando, come avvengono gli errori. Poi prepari un piano.',c:true,fb:'Plan = analisi prima dell\'azione.'},
+       {t:'Rileggi tutto due volte.',c:false,fb:'Salti Plan e vai a Do.'},
+       {t:'Chiedi scusa e prometti di fare meglio.',c:false,fb:'Non è un piano, è una dichiarazione.'},
+       {t:'Cerchi "come fare meno errori" su internet.',c:false,fb:'Informazioni generiche ≠ analisi del TUO pattern.'}]},
+    {s:'Fase ACT: il nuovo metodo ha funzionato per 2 settimane. Cosa fai?',
+     opts:[{t:'Standardizzi: documenti il metodo e lo condividi col team.',c:true,fb:'Act dopo Check positivo = standardizzazione.'},
+       {t:'Lo abbandoni perché "ormai il problema è risolto".',c:false,fb:'Senza standardizzazione il miglioramento si perde.'},
+       {t:'Cambi subito metodo per provarne uno ancora migliore.',c:false,fb:'Perfezione prematura: prima consolida, poi migliora.'},
+       {t:'Aspetti di vedere se funziona anche il mese prossimo.',c:false,fb:'Aspettare non è Act. 2 settimane di dati sono sufficienti per decidere.'}]},
+    {s:'Fase DO: hai pianificato di usare una checklist per ridurre gli errori. Come la testi?',
+     opts:[{t:'La usi per una settimana su un campione ristretto di documenti, annotando ogni errore trovato.',c:true,fb:'Do = test su piccola scala. Non implementi su tutto, prima validi.'},
+       {t:'La distribuisci a tutto il team immediatamente.',c:false,fb:'Salti il test. Se non funziona, hai imposto un processo inutile a tutti.'},
+       {t:'La usi mentalmente senza scriverla.',c:false,fb:'Senza tracciabilita non puoi fare Check. Il Do deve produrre dati.'},
+       {t:'Aspetti il momento perfetto per iniziare.',c:false,fb:'La procrastinazione non e una fase del PDCA.'}]},
+    {s:'Hai fatto un ciclo PDCA su un processo e Act dice: "Non ha funzionato". Cosa fai?',
+     opts:[{t:'Torni a Plan con le informazioni raccolte in Check. Il PDCA e ciclico.',c:true,fb:'Il fallimento non e la fine: e dati nuovi per un Plan migliore.'},
+       {t:'Abbandoni il miglioramento e torni al vecchio metodo.',c:false,fb:'Rinunci senza usare cio che hai imparato.'},
+       {t:'Rifai lo stesso Do sperando in un risultato diverso.',c:false,fb:'Ripetere la stessa azione aspettando risultati diversi non e PDCA.'},
+       {t:'Dai la colpa al team per la cattiva esecuzione.',c:false,fb:'Attribuzione esterna: forse il Plan era sbagliato, non le persone.'}]},
+    {s:'Il team vuole migliorare i tempi di risposta al cliente. Dove inizia il PDCA?',
+     opts:[{t:'Plan: misuri i tempi attuali, identifichi dove si perde tempo, ipotizzi una causa.',c:true,fb:'Plan = dati + analisi + ipotesi. Senza questo, qualsiasi azione e casuale.'},
+       {t:'Do: provi subito a rispondere piu velocemente.',c:false,fb:'Agire senza analizzare = tirare a indovinare.'},
+       {t:'Check: guardi i dati degli ultimi mesi.',c:false,fb:'Check viene dopo Do. Senza un intervento, i dati mostrano solo lo stato attuale, non il miglioramento.'},
+       {t:'Act: decidi di assumere piu personale.',c:false,fb:'Soluzione senza analisi. Forse il problema non e il personale.'}]},
+    {s:'Check rivela che la tua soluzione funziona al 70%. Non perfettamente, ma meglio di prima.',
+     opts:[{t:'Standardizzi il 70% che funziona e apri un nuovo ciclo PDCA per il restante 30%.',c:true,fb:'Miglioramento continuo: consolida i progressi e itera. Non aspettare la perfezione.'},
+       {t:'Scarti tutto perche non e al 100%.',c:false,fb:'Perfezionismo paralizzante: il 70% meglio di prima e un successo.'},
+       {t:'Dichiari la missione compiuta e passi ad altro.',c:false,fb:'Ignori il 30% restante: tornerai a occupartene quando sara urgente.'},
+       {t:'Aggiungi altre modifiche senza testarle.',c:false,fb:'Stai facendo un altro Do senza Check. Perdi il controllo.'}]},
+    {s:'Il responsabile ti chiede di risolvere un problema "subito, senza perdere tempo in analisi". Come gestisci il PDCA?',
+     opts:[{t:'Fai un Plan rapidissimo (anche 10 minuti): ipotesi principale, test minimo. Poi Do.',c:true,fb:'Il PDCA si scala: un Plan da 10 minuti e meglio di zero Plan. Veloce non significa casuale.'},
+       {t:'Salti Plan e agisci subito come chiede il capo.',c:false,fb:'L urgenza non elimina la necessita di pensare. Agire alla cieca costa di piu.'},
+       {t:'Rifiuti perche il PDCA richiede tempo.',c:false,fb:'Il PDCA non e burocratico: e un modo di pensare che si adatta a qualsiasi velocita.'},
+       {t:'Fai Plan accuratissimo ignorando l urgenza.',c:false,fb:'Analisi-paralisi: il Plan deve essere proporzionato al tempo disponibile.'}]},
+    {s:'Hai standardizzato un processo (Act). Dopo 3 mesi noti che i risultati peggiorano.',
+     opts:[{t:'Riparti con Plan: le condizioni sono cambiate, il processo va riadattato.',c:true,fb:'I processi invecchiano. Il PDCA non finisce mai: ogni standard e temporaneo.'},
+       {t:'Premi il team perche "segua meglio la procedura".',c:false,fb:'Se il processo non funziona, la colpa non e di chi lo esegue.'},
+       {t:'Ignori il peggioramento: "tanto abbiamo gia fatto il PDCA".',c:false,fb:'Il PDCA non e un evento: e un ciclo continuo.'},
+       {t:'Butti via il processo e torni al metodo precedente.',c:false,fb:'Regressione: perdi tutto cio che hai imparato.'}]},
+    {s:'Due colleghi propongono soluzioni diverse allo stesso problema. Come usi il PDCA per decidere?',
+     opts:[{t:'Plan: definite insieme i criteri di successo. Do: testate entrambe su piccola scala. Check: confrontate i dati.',c:true,fb:'Il PDCA trasforma le opinioni in esperimenti. I dati decidono, non le gerarchie.'},
+       {t:'Il capo decide quale soluzione adottare.',c:false,fb:'Decisione per autorita, non per evidenza.'},
+       {t:'Si adotta la soluzione di chi ha piu esperienza.',c:false,fb:'L esperienza e un input per Plan, non un sostituto di Check.'},
+       {t:'Si fa un compromesso tra le due proposte.',c:false,fb:'Un compromesso senza test e un azzardo che non accontenta nessuno.'}]}
+  ];
+  const q=qs[seed%qs.length];
+  return{type:'best_pick',scenario:q.s,options:shuf(q.opts.map(o=>({text:o.t,correct:o.c,feedback:o.fb})))};
+}},
+
+/* ── AREA 4 ── */
+{id:'eisenhower',ps:13,area:4,name:'Matrice Eisenhower',icon:'📊',tier:0,req:null,
+ quads:[{id:'ui',ps:0,n:'Urgente + Importante',d:'Fai subito',co:'var(--red)'},{id:'ni',ps:0,n:'Non urg. + Importante',d:'Pianifica',co:'var(--blue)'},{id:'un',ps:0,n:'Urgente + Non import.',d:'Delega',co:'var(--orange)'},{id:'nn',ps:0,n:'Non urg. + Non import.',d:'Elimina',co:'var(--text3)'}],
+ gen(seed){
+  const tasks=[
+    ...TASKS_URG.map(t=>({t,c:'ui',fb:'Urgente + Importante. Azione immediata.'})),
+    ...TASKS_IMP.map(t=>({t,c:'ni',fb:'Non urgente + Importante. Pianifica, non rimandare.'})),
+    ...TASKS_DEL.map(t=>({t,c:'un',fb:'Urgente + Non importante. Delega o rifiuta con garbo.'})),
+    ...TASKS_ELIM.map(t=>({t,c:'nn',fb:'Non urgente + Non importante. Elimina.'}))
+  ];
+  const task=tasks[seed%tasks.length];
+  return{type:'quadrant',task:task.t,correct:task.c,feedback:task.fb};
+}},
+
+{id:'growth_mindset',ps:12,area:4,name:'Growth Mindset',icon:'🌱',tier:1,req:null,
+ labels:{fixed:'🔒 Fixed',growth:'🌱 Growth'},
+ gen(seed){
+  const items=[
+    {r:'"Non sono portato per {skill}."',c:'fixed',fb:'Attribuisce la difficoltà a un tratto fisso.'},
+    {r:'"Questo esercizio è difficile, devo trovare un metodo diverso."',c:'growth',fb:'La difficoltà segnala di cambiare strategia.'},
+    {r:'"Ho sbagliato? Bene, adesso so cosa non funziona."',c:'growth',fb:'Errore = informazione, non identità.'},
+    {r:'"Se devo sforzarmi tanto, non è il mio campo."',c:'fixed',fb:'Lo sforzo letto come prova di inadeguatezza.'},
+    {r:'"Il feedback mi ha aiutato a capire dove concentrare l\'impegno."',c:'growth',fb:'Feedback = strumento, non giudizio.'},
+    {r:'"Gli altri sono più bravi, non ha senso provare."',c:'fixed',fb:'Confronto come scusa per abbandonare.'},
+    {r:'"Non ci sono ancora riuscito, ma sto migliorando."',c:'growth',fb:'"Non ancora" = parola chiave del growth mindset.'},
+    {r:'"Alcune persone sono naturalmente leader, io no."',c:'fixed',fb:'Leadership vista come talento innato.'},
+    {r:'"Ogni errore mi insegna qualcosa di concreto."',c:'growth',fb:'Errore come fonte di apprendimento.'},
+    {r:'"Se non capisco al primo colpo, vuol dire che non fa per me."',c:'fixed',fb:'Pretesa di comprensione immediata = fixed.'},
+    {r:'"Posso chiedere aiuto senza vergognarmi."',c:'growth',fb:'Chiedere aiuto è parte del processo, non debolezza.'},
+    {r:'"È inutile provare, tanto il risultato non cambierà."',c:'fixed',fb:'Rinuncia basata su determinismo.'}
+  ];
+  const skills=['la matematica','il parlare in pubblico','l\'organizzazione','la leadership','la scrittura','le lingue'];
+  const item=items[seed%items.length];
+  const response=fill(item.r,{skill:skills[seed%skills.length]});
+  const fb={};
+  for(const k of Object.keys(this.labels))fb[k]=k===item.c?'Esatto: '+item.fb:'No — '+(k==='fixed'?'qui c\'è apertura al cambiamento.':'qui c\'è rinuncia o credenza in tratti fissi.');
+  return{type:'classify',response,correct:item.c,feedback:fb};
+}},
+
+{id:'pomodoro',ps:10,area:4,name:'Pomodoro & Focus',icon:'🍅',tier:1,req:'eisenhower',
+ gen(seed){
+  if(seed%4===0){
+    return{type:'order',instruction:'Riordina i passi della tecnica del Pomodoro:',
+      steps:['Scegli il compito','Timer 25 minuti, lavora senza interruzioni','Pausa 5 minuti','Dopo 4 pomodori, pausa lunga 15-30 minuti'],
+      feedback:'Scegli, lavori 25\' senza distrazioni, pausa 5\', ogni 4 cicli pausa lunga.'};
+  }
+  const qs=[
+    {s:'Stai facendo un pomodoro e un collega ti chiede qualcosa di non urgente.',
+     opts:[{t:'"Finisco fra 12 minuti, ti cerco io." Segni la richiesta.',c:true,fb:'Proteggi il focus, dai tempo preciso, non dimentichi.'},
+       {t:'Interrompi e aiuti subito.',c:false,fb:'Ogni interruzione costa ~23 minuti di riattivazione cognitiva.'},
+       {t:'Ignori il collega.',c:false,fb:'Aggressivo passivo. Puoi dire no con rispetto.'},
+       {t:'Smetti il pomodoro.',c:false,fb:'Rinuncia al sistema.'}]},
+    {s:'Progetto grande e complesso. Come lo affronti col Pomodoro?',
+     opts:[{t:'Scomponi in sotto-compiti da 1-3 pomodori, poi uno alla volta.',c:true,fb:'Chunking + Pomodoro: sprint gestibili.'},
+       {t:'Timer da 3 ore senza pausa.',c:false,fb:'Senza pause il rendimento cala dopo ~45 minuti.'},
+       {t:'Aspetti "un\'intera giornata libera".',c:false,fb:'Non arriva mai. Il Pomodoro ti fa iniziare ORA.'},
+       {t:'Un solo pomodoro al giorno.',c:false,fb:'Troppo poco per creare flow.'}]},
+    {s:'Dopo 2 pomodori senti la concentrazione calare. Cosa fai?',
+     opts:[{t:'Fai la pausa regolare (5 min), cammini, bevi acqua. Poi riparti.',c:true,fb:'Le pause servono proprio a questo: ricaricare la corteccia prefrontale.'},
+       {t:'Spingi avanti senza pausa per "non perdere il ritmo".',c:false,fb:'Il ritmo si perde proprio quando non fai pause. Il cervello ha bisogno di cicli.'},
+       {t:'Cambi completamente attività.',c:false,fb:'Il context-switch ha un costo cognitivo alto. Meglio la pausa vera.'},
+       {t:'Smetti di lavorare per il resto della giornata.',c:false,fb:'Due pomodori sono solo 50 minuti. Il calo è normale e gestibile.'}]},
+    {s:'Hai 8 email da rispondere, un report da scrivere e una call tra 2 ore. Come organizzi i pomodori?',
+     opts:[{t:'Email: 1 pomodoro (batch). Report: 3 pomodori. Pausa prima della call. Pianificato.',c:true,fb:'Raggruppi compiti simili (batching) e assegni pomodori realistici a ciascuno.'},
+       {t:'Inizi dal report perche e il piu importante, le email aspettano.',c:false,fb:'Le email non lette generano ansia di fondo. Un pomodoro per chiuderle libera la mente.'},
+       {t:'Fai tutto contemporaneamente: email tra una pausa e l altra del report.',c:false,fb:'Multitasking: nessun compito riceve attenzione piena.'},
+       {t:'Rispondi prima a tutte le email una per una, poi vedi se resta tempo.',c:false,fb:'Le email si espandono per riempire il tempo. Senza limite, il report non si inizia mai.'}]},
+    {s:'Ti accorgi che durante i pomodori controlli il telefono. Come correggi?',
+     opts:[{t:'Telefono in modalita aereo o in un cassetto per la durata del pomodoro.',c:true,fb:'Elimina la fonte di distrazione fisicamente. La forza di volonta non basta.'},
+       {t:'Ti prometti di non guardarlo.',c:false,fb:'La promessa senza barriera fisica dura al massimo 5 minuti.'},
+       {t:'Tieni il telefono vicino ma capovolto.',c:false,fb:'Le notifiche vibrano lo stesso. La tentazione resta.'},
+       {t:'Smetti di usare il Pomodoro perche "non funziona per te".',c:false,fb:'Non e il Pomodoro che non funziona: e l ambiente non strutturato.'}]},
+    {s:'Devi fare un compito che detesti (es. inventario, archiviazione). Come usi il Pomodoro?',
+     opts:[{t:'Un pomodoro alla volta. Dopo ogni pomodoro, ricompensa breve. L obiettivo e iniziare, non finire.',c:true,fb:'Il Pomodoro trasforma compiti enormi in sprint sostenibili. La ricompensa mantiene il ciclo.'},
+       {t:'Ti forzi a fare tutto in un blocco unico.',c:false,fb:'Resistenza massima, rendimento minimo. Il cervello si ribella.'},
+       {t:'Lo rimandi finche non diventa urgente.',c:false,fb:'Ora e urgente E noioso. Doppio stress.'},
+       {t:'Lo deleghi a qualcuno.',c:false,fb:'Se non e delegabile, lo stai solo evitando.'}]},
+    {s:'Hai completato 4 pomodori. Sei in flow, ti senti produttivo. Fai la pausa lunga?',
+     opts:[{t:'Si: 15-30 minuti di pausa. Il flow si riattiva dopo, ma senza pausa il crollo e peggiore.',c:true,fb:'Il flow senza recupero diventa esaurimento. La pausa lunga e un investimento, non una perdita.'},
+       {t:'Continui: "Mai interrompere il flow."',c:false,fb:'Il flow soggettivo non corrisponde alla produttivita reale. Dopo 100 minuti la qualita cala.'},
+       {t:'Pausa da 5 minuti e riparti.',c:false,fb:'Dopo 4 pomodori servono almeno 15 minuti. 5 non bastano per recuperare.'},
+       {t:'Smetti di lavorare per il giorno: "Ho gia fatto abbastanza."',c:false,fb:'4 pomodori sono 100 minuti. Buon inizio, ma smettere qui lascia potenziale sul tavolo.'}]},
+    {s:'Un collega ti dice: "Il Pomodoro non funziona per il mio lavoro creativo." Ha ragione?',
+     opts:[{t:'Parzialmente: il Pomodoro standard (25 min) puo essere corto per il lavoro creativo. Si adatta: 45-50 min + 10 pausa.',c:true,fb:'Il principio (focus + recupero) e universale. La durata si adatta al tipo di compito.'},
+       {t:'Ha ragione: il Pomodoro funziona solo per compiti ripetitivi.',c:false,fb:'Falso: Cal Newport usa il deep work (variante lunga) per lavoro accademico creativo.'},
+       {t:'Ha torto: 25 minuti funzionano per tutto.',c:false,fb:'Dogmatismo: ogni persona e ogni compito hanno ritmi diversi.'},
+       {t:'Il lavoro creativo non ha bisogno di struttura.',c:false,fb:'La creativita fiorisce dentro vincoli. La struttura libera, non imprigiona.'}]},
+    {s:'Alla fine della giornata hai completato solo 3 pomodori su 8 pianificati. Cosa analizzi?',
+     opts:[{t:'Quante interruzioni hai avuto? Quanti pomodori sono stati interrotti? La pianificazione era realistica?',c:true,fb:'Analisi del gap: interruzioni, sovrastima, o ambiente non protetto.'},
+       {t:'Concludi che sei pigro.',c:false,fb:'Autocritica globale: non e un analisi, e un giudizio che non produce dati.'},
+       {t:'Domani pianifichi 12 per compensare.',c:false,fb:'Overcompensazione: se oggi ne hai fatti 3, domani 12 e irrealistico. Pianifica 5.'},
+       {t:'Smetti di pianificare i pomodori.',c:false,fb:'Il problema non e la pianificazione, e l esecuzione. I dati ti dicono dove intervenire.'}]}
+  ];
+  const q=qs[seed%qs.length];
+  return{type:'best_pick',scenario:q.s,options:shuf(q.opts.map(o=>({text:o.t,correct:o.c,feedback:o.fb})))};
+}}
+,
+
+/* FIXED: 5 entries rescued from broken impJ */
+{id:'ascolto_attivo',ps:12,area:1,name:'Ascolto Attivo',icon:'👂',tier:0,req:null,
+ labels:{blocco:'🚫 Blocco',ascolto:'👂 Ascolto attivo'},
+ gen:function(seed){
+  var pairs=[
+    {s:'Un collega dice: "Non ce la faccio piu con questo progetto."',
+     bl:['"Non preoccuparti, andra tutto bene!"','"Dovresti organizzarti meglio."','"Anche io sono stressato, guarda."','"Ma dai, non e cosi grave."','"Ti consiglio di parlare col responsabile."'],
+     aa:['"Sembra che tu sia sotto molta pressione. Vuoi raccontarmi cosa ti pesa di piu?"','"Mi pare di capire che ti senti sopraffatto. E cosi?"','"Stai dicendo che il carico e diventato troppo pesante?"'],
+     bfb:'Questo e un blocco alla comunicazione (Gordon): rassicurare/consigliare/competere chiude il dialogo.',
+     afb:'Ascolto attivo: rispecchi il sentimento e inviti ad approfondire senza giudicare.'},
+    {s:'Un tirocinante ti dice: "Credo di aver fatto un errore grave nel report."',
+     bl:['"Fammelo vedere subito!"','"Stai calmo, non sara cosi grave."','"Come hai potuto sbagliare una cosa cosi semplice?"','"Io al tuo posto avrei controllato due volte."'],
+     aa:['"Capisco che sei preoccupato. Vuoi raccontarmi cosa e successo?"','"Ti senti in difficolta per questo. Che tipo di errore pensi di aver fatto?"','"Sembra che la cosa ti preoccupi molto. Ne parliamo insieme?"'],
+     bfb:'Giudicare, minimizzare, interrogare o dare ordini sono blocchi: l altro si chiude.',
+     afb:'Riconosci il sentimento, poi fai una domanda aperta. L altro si sente ascoltato.'},
+    {s:'La responsabile ti dice: "Non sono sicura che questo team funzioni."',
+     bl:['"Ma no, il team va benissimo!"','"Chi e il problema?"','"Forse dovresti cambiare approccio tu."','"Tutti i team hanno difficolta."'],
+     aa:['"Cosa ti fa pensare che non funzioni? Mi interessa capire."','"Stai dicendo che vedi qualcosa che non va nella dinamica del gruppo?"','"Sembra una preoccupazione importante. Puoi dirmi di piu?"'],
+     bfb:'Negare, indagare con domande chiuse, o ribaltare il problema sono blocchi.',
+     afb:'Domanda aperta + interesse genuino. Non giudichi, esplori.'},
+    {s:'Un collega appena rientrato da malattia dice: "Mi sento indietro con tutto."',
+     bl:['"Ma figurati, non ti sei perso niente di importante."','"Devi solo rimetterti al passo, e semplice."','"Anch io quando sono stato malato..."','"Il responsabile non si aspetta miracoli."'],
+     aa:['"Capisco, rientrare e trovare tanto lavoro accumulato puo essere frustrante. Da dove vorresti iniziare?"','"Ti senti sopraffatto dal carico arretrato. E cosi?"','"Sembra pesante. Vuoi che vediamo insieme le priorita?"'],
+     bfb:'Minimizzare, semplificare, competere con la propria esperienza: l altro non si sente capito.',
+     afb:'Validi il sentimento e offri supporto concreto senza importi.'},
+    {s:'Un collega dice: "Non credo che il mio lavoro venga apprezzato qui."',
+     bl:['"Ma certo che si, fai un ottimo lavoro!"','"Non dire cosi, sei bravissimo."','"Se non ti apprezzano, cambia lavoro."','"Secondo me esageri un po."'],
+     aa:['"Cosa ti fa sentire cosi? C e stato qualcosa in particolare?"','"Ti senti poco riconosciuto. Vuoi raccontarmi cosa e successo?"','"Sembra che questa sensazione sia forte. Da quanto la provi?"'],
+     bfb:'Rassicurare, svalutare, consigliare: l altro non si sente davvero ascoltato.',
+     afb:'Validi senza giudicare e inviti ad esplorare cosa c e sotto.'},
+    {s:'Un nuovo arrivato dice: "Questo lavoro non e per niente come me lo aspettavo."',
+     bl:['"E normale all inizio, poi ti abitui."','"Cosa ti aspettavi, che fosse facile?"','"Tutti ci siamo passati, non preoccuparti."','"Magari dovresti parlarne col tutor."'],
+     aa:['"In che senso e diverso? Cosa ti aspettavi?"','"Sembra che ci sia un divario tra quello che immaginavi e la realta. Puoi dirmi di piu?"','"Capisco che puo essere destabilizzante. Quali aspetti ti sorprendono di piu?"'],
+     bfb:'Normalizzare, sminuire o delegare il dialogo a qualcun altro sono blocchi.',
+     afb:'Esplori il divario aspettativa-realta senza giudicare.'},
+    {s:'Un collega ti dice: "Ho litigato con il responsabile stamattina."',
+     bl:['"Cos ha fatto? Racconta!"','"Il responsabile e difficile, lo so."','"Dovresti andare dalle risorse umane."','"Forse hai esagerato tu."'],
+     aa:['"Deve essere stato pesante. Come ti senti adesso?"','"Sembra che la cosa ti abbia scosso. Vuoi parlarne?"','"Com e andata? Mi interessa capire il tuo punto di vista."'],
+     bfb:'Curiosita morbosa, schierarsi, consigliare, colpevolizzare: nessuno di questi e ascolto.',
+     afb:'Ti focalizzi su come sta l altro, non sul gossip o sulla soluzione.'},
+    {s:'Un tirocinante dice: "Non capisco perche mi fanno fare sempre le stesse cose."',
+     bl:['"Perche devi imparare le basi prima."','"Tutti abbiamo iniziato cosi."','"Se vuoi fare cose diverse dillo al tutor."','"Smettila di lamentarti, e un tirocinio."'],
+     aa:['"Ti senti bloccato nella ripetitivita. E cosi?"','"Cosa vorresti fare di diverso? Mi interessa capire."','"Sembra che ti manchi una prospettiva su dove sta andando il percorso. Possiamo esplorarlo insieme?"'],
+     bfb:'Spiegare, normalizzare, delegare, zittire: l altro non si sente compreso.',
+     afb:'Rispecchi la frustrazione e apri uno spazio esplorativo.'},
+    {s:'Un collega dice: "Il mio contratto scade tra due mesi e nessuno mi ha detto niente."',
+     bl:['"Vedrai che te lo rinnovano."','"Dovresti chiedere al capo."','"Anche il mio scadeva e me l hanno rinnovato."','"Non pensarci troppo, stressarti non serve."'],
+     aa:['"L incertezza sul futuro deve essere stressante. Come stai gestendo questa attesa?"','"Mi sembra che l assenza di informazioni ti pesi. E cosi?"','"Senti il bisogno di avere chiarezza. Cosa ti aiuterebbe in questo momento?"'],
+     bfb:'Rassicurare con ipotesi, delegare, competere, minimizzare: tutti blocchi.',
+     afb:'Rispecchi l incertezza e inviti a esplorare i bisogni, non le soluzioni.'},
+    {s:'La tutor ti dice: "Sto pensando di lasciare questo lavoro."',
+     bl:['"Non farlo! Chi ci resta?"','"Con la crisi che c e, non e il momento."','"Dove andresti? Non trovi di meglio."','"Ma perche? Qui stai bene."'],
+     aa:['"E una riflessione importante. Cosa ti sta portando a pensarci?"','"Sembra una decisione che senti forte. Vuoi raccontarmi cosa c e dietro?"','"Capisco che non sia una cosa leggera da dire. Cosa ti pesa di piu?"'],
+     bfb:'Dissuadere, spaventare, giudicare: l altro si chiude e non condivide piu.',
+     afb:'Accogli la confidenza senza giudicarla e inviti ad approfondire.'},
+    {s:'Un collega dice: "La riunione di prima mi ha fatto arrabbiare."',
+     bl:['"Cos e successo? Chi ti ha fatto arrabbiare?"','"Lascia perdere, non vale la pena arrabbiarsi."','"Hai ragione, e stata una riunione assurda."','"Fai un respiro e calmati."'],
+     aa:['"Ti vedo agitato. Cosa ti ha colpito di piu?"','"La riunione ti ha lasciato qualcosa addosso. Vuoi dirmi cosa?"','"Sembra che qualcosa in particolare ti abbia toccato. Cosa?"'],
+     bfb:'Investigare sui colpevoli, minimizzare, schierarsi o dare istruzioni: tutti blocchi.',
+     afb:'Ti focalizzi sull emozione e lasci che l altro scelga quanto condividere.'},
+    {s:'Un nuovo collega dice: "Non riesco a integrarmi nel gruppo, mi sento escluso."',
+     bl:['"Ma no, sei simpaticissimo!"','"Forse dovresti sforzarti di piu."','"E solo questione di tempo, vedrai."','"Prova a uscire con loro dopo il lavoro."'],
+     aa:['"Dev essere scomodo sentirsi cosi. Cosa ti fa sentire escluso?"','"L integrazione richiede tempo, ma capisco che nel frattempo ti pesi. Vuoi dirmi di piu?"','"Ti senti fuori dal gruppo. In quali momenti lo percepisci di piu?"'],
+     bfb:'Negare il sentimento, colpevolizzare, minimizzare, prescrivere soluzioni: blocchi.',
+     afb:'Validi il sentimento e aiuti a esplorare le situazioni specifiche.'}
+  ];
+  var p=pairs[seed%pairs.length];
+  var isBlocco=seed%2===0;
+  return{type:'classify',scenario:p.s,
+    response:isBlocco?p.bl[seed%p.bl.length]:p.aa[seed%p.aa.length],
+    correct:isBlocco?'blocco':'ascolto',
+    feedback:{blocco:isBlocco?p.bfb:'No: qui c\'e ascolto genuino, non un blocco.',
+              ascolto:isBlocco?'No: qui c\'e un blocco alla comunicazione (Gordon).':p.afb}};
+}},
+
+{id:'star',ps:8,area:1,name:'Metodo STAR',icon:'⭐',tier:3,req:'sbi',
+ gen:function(seed){
+  if(seed%3===0){
+    return{type:'order',instruction:'Riordina i passi del metodo STAR:',
+      steps:['Descrivi il contesto specifico in cui è successo','Spiega qual era il compito o la responsabilità','Racconta i passi concreti che hai fatto','Indica l\'esito misurabile che hai ottenuto'],
+      feedback:'STAR: contesto -> responsabilita -> azione concreta -> risultato misurabile. Ogni passo deve essere specifico.'};
+  }
+  var qs=[
+    {s:'Devi raccontare come hai gestito un cliente difficile. Quale risposta STAR e migliore?',
+     opts:[{t:'"La settimana scorsa (S), un cliente ha contestato la fattura (T). Ho verificato i dati, trovato l\'errore e inviato la correzione in 2 ore (A). Il cliente ha confermato il pagamento il giorno dopo (R)."',c:true,fb:'STAR completo: contesto temporale, problema specifico, azione dettagliata, risultato misurabile.'},
+       {t:'"Ho gestito bene il cliente arrabbiato."',c:false,fb:'Zero STAR: manca tutto. Nessun dettaglio verificabile.'},
+       {t:'"Sono bravo a gestire i clienti difficili, lo faccio sempre."',c:false,fb:'Generalizzazione senza esempio concreto. Non e STAR.'},
+       {t:'"Il cliente era arrabbiato ma alla fine si e calmato."',c:false,fb:'Manca T (cosa dovevi fare) e A (cosa hai fatto concretamente).'}]},
+    {s:'Ti chiedono di descrivere un risultato di cui sei orgoglioso. Quale risposta STAR e migliore?',
+     opts:[{t:'"Nel progetto X di marzo (S), dovevo ridurre i tempi di consegna del 20% (T). Ho analizzato il processo, eliminato 3 passaggi ridondanti e creato un template (A). I tempi sono scesi del 25% in un mese (R)."',c:true,fb:'STAR perfetto: ogni passo e specifico e misurabile.'},
+       {t:'"Ho migliorato molto il processo."',c:false,fb:'Vago: quanto? Come? Quale processo?'},
+       {t:'"Il mio responsabile dice che sono efficiente."',c:false,fb:'Opinione di terzi, non un esempio STAR concreto.'},
+       {t:'"Ho lavorato duro e i risultati si sono visti."',c:false,fb:'Generico: mancano S, T, A e R specifici.'}]},
+    {s:'Ti chiedono come hai risolto un problema di comunicazione nel team. Migliore risposta STAR?',
+     opts:[{t:'"A settembre (S) il team non si coordinava sulle scadenze (T). Ho proposto una riunione settimanale di 15 minuti e creato una board condivisa (A). In un mese le scadenze rispettate sono passate dal 60% al 90% (R)."',c:true,fb:'Contesto, problema, azione concreta, risultato numerico. STAR completo.'},
+       {t:'"Ho migliorato la comunicazione del team."',c:false,fb:'Come? Quando? Quanto? Nessun dato STAR.'},
+       {t:'"Il team ora comunica molto meglio."',c:false,fb:'Solo R, e vago. Mancano S, T e A.'},
+       {t:'"Sono una persona comunicativa, risolvo sempre questi problemi."',c:false,fb:'Tratto di personalita, non un esempio concreto.'}]},
+    {s:'Descrivi una volta in cui hai imparato qualcosa di nuovo rapidamente. Migliore STAR?',
+     opts:[{t:'"Quando sono arrivato in azienda (S), dovevo imparare SAP in 2 settimane (T). Ho seguito 3 tutorial, fatto pratica con dati di test e chiesto supporto al collega esperto (A). Al quindicesimo giorno ho inserito il primo ordine in autonomia senza errori (R)."',c:true,fb:'S specifico, T con scadenza, A con 3 passi concreti, R verificabile. Eccellente.'},
+       {t:'"Imparo tutto in fretta, sono veloce."',c:false,fb:'Autodichiarazione senza prove. Non STAR.'},
+       {t:'"Ho imparato SAP da solo."',c:false,fb:'Manca tutto: quando, quanto tempo, come, con quale risultato.'},
+       {t:'"Il mio tutor ha detto che sono stato bravo a imparare."',c:false,fb:'Opinione altrui senza dati. Non e una risposta STAR.'}]},
+    {s:'Racconta un momento in cui hai lavorato sotto pressione. Migliore STAR?',
+     opts:[{t:'"Venerdi scorso (S) il server e crashato a 2 ore dalla consegna al cliente (T). Ho isolato il problema, ripristinato il backup e avvisato il cliente del ritardo di 30 minuti (A). Il cliente ha ricevuto tutto entro le 17 e ha confermato la soddisfazione (R)."',c:true,fb:'Pressione reale, azioni specifiche e ordinate, risultato con feedback. STAR completo.'},
+       {t:'"Lavoro bene sotto pressione, sono abituato."',c:false,fb:'Affermazione generica senza esempio.'},
+       {t:'"C era un problema con il server e l ho risolto."',c:false,fb:'Mancano dettagli: quando, qual era il compito, come, con quale risultato.'},
+       {t:'"Il team mi chiama sempre quando c e un emergenza."',c:false,fb:'Non e un esempio STAR, e una generalizzazione sul proprio ruolo.'}]},
+    {s:'Descrivi come hai gestito un disaccordo con un collega. Migliore STAR?',
+     opts:[{t:'"Nel progetto Y (S), io e Marco non eravamo d accordo sulla strategia di pricing (T). Ho proposto un test A/B su 100 clienti per 2 settimane (A). I dati hanno mostrato che la sua proposta rendeva il 12% in piu e abbiamo adottato quella (R)."',c:true,fb:'STAR eccellente: il conflitto si risolve con dati, non con opinioni. Il risultato mostra flessibilita.'},
+       {t:'"Alla fine avevo ragione io."',c:false,fb:'Non e STAR. E un giudizio retrospettivo senza dettagli.'},
+       {t:'"Abbiamo discusso e trovato un compromesso."',c:false,fb:'Troppo generico: quale compromesso? Come ci siete arrivati?'},
+       {t:'"Non litigo mai con i colleghi, sono diplomatico."',c:false,fb:'Autodichiarazione. Nessun esempio concreto.'}]}
+  ];
+  var q=qs[seed%qs.length];
+  return{type:'best_pick',scenario:q.s,options:shuf(q.opts.map(function(o){return{text:o.t,correct:o.c,feedback:o.fb};}))};
+}},
+
+{id:'scqa',ps:5,area:1,name:'Metodo SCQA',icon:'🧩',tier:2,req:'cnv',
+ gen:function(seed){
+  if(seed%4===0){
+    return{type:'order',instruction:'Riordina i passi del metodo SCQA per argomentare una proposta:',
+      steps:['Descrivi la situazione attuale condivisa da tutti','Introduci la complicazione che cambia le carte in tavola','Formula la domanda chiave che ne deriva','Presenta la tua risposta o proposta concreta'],
+      feedback:'SCQA crea una tensione narrativa: dal contesto condiviso al problema, dalla domanda alla soluzione. L\'ordine genera persuasione.'};
+  }
+  var qs=[
+    {s:'Devi proporre al responsabile di cambiare fornitore. Come strutturi con SCQA?',
+     opts:[{t:'"Attualmente usiamo il fornitore X da 3 anni (S). Negli ultimi 6 mesi le consegne sono arrivate in ritardo 4 volte, causando fermi produzione (C). Possiamo continuare a rischiare fermi? (Q) Propongo di testare il fornitore Y per 3 mesi con un ordine pilota (R)."',c:true,fb:'SCQA perfetto: contesto condiviso, problema con dati, domanda retorica, proposta concreta e graduale.'},
+       {t:'"Dobbiamo cambiare fornitore perche X fa schifo."',c:false,fb:'Nessuna struttura. Giudizio senza dati. Il responsabile non ha elementi per decidere.'},
+       {t:'"Ho trovato un fornitore migliore, lo cambiamo?"',c:false,fb:'Salta S e C: il responsabile non capisce perche dovrebbe cambiare.'},
+       {t:'"Ci sono stati dei problemi con le consegne ultimamente."',c:false,fb:'Solo C, vago. Manca tutto il resto.'}]},
+    {s:'Vuoi proporre al team di usare una nuova app per la gestione dei compiti. SCQA migliore?',
+     opts:[{t:'"Usiamo fogli Excel per tracciare i compiti (S). Il mese scorso 3 task sono stati dimenticati perche il file non era aggiornato (C). Come evitiamo che succeda ancora? (Q) Propongo di provare Trello per 2 settimane e confrontare i risultati (R)."',c:true,fb:'S (stato attuale), C (problema con dati), Q (domanda aperta), R (proposta con periodo di test). Struttura persuasiva.'},
+       {t:'"Trello e meglio di Excel, usiamolo."',c:false,fb:'Opinione senza argomentazione. Non convince chi non conosce Trello.'},
+       {t:'"Excel non funziona piu."',c:false,fb:'Solo C, generico. Non proponi niente.'},
+       {t:'"Ho letto che le aziende moderne usano tool digitali."',c:false,fb:'Appello all autorita generica. Non parla del vostro problema specifico.'}]},
+    {s:'Devi convincere il tutor a darti piu responsabilita. SCQA?',
+     opts:[{t:'"Da 4 mesi gestisco l inventario senza errori (S). Il magazzino ha anche il processo di riordino che nessuno segue (C). Chi potrebbe occuparsene? (Q) Vorrei provare a gestirlo per un mese, con un check settimanale con te (R)."',c:true,fb:'S (track record), C (problema scoperto), Q (aperta), R (proposta graduale con controllo). Persuasivo e rispettoso.'},
+       {t:'"Sono pronto per fare di piu."',c:false,fb:'Autodichiarazione senza evidenze. Non e SCQA.'},
+       {t:'"Mi annoio a fare sempre le stesse cose."',c:false,fb:'Lamentela, non proposta. Effetto opposto.'},
+       {t:'"Il riordino va male, posso farlo io?"',c:false,fb:'Salta S (non mostri le tue credenziali) e la domanda. Troppo diretto senza contesto.'}]},
+    {s:'Devi scrivere un email per proporre una nuova procedura di sicurezza. SCQA?',
+     opts:[{t:'"Attualmente i visitatori accedono liberamente all area produzione (S). La settimana scorsa un visitatore e entrato senza casco in zona macchine (C). Come preveniamo incidenti? (Q) Propongo un registro accessi con DPI obbligatori e accompagnamento (R)."',c:true,fb:'Parte dal fatto condiviso, introduce il rischio concreto, pone la domanda, propone la soluzione. SCQA completo.'},
+       {t:'"Serve una nuova procedura di sicurezza."',c:false,fb:'Conclusione senza S, C, Q. Non spiega perche ne cosa.'},
+       {t:'"La sicurezza e importante."',c:false,fb:'Ovvieta. Nessuno e in disaccordo, ma nessuno agisce.'},
+       {t:'"Un visitatore rischiava di farsi male."',c:false,fb:'Solo C parziale. Manca il contesto e la proposta.'}]}
+  ];
+  var q=qs[seed%qs.length];
+  return{type:'best_pick',scenario:q.s,options:shuf(q.opts.map(function(o){return{text:o.t,correct:o.c,feedback:o.fb};}))};
+}},
+
+{id:'pyramid',ps:10,area:1,name:'Pyramid Principle',icon:'🔺',tier:2,req:'cnv',
+ labels:{topdown:'🔺 Top-down (Pyramid)',bottomup:'⬇️ Bottom-up'},
+ gen:function(seed){
+  if(seed%4===0){
+    return{type:'order',instruction:'Riordina i passi del Pyramid Principle per comunicare in modo efficace:',
+      steps:['Parti dalla conclusione o richiesta principale','Fornisci le 2-3 motivazioni chiave che la sostengono','Aggiungi dettagli, dati o alternative solo se richiesti'],
+      feedback:'Top-down: prima il messaggio, poi il perche, poi i dettagli. Rispetta il tempo dell interlocutore.'};
+  }
+  var items=[
+    {r:'"Le scrivo per chiederle un giorno di ferie giovedi 15. Ho completato in anticipo le consegne e non ci sono riunioni. Luca puo coprire le urgenze."',c:'topdown',fb:'Conclusione (richiesta ferie) in apertura. Motivazioni subito dopo. Dettaglio operativo alla fine.'},
+    {r:'"Dunque, vedi, c e una cosa... praticamente io giovedi avrei questo appuntamento, cioe non e che non voglio venire, pero ecco... non so se riesco..."',c:'bottomup',fb:'Bottom-up confuso. Il tutor non capisce cosa vuoi dire. Sembra un tentativo di scusa.'},
+    {r:'"Propongo di cambiare il fornitore di carta. Il costo e aumentato del 30% e la qualita e peggiorata. Ho trovato un alternativa a -15% con campioni gia testati."',c:'topdown',fb:'Conclusione (cambiare fornitore), motivazione (costo +30%, qualita peggiore), dettaglio (alternativa testata). Pyramid perfetta.'},
+    {r:'"Allora, ieri ho controllato le fatture, poi ho confrontato i prezzi, poi ho chiamato tre fornitori, e alla fine ho scoperto che quello attuale costa il 30% in piu... insomma, forse dovremmo cambiarlo."',c:'bottomup',fb:'Il messaggio principale arriva alla fine, dopo un racconto cronologico. Chi ascolta ha gia perso attenzione.'},
+    {r:'"Il progetto sara in ritardo di 3 giorni. Il test del modulo B ha rivelato un bug critico. Ho gia assegnato la fix a Marco e prevedo chiusura entro venerdi."',c:'topdown',fb:'Impatto (ritardo), causa (bug), azione (fix + timeline). Nessun preambolo inutile.'},
+    {r:'"Dunque, prima stavamo testando il modulo A che andava bene, poi siamo passati al B, li abbiamo trovato un problema, Marco ha detto che serviva tempo... insomma, forse consegnamo un po in ritardo."',c:'bottomup',fb:'Storia cronologica con conclusione nascosta in fondo. Chi legge non sa se il ritardo e di un giorno o un mese.'},
+    {r:'"Chiedo di anticipare la riunione a martedi. Tre dei cinque partecipanti hanno conflitti giovedi. Martedi siamo tutti disponibili."',c:'topdown',fb:'Richiesta, motivazione, dato. Tre frasi, zero ambiguita.'},
+    {r:'"Ho parlato con Luca e lui giovedi ha un corso, poi ho sentito Sara e anche lei ha un problema, anche Marco non e sicuro... forse sarebbe meglio spostare?"',c:'bottomup',fb:'Bottom-up: la richiesta arriva nascosta alla fine come domanda timida. Il destinatario non capisce se stai chiedendo o raccontando.'},
+    {r:'"Il nuovo sistema di ticketing va adottato. Riduce i tempi di risposta del 40%. Il costo e coperto dal budget esistente. Allego il confronto con il sistema attuale."',c:'topdown',fb:'Conclusione diretta, 2 motivazioni (tempo + costo), dettaglio come allegato. Comunicazione da professionista.'},
+    {r:'"Non so se hai visto quella email del reparto IT, comunque parlano di un sistema nuovo, io l ho guardato un po e sembra carino, costa anche meno... potremmo valutarlo?"',c:'bottomup',fb:'Nessuna struttura: si perde tra premesse, incertezze e conclusione debole.'}
+  ];
+  var item=items[seed%items.length];
+  var fb={};
+  fb.topdown=item.c==='topdown'?'Esatto: '+item.fb:'No: qui la conclusione e nascosta in fondo. E bottom-up.';
+  fb.bottomup=item.c==='bottomup'?'Esatto: '+item.fb:'No: qui la conclusione e in apertura. E top-down (Pyramid).';
+  return{type:'classify',response:item.r,correct:item.c,feedback:fb};
+}},
+
+{id:'goleman_eq',ps:10,area:2,name:'Intelligenza Emotiva (EQ)',icon:'🧠',tier:3,req:'empatia',
+ labels:{autoconsapevolezza:'🪞 Autoconsapevolezza',autoregolazione:'🎛️ Autoregolazione',motivazione:'🔥 Motivazione',empatia_eq:'🤝 Empatia',abilita_sociali:'🌐 Abilita sociali'},
+ gen:function(seed){
+  var items=[
+    {r:'Riconosci che stai provando ansia prima di una presentazione e ne comprendi la causa.',c:'autoconsapevolezza',fb:'Saper identificare e nominare le proprie emozioni in tempo reale.'},
+    {r:'Decidi di aspettare prima di rispondere a un\'email che ti ha irritato.',c:'autoregolazione',fb:'Gestire l\'impulso e scegliere come rispondere.'},
+    {r:'Continui a lavorare su un progetto difficile perche ci credi, non per il bonus.',c:'motivazione',fb:'Motivazione intrinseca: spingi per il significato, non per il rinforzo esterno.'},
+    {r:'Noti che un collega e silenzioso e intuisci che qualcosa lo preoccupa.',c:'empatia_eq',fb:'Leggere gli stati emotivi altrui dai segnali non verbali.'},
+    {r:'Riesci a mediare un conflitto tra due colleghi trovando un compromesso.',c:'abilita_sociali',fb:'Orchestrare le relazioni e gestire dinamiche di gruppo.'},
+    {r:'Ti accorgi che la tua frustrazione sta influenzando il tono delle tue email.',c:'autoconsapevolezza',fb:'Monitorare come le emozioni influenzano il comportamento.'},
+    {r:'Respiri profondamente e riformuli il tuo messaggio prima di parlare in riunione.',c:'autoregolazione',fb:'Mettere una pausa tra stimolo e risposta.'},
+    {r:'Lavori con entusiasmo anche su compiti ripetitivi perche li colleghi a un obiettivo piu grande.',c:'motivazione',fb:'Dare significato alle attivita quotidiane.'},
+    {r:'Adatti il tuo stile comunicativo quando parli con persone di culture diverse.',c:'abilita_sociali',fb:'Flessibilita relazionale e consapevolezza sociale.'},
+    {r:'Chiedi a un collega in difficolta come si sente prima di offrire soluzioni.',c:'empatia_eq',fb:'Ascolto empatico prima del problem-solving.'}
+  ];
+  var item=items[seed%items.length];
+  var labels=this.labels;var fb={};
+  var keys=Object.keys(labels);
+  for(var i=0;i<keys.length;i++){fb[keys[i]]=keys[i]===item.c?'Esatto: '+item.fb:'No, questa e un\'altra componente dell\'EQ.';}
+  return{type:'classify',scenario:'Quale componente dell\'intelligenza emotiva di Goleman?',response:item.r,correct:item.c,feedback:fb};
+}},
+
+{id:'leadership_sit',ps:12,area:2,name:'Leadership Situazionale',icon:'👔',tier:2,req:'coping',
+ labels:{direttivo:'📋 Direttivo',coaching:'🎓 Coaching',supportivo:'🤗 Supportivo',delegante:'🚀 Delegante'},
+ gen:function(seed){
+  var items=[
+    {r:'Un nuovo tirocinante non sa usare il software e non ha mai lavorato in ufficio.',c:'direttivo',fb:'Competenza bassa + motivazione variabile = servono istruzioni chiare, passo-passo, con supervisione stretta.'},
+    {r:'Un collega motivato ma ancora inesperto vuole imparare a gestire i clienti.',c:'coaching',fb:'Motivazione alta + competenza in crescita = guida con spiegazioni, domande, feedback. Non fai tu, insegni.'},
+    {r:'Un collaboratore esperto ma demotivato dopo un progetto fallito.',c:'supportivo',fb:'Competenza alta + motivazione bassa = ascolto, incoraggiamento, coinvolgimento nelle decisioni. Sa fare, non vuole.'},
+    {r:'Un professionista autonomo con track record eccellente sul compito.',c:'delegante',fb:'Competenza alta + motivazione alta = dai l obiettivo e lascialo lavorare. Il controllo eccessivo lo demotiva.'},
+    {r:'Un tirocinante al primo giorno: entusiasta ma non sa nulla delle procedure.',c:'direttivo',fb:'L entusiasmo non compensa la mancanza di competenza. Servono istruzioni chiare e supervisione.'},
+    {r:'Un collega che sa fare bene il suo lavoro ma ultimamente arriva tardi e sembra spento.',c:'supportivo',fb:'La competenza c e, la motivazione no. Servono ascolto e coinvolgimento, non ordini.'},
+    {r:'Un membro del team che ha gia gestito 10 progetti simili con successo.',c:'delegante',fb:'Esperto e motivato: il tuo intervento e controproducente. Definisci il risultato atteso e fidati.'},
+    {r:'Un junior che ha imparato le basi e ora vuole capire il perche delle cose, non solo il come.',c:'coaching',fb:'Sta passando dalla dipendenza all autonomia. Spiegagli la logica dietro le azioni, non solo le azioni.'},
+    {r:'Un collega esperto a cui viene assegnato un compito completamente nuovo per lui.',c:'coaching',fb:'E esperto in generale ma novizio su questo. Torna al coaching: guida, spiega, fai domande.'},
+    {r:'Un collaboratore che ha appena ricevuto una promozione e si sente sopraffatto.',c:'supportivo',fb:'Ha le competenze (per questo e stato promosso) ma la fiducia e bassa. Serve supporto emotivo, non direttive.'},
+    {r:'Un tirocinante che dopo 3 mesi continua a fare errori sulle procedure base.',c:'direttivo',fb:'Ancora non padroneggia le basi: tornare a istruzioni strutturate e supervisione. Non e il momento del coaching.'},
+    {r:'Il tuo miglior collaboratore ti chiede di non essere coinvolto nelle decisioni operative.',c:'delegante',fb:'Sta comunicando che vuole autonomia. Rispettalo: definisci i confini e lascia fare.'}
+  ];
+  var item=items[seed%items.length];
+  var labels=this.labels;var fb={};
+  var keys=Object.keys(labels);
+  for(var i=0;i<keys.length;i++){fb[keys[i]]=keys[i]===item.c?'Esatto: '+item.fb:'No: valuta competenza + motivazione per scegliere lo stile giusto.';}
+  return{type:'classify',scenario:'Quale stile di leadership situazionale (Hersey-Blanchard) e piu efficace?',response:item.r,correct:item.c,feedback:fb};
+}},
+
+{id:'fiveWhy',ps:4,area:3,name:'5 Perche',icon:'🔬',tier:2,req:'pdca',
+ gen:function(seed){
+  if(seed%3===0){
+    var chains=[
+      {problem:'Le consegne ai clienti sono spesso in ritardo.',steps:['Perche sono in ritardo? -> La produzione finisce tardi.','Perche finisce tardi? -> Le materie prime arrivano in ritardo.','Perche arrivano tardi? -> Gli ordini partono troppo tardi.','Perche partono tardi? -> Non c\'e un sistema di riordino automatico.','Perche non c\'e? -> Nessuno ha mai analizzato il processo di approvvigionamento.']},
+      {problem:'I report mensili contengono errori frequenti.',steps:['Perche ci sono errori? -> I dati vengono inseriti manualmente.','Perche manualmente? -> Non c\'e un template standardizzato.','Perche non c\'e? -> Ogni persona usa il proprio formato.','Perche formati diversi? -> Non e mai stata creata una procedura comune.','Perche nessuna procedura? -> Non c\'e un responsabile della qualita dei report.']}
+    ];
+    var ch=chains[seed%chains.length];
+    return{type:'order',instruction:'Ordina la catena dei 5 Perche per il problema: "'+ch.problem+'"',steps:ch.steps,feedback:'Ogni Perche scava piu in profondita: dal sintomo alla causa sistemica. La causa radice e sempre organizzativa o di processo.'};
+  }
+  var qs=[
+    {s:'Un collega propone: "Le consegne sono in ritardo, assumiamo piu personale." A quale livello dei 5 Perche si e fermato?',
+     opts:[{t:'Al primo Perche: ha identificato il sintomo ma non la causa radice.',c:true,fb:'Esatto: "assumere personale" risolve il sintomo. I 5 Perche potrebbero rivelare che il problema e nel processo, non nelle persone.'},
+       {t:'Al quinto Perche: ha trovato la causa radice.',c:false,fb:'No: non ha chiesto nemmeno un Perche.'},
+       {t:'E una buona soluzione definitiva.',c:false,fb:'Senza analisi causale, e una soluzione-cerotto.'},
+       {t:'Non si applica ai problemi di personale.',c:false,fb:'I 5 Perche si applicano a qualsiasi problema.'}]},
+    {s:'Un software ha un bug che si ripresenta dopo ogni fix. Cosa suggeriscono i 5 Perche?',
+     opts:[{t:'La causa radice non e stata trovata: si sta risolvendo il sintomo, non il problema.',c:true,fb:'Se il bug torna, la fix agisce a livello superficiale. Servono piu Perche per trovare la causa strutturale.'},
+       {t:'Il software va riscritto da zero.',c:false,fb:'Soluzione drastica senza analisi. Potrebbe bastare un fix alla causa radice.'},
+       {t:'Servono piu test automatici.',c:false,fb:'I test rilevano il problema ma non lo prevengono. Serve capire PERCHE il bug si genera.'},
+       {t:'Il programmatore non e competente.',c:false,fb:'Attribuzione personale senza analisi di processo. I 5 Perche guardano il sistema, non la persona.'}]}
+  ];
+  var q=qs[seed%qs.length];
+  return{type:'best_pick',scenario:q.s,options:shuf(q.opts.map(function(o){return{text:o.t,correct:o.c,feedback:o.fb};}))};
+}},
+
+{id:'smart',ps:10,area:3,name:'Obiettivi SMART',icon:'🏹',tier:1,req:'fatto_opinione',
+ labels:{smart:'✅ SMART',non_smart:'❌ Non SMART'},
+ gen:function(seed){
+  var items=[
+    {r:'"Voglio migliorare nel mio lavoro."',c:'non_smart',fb:'Vago: manca Specifico (cosa?), Misurabile (quanto?), Time-bound (entro quando?).'},
+    {r:'"Entro il 30 giugno, completero 3 corsi di Excel avanzato e applichero le formule nel report mensile."',c:'smart',fb:'S (corsi Excel), M (3 corsi), A (raggiungibile), R (utile per il report), T (30 giugno).'},
+    {r:'"Devo leggere di piu."',c:'non_smart',fb:'Non specificato: cosa leggere? Quanto? Entro quando?'},
+    {r:'"Leggero un libro di settore al mese per i prossimi 6 mesi, e ne faro un riassunto di 1 pagina."',c:'smart',fb:'S (libro di settore + riassunto), M (1/mese, 1 pagina), A (fattibile), R (crescita), T (6 mesi).'},
+    {r:'"Diventero il miglior venditore dell\'azienda."',c:'non_smart',fb:'Non Misurabile (miglior come?), non Time-bound, forse non Achievable.'},
+    {r:'"Aumentero le mie vendite del 15% nel Q3 contattando 5 nuovi clienti a settimana."',c:'smart',fb:'S (vendite), M (15%), A (5 clienti/sett), R (crescita fatturato), T (Q3).'},
+    {r:'"Voglio essere piu organizzato."',c:'non_smart',fb:'Troppo vago: organizzato come? In cosa? Misurato come?'},
+    {r:'"Da lunedi usero la matrice di Eisenhower ogni mattina per 30 giorni e misuro le scadenze rispettate."',c:'smart',fb:'S (Eisenhower), M (scadenze rispettate), A (si), R (organizzazione), T (30 giorni da lunedi).'},
+    {r:'"Prima o poi imparero a parlare in pubblico."',c:'non_smart',fb:'"Prima o poi" = nessuna scadenza. "Imparero" = non misurabile.'},
+    {r:'"Entro marzo faro 2 presentazioni al team e chiedero feedback strutturato su 3 criteri."',c:'smart',fb:'S (presentazioni + feedback), M (2 presentazioni, 3 criteri), T (marzo). Eccellente.'}
+  ];
+  var item=items[seed%items.length];
+  return{type:'classify',response:item.r,correct:item.c,
+    feedback:{smart:item.c==='smart'?'Esatto: '+item.fb:'No: questo obiettivo non soddisfa i criteri SMART.',
+              non_smart:item.c==='non_smart'?'Esatto: '+item.fb:'No: questo obiettivo e formulato in modo SMART.'}};
+}}
+,
+
+{id:'ooda',ps:5,area:3,name:'OODA Loop',icon:'🎯',tier:2,req:'pdca',
+ gen:function(seed){
+  if(seed%4===0){
+    return{type:'order',instruction:'Riordina le fasi dell\'OODA Loop per prendere una decisione rapida:',
+      steps:['Osserva: raccogli dati dalla situazione reale','Orienta: interpreta i dati usando esperienza e contesto','Decidi: scegli la linea d\'azione migliore disponibile','Agisci: esegui la decisione e osserva il risultato'],
+      feedback:'OODA e ciclico: dopo Act, torni a Observe. La velocita del ciclo e piu importante della perfezione di ogni singolo passo.'};
+  }
+  var qs=[
+    {s:'Un cliente chiama furioso per un ordine sbagliato. Sei l unico in ufficio. Cosa fai secondo OODA?',
+     opts:[{t:'Observe: ascolti cosa e successo. Orient: verifichi l ordine nel sistema. Decide: proponi sostituzione o rimborso. Act: lo fai subito e avvisi il responsabile.',c:true,fb:'Ciclo OODA completo e rapido. Non ti blocchi, non reagisci d impulso, non rimandi.'},
+       {t:'"Mi dispiace, il mio responsabile non c e, puo richiamare domani?"',c:false,fb:'Salti tutto il ciclo. Il cliente aspetta un giorno senza motivo.'},
+       {t:'Verifichi l ordine per 30 minuti cercando di capire ogni dettaglio.',c:false,fb:'Observe senza Orient, Decide e Act. Analisi-paralisi: il cliente aspetta inutilmente.'},
+       {t:'Prometti un rimborso immediato senza verificare.',c:false,fb:'Salti Observe e Orient: agisci senza dati. Potresti rimborsare un ordine corretto.'}]},
+    {s:'In una riunione, scopri che il progetto ha un budget inferiore del 20% rispetto a quello concordato. Come applichi OODA?',
+     opts:[{t:'Observe: chiedi i numeri aggiornati. Orient: valuti cosa e tagliabile e cosa no. Decide: proponi due scenari (con e senza tagli). Act: presenti le opzioni al team.',c:true,fb:'Non ti blocchi nella sorpresa. Raccogli dati, interpreti, proponi. OODA rapido.'},
+       {t:'Ti arrabbi e dici che cosi non si puo lavorare.',c:false,fb:'Reazione emotiva: zero Orient e zero Decide. Non aiuta nessuno.'},
+       {t:'Chiedi una settimana per ripensare tutto.',c:false,fb:'Rallenti il ciclo inutilmente. I dati sono gia li, servono decisioni.'},
+       {t:'Accetti il taglio senza analizzare l impatto.',c:false,fb:'Salti Orient: non sai cosa perdi. Act senza Decide.'}]},
+    {s:'Un collega si ammala il giorno della presentazione al cliente. Tocca a te. Come procedi?',
+     opts:[{t:'Observe: leggi le slide e gli appunti. Orient: identifichi le 3 slide chiave. Decide: presenti quelle e rimandi il dettaglio. Act: fai la presentazione e chiedi feedback.',c:true,fb:'OODA sotto pressione: non cerchi la perfezione, cerchi l azione migliore possibile con i dati disponibili.'},
+       {t:'Chiedi di rimandare la presentazione.',c:false,fb:'Puo essere impossibile. OODA dice: agisci con quello che hai, non aspettare condizioni ideali.'},
+       {t:'Studi tutte le slide nel dettaglio e arrivi preparatissimo ma in ritardo.',c:false,fb:'Observe eccessivo: la perfezione rallenta il ciclo. Il cliente non aspetta.'},
+       {t:'Improvvisi completamente.',c:false,fb:'Act senza Observe e Orient: rischi di dire cose sbagliate.'}]},
+    {s:'Stai guidando un progetto e un competitor lancia un prodotto simile. Come reagisci?',
+     opts:[{t:'Observe: analizzi il prodotto concorrente. Orient: confronti punti di forza e debolezza col tuo. Decide: scegli se accelerare, differenziare o cambiare target. Act: comunichi la strategia al team.',c:true,fb:'OODA strategico: il vantaggio non e reagire per primi, ma capire meglio e decidere piu in fretta.'},
+       {t:'Vai in panico e cambi tutto il progetto.',c:false,fb:'Act senza Orient: la reazione istintiva raramente e quella giusta.'},
+       {t:'Ignori il competitor e vai avanti come prima.',c:false,fb:'Rifiuti di Observe: il contesto e cambiato, ignorarlo e pericoloso.'},
+       {t:'Aspetti di vedere come va il loro lancio prima di fare qualsiasi cosa.',c:false,fb:'Observe infinito senza mai passare a Orient e Decide. Il mercato non aspetta.'}]}
+  ];
+  var q=qs[seed%qs.length];
+  return{type:'best_pick',scenario:q.s,options:shuf(q.opts.map(function(o){return{text:o.t,correct:o.c,feedback:o.fb};}))};
+}}
+,
+
+/* ═══ ADVANCED SKILLS — Unlock after ⭐⭐⭐ on all skills in the area ═══ */
+
+{id:'negoziazione',ps:10,area:1,name:'Negoziazione Win-Win',icon:'🤝',tier:99,reqAll:1,
+ gen:function(seed){
+  var qs=[
+    {s:'Un cliente chiede uno sconto del 30% su un ordine importante. Come negozi?',
+     opts:[{t:'"Posso offrire il 10% se confermi l\'ordine entro venerdi. Per il 30% dovremmo aumentare il volume a 500 pezzi."',c:true,fb:'Win-win: offri qualcosa in cambio di qualcosa. Nessuno perde.'},
+       {t:'"No, il prezzo e quello."',c:false,fb:'Rigidita pura: rischi di perdere il cliente senza neanche esplorare.'},
+       {t:'"Va bene, 30%."',c:false,fb:'Cedere subito distrugge il tuo margine e il tuo potere negoziale futuro.'},
+       {t:'"Devo chiedere al mio responsabile."',c:false,fb:'Delega la decisione: perdi autorevolezza e tempo.'}]},
+    {s:'Devi chiedere un aumento al tuo responsabile. Come imposti la conversazione?',
+     opts:[{t:'"Negli ultimi 6 mesi ho gestito 3 progetti in piu rispetto al mio ruolo, con risultati misurabili. Vorrei discutere un adeguamento che rifletta il contributo attuale."',c:true,fb:'Dati + proposta. Non chiedi un favore, proponi un riequilibrio basato su fatti.'},
+       {t:'"Mi merito un aumento, lavoro piu degli altri."',c:false,fb:'Confronto competitivo + pretesa emotiva. Non e negoziazione.'},
+       {t:'"Se non mi aumentate cerco altrove."',c:false,fb:'Ultimatum: distrugge la relazione. Funziona una volta, poi sei fuori.'},
+       {t:'"So che e un momento difficile, pero..."',c:false,fb:'Inizi scusandoti: il messaggio arriva gia debole.'}]},
+    {s:'Due colleghi vogliono lo stesso giorno di ferie. Come media il responsabile?',
+     opts:[{t:'Proponi di alternare: uno prende questo mese, l\'altro il prossimo, con priorita inversa. Documenti l\'accordo.',c:true,fb:'Soluzione strutturale: entrambi ottengono, a turno. Regola replicabile.'},
+       {t:'Decide lui chi ha piu bisogno.',c:false,fb:'Giudizio soggettivo: chi "perde" si sentira trattato ingiustamente.'},
+       {t:'Nessuno dei due prende ferie quel giorno.',c:false,fb:'Nessuno vince: e la soluzione peggiore.'},
+       {t:'Chi chiede prima ha la precedenza.',c:false,fb:'Regola rigida che non tiene conto delle circostanze.'}]},
+    {s:'Un fornitore ti propone un contratto con clausole sfavorevoli. Come rispondi?',
+     opts:[{t:'"Ho analizzato le clausole 3 e 7: creano un rischio per noi. Vi propongo questa formulazione alternativa che protegge entrambi."',c:true,fb:'Specifico + propositivo. Non rifiuti: offri una alternativa.'},
+       {t:'"Va bene, firmiamo."',c:false,fb:'Accettare clausole sfavorevoli per fretta e un errore strategico.'},
+       {t:'"Non firmo questo contratto."',c:false,fb:'Rifiuto secco senza controproposta. Blocca la trattativa.'},
+       {t:'"Le vostre condizioni sono inaccettabili."',c:false,fb:'Giudizio globale. Non indica cosa cambiare ne come.'}]},
+    {s:'Il tuo team vuole lavorare da remoto il venerdi. Il responsabile e contrario. Come negozi?',
+     opts:[{t:'"Propongo un test di 4 venerdi: misuriamo produttivita e soddisfazione. Se i numeri sono positivi, diventa strutturale."',c:true,fb:'Proposta basata su dati futuri, non su opinioni. Riduci il rischio per entrambi.'},
+       {t:'"Tutti lo fanno, dovremmo farlo anche noi."',c:false,fb:'Appello alla conformita: non e un argomento per il TUO contesto.'},
+       {t:'"Se non ce lo concede, il morale crollera."',c:false,fb:'Minaccia velata. Non e negoziazione, e ricatto emotivo.'},
+       {t:'"Ok, come vuole lei."',c:false,fb:'Rinuncia senza neanche esplorare opzioni.'}]},
+    {s:'Stai negoziando il tuo primo stipendio. L offerta e bassa. Come rispondi?',
+     opts:[{t:'"Apprezzo l offerta. Considerando le mie competenze in X e Y, e i valori di mercato, proporrei una cifra tra A e B. Cosa ne pensate?"',c:true,fb:'Ancoraggio: dai un range basato su dati. Rispettoso ma fermo.'},
+       {t:'"Accetto, grazie!" (anche se e sotto le tue aspettative)',c:false,fb:'Accettare la prima offerta segnala che avresti accettato anche meno.'},
+       {t:'"E troppo poco, voglio il doppio."',c:false,fb:'Richiesta non ancorata a dati: perde credibilita.'},
+       {t:'"Non so, quanto offrite di solito?"',c:false,fb:'Cedi il potere di ancoraggio all altra parte.'}]},
+    {s:'Un collega vuole che tu faccia il suo turno di sabato. Tu non vuoi. Come negozi?',
+     opts:[{t:'"Sabato non posso. Posso coprirti mercoledi sera se tu copri il mio lunedi mattina prossimo."',c:true,fb:'Scambio concreto: non dici solo no, offri un alternativa equivalente.'},
+       {t:'"No, arrangiati."',c:false,fb:'Rifiuto secco che danneggia la relazione.'},
+       {t:'"Ok va bene." (controvoglia)',c:false,fb:'Cedere genera rancore e il collega chiedera di nuovo.'},
+       {t:'"Chiedi a qualcun altro."',c:false,fb:'Scarichi senza esplorare se c e un accordo possibile.'}]},
+    {s:'In una trattativa il cliente dice: "Il vostro competitor costa il 20% in meno." Come rispondi?',
+     opts:[{t:'"Capisco. Il nostro prezzo include X, Y e Z che il competitor non offre. Se queste cose non vi servono, posso ridurre il pacchetto."',c:true,fb:'Non abbassi il prezzo: mostri il valore. Se non lo vogliono, riduci il servizio, non il margine.'},
+       {t:'"Allora andate dal competitor."',c:false,fb:'Chiudi la trattativa. Se avesse voluto il competitor ci sarebbe gia andato.'},
+       {t:'"Ok, facciamo -20%."',c:false,fb:'Cedi senza sapere se il dato e vero. Perdi margine e credibilita.'},
+       {t:'"Il nostro prodotto e migliore."',c:false,fb:'Affermazione generica senza dati. Non convince.'}]},
+    {s:'Stai mediando tra due reparti che si accusano a vicenda di ritardi. Come imposti la negoziazione?',
+     opts:[{t:'Chiedi a entrambi: "Qual e il vostro bisogno reale?" Poi cerchi una soluzione che soddisfi entrambi i bisogni.',c:true,fb:'Fisher & Ury: separa le posizioni dai bisogni. Le posizioni sono opposte, i bisogni possono essere compatibili.'},
+       {t:'Dai ragione al reparto piu importante.',c:false,fb:'Gerarchia come criterio: il reparto "perdente" sabotera la soluzione.'},
+       {t:'Proponi un compromesso a meta.',c:false,fb:'Il compromesso accontenta meta di entrambi: nessuno e soddisfatto.'},
+       {t:'Lasci che risolvano da soli.',c:false,fb:'Se potessero, lo avrebbero gia fatto. Serve un mediatore.'}]},
+    {s:'Il tuo BATNA (alternativa migliore) e debole: non hai altre offerte di lavoro. Come negozi lo stipendio?',
+     opts:[{t:'Non riveli il tuo BATNA. Ti concentri sul valore che porti: competenze, risultati, unicita. Chiedi un range di mercato.',c:true,fb:'Con BATNA debole: non parlare di alternative, parla di valore. Il tuo potere e nel contributo, non nella minaccia.'},
+       {t:'Bluffi: "Ho altre offerte."',c:false,fb:'Se scoprono il bluff, perdi tutta la credibilita. E lo scoprono.'},
+       {t:'Accetti qualsiasi offerta pur di non rischiare.',c:false,fb:'BATNA debole non significa zero potere. Il tuo valore resta reale.'},
+       {t:'Dici che non hai alternative per ottenere empatia.',c:false,fb:'La pena non e una strategia negoziale. Comunica debolezza, non valore.'}]}
+  ];
+  var q=qs[seed%qs.length];
+  return{type:'best_pick',scenario:q.s,options:shuf(q.opts.map(function(o){return{text:o.t,correct:o.c,feedback:o.fb};}))};
+}},
+
+{id:'regolazione_avanzata',ps:3,area:2,name:'Regolazione Avanzata',icon:'🧩',tier:99,reqAll:2,
+ gen:function(seed){
+  var qs=[
+    {s:'Sei in riunione, il tuo progetto viene bocciato pubblicamente. Senti la rabbia salire. Cosa fai?',
+     opts:[{t:'Prendi un respiro. Dici: "Capisco le perplessita. Posso avere 24 ore per presentare una versione rivista con i vostri input?"',c:true,fb:'Pausa + riconoscimento + richiesta di tempo. Non reprimi la rabbia, la gestisci.'},
+       {t:'Difendi il progetto punto per punto con tono agitato.',c:false,fb:'L\'arousal alto corrompe l\'argomentazione. Sembri sulla difensiva.'},
+       {t:'Non dici niente e ti chiudi.',c:false,fb:'Passivita: il progetto muore senza difesa e tu accumuli rancore.'},
+       {t:'Rispondi: "Se lo aveste letto con attenzione non direste cosi."',c:false,fb:'Contrattacco: metti in discussione la competenza degli altri. Escalation garantita.'}]},
+    {s:'Un collega prende il merito del tuo lavoro durante una presentazione al cliente. Cosa fai?',
+     opts:[{t:'Aspetti la fine della presentazione. Poi in privato: "Nella slide 4 hai presentato l\'analisi che ho fatto io. Mi piacerebbe che fosse chiaro il contributo."',c:true,fb:'Timing giusto (non davanti al cliente) + DESC in privato. Assertivo senza escalation.'},
+       {t:'Lo interrompi davanti al cliente: "Scusa, quella parte l\'ho fatta io."',c:false,fb:'Timing sbagliato: il cliente vede un team in conflitto.'},
+       {t:'Non dici niente e ti lamenti con altri colleghi.',c:false,fb:'Triangolazione passiva: il problema non si risolve e la relazione peggiora.'},
+       {t:'Mandi un\'email al capo per denunciare il fatto.',c:false,fb:'Escalation immediata senza dare al collega la possibilita di rimediare.'}]},
+    {s:'Il tuo capo ti da un feedback molto negativo che ritieni ingiusto. Come rispondi?',
+     opts:[{t:'"Prendo nota di quello che dici. Alcune osservazioni le condivido, su altre vorrei portarti dei dati la prossima settimana per avere un confronto piu preciso."',c:true,fb:'Accetti la parte utile, riservi il diritto di rispondere con dati. Non reagisci a caldo.'},
+       {t:'"Non e vero, ho fatto un ottimo lavoro!"',c:false,fb:'Difesa emotiva: non porti dati, solo un giudizio opposto.'},
+       {t:'"Ha ragione, mi scusi." (senza crederci)',c:false,fb:'Sottomissione: ne la relazione ne il tuo lavoro beneficiano.'},
+       {t:'Vai a casa e ci pensi tutta la notte senza agire.',c:false,fb:'Ruminazione senza azione: l ingiustizia percepita cresce.'}]}
+  ];
+  var q=qs[seed%qs.length];
+  return{type:'best_pick',scenario:q.s,options:shuf(q.opts.map(function(o){return{text:o.t,correct:o.c,feedback:o.fb};}))};
+}},
+
+{id:'design_thinking',ps:4,area:3,name:'Design Thinking',icon:'💡',tier:99,reqAll:3,
+ gen:function(seed){
+  if(seed%3===0){
+    return{type:'order',instruction:'Riordina le fasi del Design Thinking per risolvere un problema complesso:',
+      steps:['Comprendi il problema dal punto di vista dell\'utente','Definisci il problema in modo preciso e specifico','Genera il maggior numero possibile di idee senza filtro','Costruisci un prototipo rapido della soluzione migliore','Testa il prototipo con utenti reali e raccogli feedback'],
+      feedback:'Empathize, Define, Ideate, Prototype, Test. Ogni fase alimenta la successiva. Se il test fallisce, torni a Ideate o Define.'};
+  }
+  var qs=[
+    {s:'Stai progettando un nuovo servizio. Un collega propone subito la soluzione. Cosa manca?',
+     opts:[{t:'La fase Empathize: non avete ancora capito il problema dal punto di vista dell\'utente.',c:true,fb:'Saltare alla soluzione senza capire il problema e l errore piu comune. Il Design Thinking inizia dall ascolto.'},
+       {t:'La fase Test: serve un prototipo prima.',c:false,fb:'Non puoi testare una soluzione se non hai nemmeno definito il problema.'},
+       {t:'Niente, se la soluzione e buona si puo partire.',c:false,fb:'Senza comprendere il problema reale, qualsiasi soluzione e un azzardo.'},
+       {t:'La fase Ideate: servono piu idee.',c:false,fb:'Ideate viene dopo Define. Prima bisogna capire cosa risolvere.'}]},
+    {s:'Hai 10 idee per migliorare un processo. Come scegli quale prototipare?',
+     opts:[{t:'Incrocia impatto stimato e fattibilita. Prototipa quella con il miglior rapporto tra i due.',c:true,fb:'Matrice impatto/fattibilita: seleziona la soluzione piu promettente da testare prima.'},
+       {t:'Scegli quella che piace di piu al capo.',c:false,fb:'Criterio di autorita, non di merito. Non e Design Thinking.'},
+       {t:'Scegli la piu economica.',c:false,fb:'Il costo e un vincolo, non l unico criterio. Una soluzione economica ma inefficace spreca tempo.'},
+       {t:'Le implementi tutte in parallelo.',c:false,fb:'Dispersione totale di risorse. Il prototipo serve a validare UNA idea alla volta.'}]}
+  ];
+  var q=qs[seed%qs.length];
+  return{type:'best_pick',scenario:q.s,options:shuf(q.opts.map(function(o){return{text:o.t,correct:o.c,feedback:o.fb};}))};
+}},
+
+{id:'abitudini',ps:12,area:4,name:'Scienza delle Abitudini',icon:'🔁',tier:99,reqAll:4,
+ labels:{cue:'🔔 Segnale',routine:'⚙️ Routine',reward:'🎁 Ricompensa',craving:'🧲 Desiderio'},
+ gen:function(seed){
+  var items=[
+    {r:'Suona la sveglia alle 6:30.',c:'cue',fb:'Il segnale (cue) attiva il loop dell abitudine. Senza segnale non parte nessuna routine.'},
+    {r:'Ti alzi, ti vesti e vai in palestra.',c:'routine',fb:'La routine e il comportamento automatico che segue il segnale.'},
+    {r:'Dopo l allenamento ti senti energico e soddisfatto.',c:'reward',fb:'La ricompensa e cio che il cervello ottiene. Rafforza il loop per la volta successiva.'},
+    {r:'Senti il bisogno di muoverti per sentire quella energia.',c:'craving',fb:'Il craving e l anticipazione della ricompensa. E il motore che mantiene l abitudine nel tempo.'},
+    {r:'Apri il portatile dopo pranzo.',c:'cue',fb:'Segnale contestuale: l azione (aprire il pc) innesca la routine associata.'},
+    {r:'Controlli social media per 20 minuti.',c:'routine',fb:'Routine automatica attivata dal segnale.'},
+    {r:'Ti senti distratto e colpevole.',c:'reward',fb:'Ricompensa negativa: il cervello cercava stimolazione, ma il risultato e insoddisfazione. Segnale che la routine va cambiata.'},
+    {r:'Alle 15 senti il calo di energia e cerchi una distrazione.',c:'craving',fb:'Il craving e il desiderio che precede la routine. Il trucco e soddisfare il craving con una routine diversa.'},
+    {r:'Vedi i colleghi che prendono il caffe alle 10.',c:'cue',fb:'Segnale sociale: il comportamento degli altri attiva il loop.'},
+    {r:'Dopo il caffe ti senti connesso con i colleghi.',c:'reward',fb:'La vera ricompensa spesso non e il caffe ma il contatto sociale.'},
+    {r:'Imposti un timer da 25 minuti prima di iniziare a lavorare.',c:'cue',fb:'Segnale intenzionale: hai costruito un trigger artificiale per attivare la routine desiderata (Pomodoro).'},
+    {r:'Spunti un compito dalla lista alla fine del pomodoro.',c:'reward',fb:'Ricompensa visiva e tangibile che rafforza il loop produttivo.'}
+  ];
+  var item=items[seed%items.length];
+  var labels=this.labels;var fb={};
+  var keys=Object.keys(labels);
+  for(var i=0;i<keys.length;i++){fb[keys[i]]=keys[i]===item.c?'Esatto: '+item.fb:'No: questo e un altro componente del loop dell abitudine (Duhigg).';}
+  return{type:'classify',scenario:'A quale componente del loop dell\'abitudine appartiene?',response:item.r,correct:item.c,feedback:fb};
+}}
+
+];
+/* Pool size is now per-FW via ps field */
+function isUL(fid){var f=FW.find(function(x){return x.id===fid;});if(!f)return false;if(f.tier===0)return true;if(!f.req&&!f.reqAll)return true;
+/* FIXED: reqAll = unlock only when ALL non-advanced skills in that area have 3 stars */
+if(f.reqAll){var areaFws=FW.filter(function(x){return x.area===f.reqAll&&!x.reqAll&&x.id!==fid;});var allMastered=areaFws.every(function(x){return getMast(x.id)>=80;});return allMastered;}
+return getMast(f.req)>=20;}
+function hasPracticed(fid){return Object.keys(S.lt).some(function(k){return k.startsWith(fid+'_');});}
+function getNew(){return FW.filter(function(f){return f.tier>0&&isUL(f.id)&&!hasPracticed(f.id)&&!(S.su||[]).includes(f.id);});}
+function getRec(){
+  var ul=FW.filter(function(f){return isUL(f.id);});if(!ul.length)return null;
+  var nw=getNew();if(nw.length)return{fw:nw[0],reason:'🆕 Nuova skill sbloccata!'};
+  var weak=null,wm=101;
+  ul.forEach(function(f){var m=getMast(f.id);if(m<wm){wm=m;weak=f;}});
+  if(weak&&wm<60)return{fw:weak,reason:'🎯 Da rafforzare'};
+  var old=null,ot=Infinity;
+  ul.forEach(function(f){var t=(S.lastPractice&&S.lastPractice[f.id])||0;if(t<ot){ot=t;old=f;}});
+  if(old)return{fw:old,reason:'🔄 Da ripassare'};
+  return{fw:pick(ul),reason:'⚡ Continua'};
+}
+
+/* ═══ GENERATOR — FIXED SEED POOL ═══ */
+function getPS(fwId){var fw=FW.find(function(f){return f.id===fwId;});return fw&&fw.ps?fw.ps:10;}
+function genItem(fwId,seed){
+  var fw=FW.find(function(f){return f.id===fwId;});
+  if(!fw||!fw.gen)return null;
+  try{var item=fw.gen(seed);if(!item)return null;item.fwId=fwId;item.area=fw.area;item.uid=fwId+'_'+seed;return item;}
+  catch(e){return null;}
+}
+
+function genPool(fwId,count){
+  var items=[];
+  var seen=new Set();
+  // PHASE 1: Leitner-priority items (box 1-2, need review)
+  var leitnerSeeds=[];
+  var _ps=getPS(fwId);for(var s=0;s<_ps;s++){
+    var box=S.lt[fwId+'_'+s]||0;
+    if(box>=1&&box<=2)leitnerSeeds.push({seed:s,box:box});
+  }
+  leitnerSeeds.sort(function(a,b){return a.box-b.box;});
+  for(var i=0;i<leitnerSeeds.length&&items.length<count;i++){
+    var item=genItem(fwId,leitnerSeeds[i].seed);
+    if(!item)continue;
+    var key=(item.response||item.task||item.instruction||'')+item.correct;
+    if(seen.has(key))continue;
+    seen.add(key);items.push(item);
+  }
+  // PHASE 2: Unseen items (never attempted)
+  var unseenSeeds=[];
+  for(var s2=0;s2<_ps;s2++){
+    if(!S.lt[fwId+'_'+s2])unseenSeeds.push(s2);
+  }
+  unseenSeeds=shuf(unseenSeeds);
+  for(var j=0;j<unseenSeeds.length&&items.length<count;j++){
+    var item2=genItem(fwId,unseenSeeds[j]);
+    if(!item2)continue;
+    var key2=(item2.response||item2.task||item2.instruction||'')+item2.correct;
+    if(seen.has(key2))continue;
+    seen.add(key2);items.push(item2);
+  }
+  // PHASE 3: Fill remaining from any seed
+  if(items.length<count){
+    var allSeeds=shuf(Array.from({length:_ps},function(_,i){return i;}));
+    for(var k=0;k<allSeeds.length&&items.length<count;k++){
+      var item3=genItem(fwId,allSeeds[k]);
+      if(!item3)continue;
+      var key3=(item3.response||item3.task||item3.instruction||'')+item3.correct;
+      if(seen.has(key3))continue;
+      seen.add(key3);items.push(item3);
+    }
+  }
+  return items;
+}
+
+/* ═══ LEITNER & MASTERY ═══ */
+function getBox(uid){return S.lt[uid]||0;}
+function setBox(uid,box){S.lt[uid]=Math.max(1,Math.min(5,box));sv();}
+function getMast(fid){
+  var ps=getPS(fid);
+  var keys=Object.keys(S.lt).filter(function(k){return k.startsWith(fid+'_');});
+  if(keys.length===0)return 0;
+  var total=0;
+  keys.forEach(function(k){total+=Math.min(S.lt[k],5)/5;});
+  return Math.round(total/ps*100);
+}
+function getAreaMast(aid){
+  var fws=FW.filter(function(f){return f.area===aid&&isUL(f.id);});
+  if(!fws.length)return 0;
+  var t=0,m=0;
+  fws.forEach(function(f){
+    var fps=getPS(f.id);
+    var ks=Object.keys(S.lt).filter(function(k){return k.startsWith(f.id+'_');});
+    t+=fps;
+    ks.forEach(function(k){m+=Math.min(S.lt[k],5)/5;});
+  });
+  return t>0?Math.round(m/t*100):0;
+}
+
+/* ═══ ADAPTIVE SESSION MIXER ═══ */
+function buildSession(count){
+  count=count||12;
+  var unlocked=FW.filter(function(f){return isUL(f.id);});
+  if(!unlocked.length)return[];
+  var areaW={};var totalW=0;
+  AREAS.forEach(function(a){
+    var hasContent=unlocked.some(function(f){return f.area===a.id;});
+    if(!hasContent){areaW[a.id]=0;return;}
+    var m=getAreaMast(a.id);
+    var adj=a.w*(1+(1-m/100)*1.5);
+    areaW[a.id]=adj;totalW+=adj;
+  });
+  if(totalW===0)return[];
+  var targets={};var assigned=0;
+  var active=AREAS.filter(function(a){return areaW[a.id]>0;});
+  active.forEach(function(a,i){
+    if(i===active.length-1){targets[a.id]=count-assigned;return;}
+    var t=Math.max(1,Math.round(count*areaW[a.id]/totalW));
+    targets[a.id]=t;assigned+=t;
+  });
+  var session=[];
+  AREAS.forEach(function(a){
+    var t=targets[a.id]||0;if(t===0)return;
+    var aFws=unlocked.filter(function(f){return f.area===a.id;});
+    if(!aFws.length)return;
+    var fwW=aFws.map(function(f){return{fw:f,w:1+(1-getMast(f.id)/100)*2};});
+    var totFW=fwW.reduce(function(s,x){return s+x.w;},0);
+    var aItems=[];
+    fwW.forEach(function(item){
+      var n=Math.max(1,Math.round(t*item.w/totFW));
+      var pool=genPool(item.fw.id,n*3);
+      pool.sort(function(a,b){return getBox(a.uid)-getBox(b.uid);});
+      aItems=aItems.concat(pool.slice(0,n));
+    });
+    session=session.concat(aItems.slice(0,t));
+  });
+  return shuf(session);
+}
+
+function buildPractice(fwId,count){
+  count=count||15;
+  var pool=genPool(fwId,count*2);
+  pool.sort(function(a,b){return getBox(a.uid)-getBox(b.uid);});
+  return pool.slice(0,count);
+}
+
+/* ═══ STATE ═══ */
+var SK='softskillo_v6';
+function ds(){return{scr:'welcome',nome:'',xp:0,lv:1,str:0,ld:null,hr:3,lt:{},sc:0,tc:0,tw:0,cs:null,si:0,sco:0,swr:0,pfw:null,su:[],lastPractice:{},wikiSeen:{}};}
+var S=ls();
+function ls(){try{var d=localStorage.getItem(SK);if(d)return Object.assign(ds(),JSON.parse(d));}catch(e){}return ds();}
+function sv(){try{localStorage.setItem(SK,JSON.stringify(S));}catch(e){}}
+function axp(n){S.xp+=n;var nd=50+S.lv*30;while(S.xp>=nd){S.lv++;S.xp-=nd;nd=50+S.lv*30;sL();}sv();}
+function ckStr(){var td=new Date().toISOString().split('T')[0];if(S.ld===td)return;var yd=new Date(Date.now()-864e5).toISOString().split('T')[0];if(S.ld===yd)S.str++;else S.str=1;S.ld=td;sv();}
+function ckUL(){
+  FW.forEach(function(f){
+    if(f.tier===0)return;
+    if(!isUL(f.id))return;
+    if(!S.su)S.su=[];
+    if(S.su.indexOf(f.id)>=0)return;
+    S.su.push(f.id);sv();
+    sU();var a=AREAS.find(function(x){return x.id===f.area;});
+    document.getElementById('toast').innerHTML='<div class="ut"><div style="font-size:2em">'+f.icon+'</div><div style="font-family:Fredoka;font-weight:600;color:var(--green-d)">Nuova skill sbloccata!</div><div style="font-size:.82em;color:var(--text2);font-weight:600">'+f.name+' — '+a.name+'</div></div>';
+    setTimeout(function(){document.getElementById('toast').innerHTML='';},3000);
+  });
+}
+
+function updTB(){
+  var el1=document.getElementById('tbx');
+  var el2=document.getElementById('tbh');
+  if(el1)el1.innerHTML='⭐'+S.xp;
+  if(el2)el2.innerHTML=Array(Math.max(0,S.hr)+1).join('❤️')+Array(Math.max(0,3-S.hr)+1).join('🤍');
+}
+
+/* ═══ RENDER ═══ */
+var ap=document.getElementById('app');
+var tb=document.getElementById('topbar');
+var fb=document.getElementById('fbB');
+
+function R(){
+  fb.style.display='none';fb.innerHTML='';
+  if(S.scr==='welcome'){tb.style.display='none';rW();}
+  else if(S.scr==='home'){tb.style.display='none';rH();}
+  else if(S.scr==='session'||S.scr==='practice'){tb.style.display='flex';rS();}
+  else if(S.scr==='results'){tb.style.display='none';rR();}
+  else{tb.style.display='none';rH();}
+}
+
+function rW(){
+  ap.innerHTML='<div class="ws"><span class="msc">🧠</span><h1>Softskillo</h1><p class="sub">Il tuo allenamento quotidiano sulle soft skill</p><input type="text" id="iN" value="'+(S.nome||'')+'" placeholder="Come ti chiami?" maxlength="30"><br><button class="btn btn-g btn-f" onclick="stA()" style="max-width:320px">INIZIA AD ALLENARTI</button><p style="font-size:.75em;color:var(--text3);margin-top:20px">Comunicazione · Emozioni · Problem Solving · Meta-skill</p></div>';
+}
+function stA(){iA();S.nome=document.getElementById('iN').value||'';S.scr='home';sv();sT();R();}
+
+function goHome(){S.scr='home';S.cs=null;sv();R();}
+
+function rH(){
+  ckStr();ckUL();
+  var lv=S.lv,xn=S.xp,xd=50+lv*30,pct=Math.round(xn/xd*100);
+  var ulC=FW.filter(function(f){return isUL(f.id);}).length;
+  var totC=FW.length;
+  var rec=getRec();
+  var h='<div style="animation:su .4s ease">';
+  h+='<div style="text-align:center;margin-bottom:14px"><span style="font-size:2.4em;display:block;margin-bottom:2px">🧠</span><div style="font-family:Fredoka;font-size:1.25em;font-weight:700">'+(S.nome?'Ciao '+S.nome+'!':'Softskillo')+'</div><div style="font-size:.75em;color:var(--text2);font-weight:600">'+ulC+'/'+totC+' skill sbloccate</div></div>';
+  h+='<div class="hst"><div class="sc"><div class="sv" style="color:var(--amber-d)">'+(S.str>=1?'🔥':'')+S.str+'</div><div class="sl">Streak</div></div><div class="sc"><div class="sv" style="color:var(--purple-d)">Lv.'+lv+'</div><div class="sl">Livello</div></div><div class="sc"><div class="sv" style="color:var(--green-d)">'+S.tc+'</div><div class="sl">Corrette</div></div><div class="sc"><div class="sv" style="color:var(--blue-d)">'+pct+'%</div><div class="sl">XP</div></div></div>';
+  h+='<div class="wk"><div class="wk-title">📊 Le tue aree</div><div class="wk-bars">';
+  var am=AREAS.map(function(a){return{id:a.id,name:a.name,icon:a.icon,c:a.c,m:getAreaMast(a.id)};}).sort(function(a,b){return a.m-b.m;});
+  am.forEach(function(a){
+    h+='<div class="wk-row"><div class="wk-label">'+a.icon+'</div><div class="wk-bar"><div class="wk-fill" style="width:'+Math.max(2,a.m)+'%;background:'+a.c+'"></div></div><div class="wk-pct" style="color:'+(a.m<30?'var(--red-d)':a.m<60?'var(--orange-d)':'var(--green-d)')+'">'+a.m+'%</div></div>';
+  });
+  h+='</div></div>';
+  if(rec){
+    var ra=AREAS.find(function(x){return x.id===rec.fw.area;});
+    h+='<div class="nc" onclick="stP(\''+rec.fw.id+'\')"><div class="nl">'+rec.reason+'</div><div class="nt">'+rec.fw.icon+' '+rec.fw.name+'</div><div class="nd">'+ra.icon+' '+ra.name+' · Mastery: '+getMast(rec.fw.id)+'%</div></div>';
+  }
+  h+='<button class="btn btn-g btn-f" style="margin-bottom:18px;padding:16px;font-size:1.05em" onclick="stSe()">⚡ ALLENAMENTO ADATTIVO (12 domande)</button>';
+  var daySeed=Math.floor(Date.now()/864e5);
+  var sAreas=AREAS.map(function(a){return{id:a.id,name:a.name,icon:a.icon,c:a.c,m:getAreaMast(a.id)};}).sort(function(a,b){return a.m-b.m;});
+  var newIds=getNew().map(function(f){return f.id;});
+  sAreas.forEach(function(a){
+    var fws=FW.filter(function(f){return f.area===a.id;});
+    var ulF=fws.filter(function(f){return isUL(f.id);});
+    var lkF=fws.filter(function(f){return !isUL(f.id);});
+    if(!ulF.length&&!lkF.length)return;
+    ulF.sort(function(x,y){
+      var mx=getMast(x.id),my=getMast(y.id);
+      if(Math.abs(mx-my)>10)return mx-my;
+      return((x.id.charCodeAt(0)*daySeed)%7)-((y.id.charCodeAt(0)*daySeed)%7);
+    });
+    h+='<div class="as"><div class="ah" style="background:'+a.c+'">'+a.icon+' '+a.name+'<span class="ap">'+ulF.length+'/'+fws.length+' · '+a.m+'%</span></div><div class="sg">';
+    ulF.forEach(function(f){
+      var m=getMast(f.id);
+      var stars=m>=80?'⭐⭐⭐':m>=50?'⭐⭐':m>=20?'⭐':'☆☆☆';
+      var isNew=newIds.indexOf(f.id)>=0;
+      var isWeak=m<30;
+      var isAdvanced=!!f.reqAll;
+      h+='<div class="sk'+(m>=80?' ma':'')+(isNew?' nu':'')+(isWeak&&!isNew?' wk-sk':'')+(isAdvanced?' adv':'')+'" onclick="stP(\''+f.id+'\')">';
+      if(isAdvanced&&isNew)h+='<span class="sb" style="background:var(--purple)">★</span>';
+      else if(isWeak&&!isNew)h+='<span class="sb" style="background:var(--red)">!</span>';
+      else if(isNew)h+='<span class="sb">NEW</span>';
+      h+='<span class="si">'+f.icon+'</span><div class="sn">'+f.name+'</div><div class="ss">'+stars+'</div></div>';
+    });
+    lkF.forEach(function(f){
+      var rf=FW.find(function(x){return x.id===f.req;});
+      var lockMsg=f.reqAll?'⭐⭐⭐ su tutte le skill dell\'area':(rf?'⭐ '+rf.name:'');
+      var isAdv=!!f.reqAll;
+      h+='<div class="sk lk'+(isAdv?' adv':'')+'"><span class="si">'+f.icon+'</span><div class="sn">'+f.name+'</div><div style="font-size:.85em;margin-top:2px">🔒</div><div class="sr">'+lockMsg+'</div></div>';
+    });
+    h+='</div></div>';
+  });
+  h+='<div style="display:flex;gap:8px;margin-top:20px;flex-wrap:wrap"><button class="btn btn-ol btn-sm" onclick="expJ()">💾 Backup</button><button class="btn btn-ol btn-sm" onclick="document.getElementById(\'iF\').click()">📂 Importa</button><input type="file" id="iF" accept=".json" style="display:none" onchange="impJ(event)"><button class="btn btn-ol btn-sm" onclick="resetAll()">🔄 Reset</button></div></div>';
+  ap.innerHTML=h;
+}
+
+var _rstT=0;
+function resetAll(){
+  var now=Date.now();
+  if(now-_rstT<2000){_rstT=0;localStorage.removeItem(SK);S=ds();S.scr='welcome';R();return;}
+  _rstT=now;
+  var btn=event&&event.target;
+  if(btn){btn.textContent='⚠️ TAP DI NUOVO';btn.style.background='var(--red-l)';btn.style.color='var(--red-d)';btn.style.borderColor='var(--red)';setTimeout(function(){btn.textContent='🔄 Reset';btn.style.background='';btn.style.color='';btn.style.borderColor='';},2000);}
+}
+
+
+/* ═══ WIKI ═══ */
+function renderWikiHTML(fwId){
+  var fw=FW.find(function(f){return f.id===fwId;});
+  if(!fw)return '';
+  var wid=fw.id;
+  // Map some IDs
+  if(wid==='growth')wid='growth_mindset';
+  var w=WIKI[wid];
+  if(!w)return '';
+  var area=AREAS.find(function(a){return a.id===fw.area;});
+  var ac=AREA_WIKI_COLORS[fw.area]||{bg:'var(--bg3)',tc:'var(--text2)'};
+  var h='<button class="wiki-toggle" onclick="toggleWiki(\''+fwId+'\')">📚 WIKI<span class="wiki-sub">per saperne di più</span></button>';
+  h+='<div class="wiki-box" id="wiki-'+fwId+'">';
+  h+='<div class="wiki-synth" style="background:'+ac.bg+';color:'+ac.tc+'">'+w.s+'</div>';
+  h+='<div class="wiki-aut">&#128100; '+w.a+'</div>';
+  h+='<div class="wiki-teo">'+w.t+'</div>';
+  if(w.l&&w.l.length){
+    h+='<div style="font-weight:700;font-size:.82em;margin-bottom:6px">&#128214; Letture chiave</div>';
+    for(var i=0;i<w.l.length;i++){
+      var b=w.l[i];
+      h+='<div class="wiki-lib"><strong>'+b.t+'</strong> — '+b.a+' ('+b.y+')<br><span class="wl-n">'+b.n+'</span></div>';
+    }
+  }
+  if(w.k&&w.k.length){
+    h+='<div class="wiki-tags">';
+    for(var j=0;j<w.k.length;j++){
+      h+='<span class="wiki-tag" style="background:'+ac.bg+';color:'+ac.tc+'">'+w.k[j]+'</span>';
+    }
+    h+='</div>';
+  }
+  h+='</div>';
+  return h;
+}
+function toggleWiki(fwId){
+  var el=document.getElementById('wiki-'+fwId);
+  if(!el)return;
+  var isOpen=el.classList.contains('open');
+  el.classList.toggle('open');
+  if(!isOpen){
+    var wikiKey='wiki_'+fwId;
+    if(!S.wikiSeen)S.wikiSeen={};
+    if(!S.wikiSeen[wikiKey]){S.wikiSeen[wikiKey]=true;axp(5);sv();updTB();showToast('+5 XP &#128218; Wiki esplorata!');}
+  }
+}
+
+/* ═══ SESSION ═══ */
+function stSe(){sT();S.cs=buildSession(12);S.si=0;S.sco=0;S.swr=0;S.hr=3;S.scr='session';sv();R();}
+function stP(fid){if(!isUL(fid))return;sT();S.pfw=fid;S.cs=buildPractice(fid,15);S.si=0;S.sco=0;S.swr=0;S.hr=3;S.scr='practice';if(!S.lastPractice)S.lastPractice={};S.lastPractice[fid]=Date.now();sv();R();}
+
+function rS(){
+  if(!S.cs||S.cs.length===0||S.si>=S.cs.length||S.hr<=0){endS();return;}
+  var item=S.cs[S.si];
+  if(!item||!item.fwId){S.si++;sv();rS();return;}
+  var fw=FW.find(function(f){return f.id===item.fwId;});
+  var area=AREAS.find(function(a){return a.id===item.area;});
+  if(!fw||!area){S.si++;sv();rS();return;}
+  var tot=S.cs.length,pct=Math.round(S.si/tot*100);
+  document.getElementById('tbt').textContent=fw.icon+' '+fw.name;
+  updTB();
+  var h='<div style="animation:su .3s ease"><div class="pb" style="margin-bottom:14px"><div class="pb-f" style="width:'+pct+'%"></div></div>';
+  h+='<div style="font-size:.73em;font-weight:700;color:var(--text2);margin-bottom:6px">'+area.icon+' '+area.name+' · '+(S.si+1)+'/'+tot+'</div>';
+  if(S.si===0)h+=renderWikiHTML(item.fwId);
+  if(item.type==='classify')h+=rCl(item,fw);
+  else if(item.type==='best_pick')h+=rBP(item);
+  else if(item.type==='order')h+=rOr(item);
+  else if(item.type==='quadrant')h+=rQd(item,fw);
+  else{S.si++;sv();rS();return;}
+  h+='</div>';
+  ap.innerHTML=h;
+}
+
+function rCl(item,fw){
+  var h='<div class="sq">Classifica:</div>';
+  if(item.scenario)h+='<div class="ss2">'+item.scenario+'</div>';
+  h+='<div class="sr2">'+item.response+'</div><div class="ops" id="ops">';
+  var lb=fw.labels||{};var keys=Object.keys(lb);
+  for(var i=0;i<keys.length;i++){
+    h+='<div class="op" onclick="aCl(\''+keys[i]+'\',this)" data-k="'+keys[i]+'"><span class="om">'+String.fromCharCode(65+i)+'</span><span>'+lb[keys[i]]+'</span></div>';
+  }
+  return h+'</div>';
+}
+function rBP(item){
+  window._bp=item.options;
+  var h='<div class="sq">Scegli la risposta migliore:</div><div class="ss2">'+item.scenario+'</div><div class="ops" id="ops">';
+  for(var i=0;i<item.options.length;i++){
+    h+='<div class="op" onclick="aBP('+i+',this)" data-c="'+item.options[i].correct+'"><span class="om">'+String.fromCharCode(65+i)+'</span><span>'+item.options[i].text+'</span></div>';
+  }
+  return h+'</div>';
+}
+function rOr(item){
+  if(!window._os){
+    var idx=[];for(var i=0;i<item.steps.length;i++)idx.push(i);
+    for(var i2=idx.length-1;i2>0;i2--){var j=Math.floor(Math.random()*(i2+1));var tmp=idx[i2];idx[i2]=idx[j];idx[j]=tmp;}
+    var allCorrect=true;for(var c=0;c<idx.length;c++){if(idx[c]!==c){allCorrect=false;break;}}
+    if(allCorrect){tmp=idx[0];idx[0]=idx[1];idx[1]=tmp;}
+    window._os=idx;
+  }
+  var order=window._os;
+  var h='<div class="sq">'+item.instruction+'</div><div class="os" id="osl">';
+  for(var p=0;p<order.length;p++){
+    h+='<div class="oi" data-s="'+order[p]+'"><span class="on">'+(p+1)+'</span><span style="flex:1">'+item.steps[order[p]]+'</span><span class="oa"><button onclick="mO('+p+',-1)"'+(p===0?' disabled':'')+'>▲</button><button onclick="mO('+p+',1)"'+(p===order.length-1?' disabled':'')+'>▼</button></span></div>';
+  }
+  return h+'</div><button class="btn btn-g btn-f" onclick="cO()">CONTROLLA</button>';
+}
+function rQd(item,fw){
+  var quads=fw.quads||[];
+  var h='<div class="sq">In quale quadrante?</div><div class="ss2">'+item.task+'</div><div class="qg" id="qg">';
+  for(var i=0;i<quads.length;i++){
+    h+='<div class="qc" onclick="aQd(\''+quads[i].id+'\',this)" data-q="'+quads[i].id+'" style="border-top:3px solid '+quads[i].co+'"><div class="qt">'+quads[i].n+'</div><div class="qd">'+quads[i].d+'</div></div>';
+  }
+  return h+'</div>';
+}
+
+/* ═══ ANSWERS ═══ */
+function aCl(k,el){
+  var item=S.cs[S.si];
+  var opts=document.querySelectorAll('#ops .op');
+  for(var i=0;i<opts.length;i++){opts[i].classList.add('dis');if(opts[i].getAttribute('data-k')===item.correct)opts[i].classList.add('rc');}
+  if(k===item.correct){el.classList.add('cor');sC();S.sco++;S.tc++;setBox(item.uid,getBox(item.uid)+1);axp(10+(S.sco>=3?5:0));}
+  else{el.classList.add('wrg');sW();S.swr++;S.tw++;S.hr--;setBox(item.uid,1);}
+  updTB();sv();
+  sFB(k===item.correct,k===item.correct?item.feedback[item.correct]:(item.feedback[k]||'Non corretto.'));
+}
+function aBP(i,el){
+  var item=S.cs[S.si];var opt=window._bp[i];
+  var opts=document.querySelectorAll('#ops .op');
+  for(var j=0;j<opts.length;j++){opts[j].classList.add('dis');if(opts[j].getAttribute('data-c')==='true')opts[j].classList.add('rc');}
+  if(opt.correct){el.classList.add('cor');sC();S.sco++;S.tc++;setBox(item.uid,getBox(item.uid)+1);axp(10+(S.sco>=3?5:0));}
+  else{el.classList.add('wrg');sW();S.swr++;S.tw++;S.hr--;setBox(item.uid,1);}
+  updTB();sv();
+  sFB(opt.correct,opt.feedback);
+}
+function mO(p,d){
+  var np=p+d;if(np<0||np>=window._os.length)return;
+  var a=window._os;var tmp=a[p];a[p]=a[np];a[np]=tmp;sT();
+  var item=S.cs[S.si];var c=document.getElementById('osl');c.innerHTML='';
+  for(var pp=0;pp<a.length;pp++){
+    c.innerHTML+='<div class="oi" data-s="'+a[pp]+'"><span class="on">'+(pp+1)+'</span><span style="flex:1">'+item.steps[a[pp]]+'</span><span class="oa"><button onclick="mO('+pp+',-1)"'+(pp===0?' disabled':'')+'>▲</button><button onclick="mO('+pp+',1)"'+(pp===a.length-1?' disabled':'')+'>▼</button></span></div>';
+  }
+}
+function cO(){
+  var item=S.cs[S.si];var o=window._os;
+  var ok=true;for(var i=0;i<o.length;i++){if(o[i]!==i){ok=false;break;}}
+  var els=document.querySelectorAll('.oi');
+  for(var j=0;j<els.length;j++){els[j].style.borderColor=o[j]===j?'var(--green)':'var(--red)';}
+  var btns=document.querySelectorAll('.oa button');
+  for(var k=0;k<btns.length;k++){btns[k].disabled=true;}
+  if(ok){sC();S.sco++;S.tc++;setBox(item.uid,getBox(item.uid)+1);axp(15);}
+  else{sW();S.swr++;S.tw++;S.hr--;setBox(item.uid,1);}
+  window._os=null;updTB();sv();
+  sFB(ok,ok?item.feedback:'Ordine non corretto. '+item.feedback);
+}
+function aQd(qid,el){
+  var item=S.cs[S.si];
+  var cells=document.querySelectorAll('.qc');
+  for(var i=0;i<cells.length;i++){cells[i].classList.add('dis');cells[i].style.pointerEvents='none';if(cells[i].getAttribute('data-q')===item.correct)cells[i].classList.add('cor');}
+  if(qid===item.correct){el.classList.add('cor');sC();S.sco++;S.tc++;setBox(item.uid,getBox(item.uid)+1);axp(10);}
+  else{el.classList.add('wrg');sW();S.swr++;S.tw++;S.hr--;setBox(item.uid,1);}
+  updTB();sv();
+  sFB(qid===item.correct,item.feedback);
+}
+
+/* ═══ FEEDBACK & FLOW ═══ */
+function sFB(ok,txt){
+  fb.style.display='block';
+  fb.innerHTML='<div class="fb '+(ok?'fc':'fw')+'"><div class="fi"><div class="ft">'+(ok?'🎉 Corretto!':'😕 Non proprio...')+'</div><div class="fx">'+txt+'</div><button class="btn '+(ok?'btn-g':'btn-ol')+' btn-f" onclick="nI()">CONTINUA</button></div></div>';
+}
+function nI(){fb.style.display='none';fb.innerHTML='';window._os=null;window._bp=null;S.si++;sv();if(S.hr<=0||S.si>=S.cs.length){endS();}else{R();}}
+function endS(){S.sc++;ckStr();S.scr='results';sv();R();}
+
+function rR(){
+  var tot=S.sco+S.swr,pct=tot>0?Math.round(S.sco/tot*100):0;
+  var em=pct>=80?'🏆':pct>=60?'💪':pct>=40?'📚':'🔄';
+  var msg=pct>=80?'Fantastico!':pct>=60?'Buon lavoro!':pct>=40?'Stai migliorando!':'Non mollare!';
+  var cft='';
+  if(pct>=70){var cs=['var(--green)','var(--blue)','var(--purple)','var(--orange)','var(--amber)'];for(var i=0;i<20;i++){cft+='<div class="cp" style="left:'+Math.random()*100+'%;background:'+cs[i%cs.length]+';animation-delay:'+Math.random()+'s;animation-duration:'+(1.5+Math.random())+'s"></div>';}}
+  setTimeout(ckUL,800);
+  var rhtml=cft;
+  rhtml+='<div class="res"><span class="rm">'+em+'</span><h2>'+msg+'</h2>';
+  rhtml+='<p style="color:var(--text2);font-weight:600;margin-bottom:16px">Sessione completata</p>';
+  rhtml+='<div class="rg"><div class="rs"><div class="rv" style="color:var(--green-d)">'+S.sco+'</div><div class="rl">Corrette</div></div>';
+  rhtml+='<div class="rs"><div class="rv" style="color:var(--red-d)">'+S.swr+'</div><div class="rl">Errori</div></div>';
+  rhtml+='<div class="rs"><div class="rv" style="color:var(--amber-d)">'+pct+'%</div><div class="rl">Precisione</div></div></div>';
+  rhtml+='<div style="text-align:left;background:var(--bg2);border:2px solid var(--bg3);border-radius:var(--r);padding:16px;margin-bottom:14px">';
+  rhtml+='<div style="font-weight:700;margin-bottom:6px">🔥 Streak: '+S.str+' giorn'+(S.str===1?'o':'i')+'</div>';
+  rhtml+='<div style="font-weight:700">⭐ Livello '+S.lv+' ('+S.xp+'/'+(50+S.lv*30)+' XP)</div></div>';
+  rhtml+='<button class="btn btn-g btn-f" style="margin-top:8px" onclick="goHome()">TORNA ALLA HOME</button>';
+  rhtml+='<button class="btn btn-ol btn-f" style="margin-top:8px" onclick="stSe()">🔄 ALLENATI ANCORA</button>';
+  rhtml+='</div>';
+  ap.innerHTML=rhtml;
+  if(pct>=70)sF();
+}
+
+/* ═══ NAV & BACKUP ═══ */
+var _bkT=0;
+function goBack(){
+  var now=Date.now();
+  if(now-_bkT<2000){_bkT=0;S.scr='home';S.cs=null;window._os=null;window._bp=null;fb.style.display='none';fb.innerHTML='';sv();R();return;}
+  _bkT=now;sT();
+  var el=document.getElementById('tbt');
+  if(el){var ov=el.textContent;el.textContent='⚠️ Tap di nuovo per uscire';el.style.color='var(--red)';setTimeout(function(){var e2=document.getElementById('tbt');if(e2){e2.textContent=ov;e2.style.color='';}},2000);}
+}
+function expJ(){var d=JSON.stringify(S,null,2);var b=new Blob([d],{type:'application/json'});var u=URL.createObjectURL(b);var a=document.createElement('a');a.href=u;a.download='softskillo_'+new Date().toISOString().split('T')[0]+'.json';a.click();URL.revokeObjectURL(u);}
+function impJ(e){var f=e.target.files[0]; /* FIXED: function was truncated */
+if(!f)return;var r=new FileReader();r.onload=function(ev){try{S=Object.assign(ds(),JSON.parse(ev.target.result));sv();R();showToast('✅ Progressi importati!');}catch(err){showToast('❌ File non valido');}};r.readAsText(f);e.target.value='';}
+function showToast(msg){var t=document.getElementById('toast');t.innerHTML='<div class="ut" style="border-color:var(--blue)"><div style="font-family:Fredoka;font-weight:600;font-size:.95em">'+msg+'</div></div>';setTimeout(function(){t.innerHTML='';},2500);}
+
+R();
+</script>
+</body>
+</html>
